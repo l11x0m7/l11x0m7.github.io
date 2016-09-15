@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "About"
-description: "学苟知本，六经皆我注脚 "
+description: "芝士就是力量。——培根"
 header-img: "img/green.jpg"
 ---
 
