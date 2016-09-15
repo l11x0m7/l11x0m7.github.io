@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "About"
-description: "芝士就是力量。——培根"
+description: "芝士就是力量"
 header-img: "img/green.jpg"
 ---
 
