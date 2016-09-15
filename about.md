@@ -7,7 +7,7 @@ header-img: "img/green.jpg"
 
 
 <center>
-    <p><img src="http://7xlfkx.com1.z0.glb.clouddn.com/white2.jpg" align="center"></p>
+    <p><img src="http://odjt9j2ec.bkt.clouddn.com/skyhigh.ico" align="center"></p>
 </center>
 
 林旭鸣，北京邮电大学在读研究生。
@@ -33,7 +33,7 @@ header-img: "img/green.jpg"
 
 
 <center>
-    <p><img src="img/skyhigh1107.jpg" align="center" alt="微信二维码"></p>
+    <p><img src="http://odjt9j2ec.bkt.clouddn.com/skyhigh1107.jpg" align="center" alt="微信二维码"></p>
 </center>
 
 
