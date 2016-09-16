@@ -31,9 +31,8 @@ header-img: "img/green.jpg"
 
 - 微信
 
-
 <center>
-    <p><img src="http://odjt9j2ec.bkt.clouddn.com/skyhigh1107.jpg" align="center" alt="微信二维码"></p>
+    <p><img src="http://odjt9j2ec.bkt.clouddn.com/weixin.jpg" align="center" alt="微信二维码"></p>
 </center>
 
 
