@@ -1,6 +1,6 @@
 --- 
 layout: post 
-title: 记中秋
+title: 起点
 date: 2016-09-15 
 categories: blog 
 tags: [日记, 杂记] 
