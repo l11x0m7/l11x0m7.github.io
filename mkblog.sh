@@ -13,7 +13,7 @@ layout: post
 title: 
 date: $today 
 categories: blog 
-tags: [,] 
+tags: [, ] 
 description: 
 --- 
 " > $pathname
