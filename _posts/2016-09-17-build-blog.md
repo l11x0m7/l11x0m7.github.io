@@ -3,7 +3,7 @@ layout: post
 title: 利用Github Pages搭建独立博客
 date: 2016-09-17 
 categories: blog 
-tags: [系统搭建] 
+tags: [系统搭建, 独立博客] 
 description: 搭建blog
 --- 
 
@@ -143,7 +143,7 @@ jekyll是一个基于ruby开发的，专用于构建静态网站的程序。它�
 
 购买域名后，需要对域名进行解析，解析的目的是把你的域名放到dns服务器上，这样你在浏览器中输入网址的时候才能够响应。但是如何才能够和github上的地址关联起来呢？可以在域名解析页面配置如下（图片截取自我在dnspod购买的域名解析网页）：
 
-![域名解析](http://odjt9j2ec.bkt.clouddn.com/%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90.png)
+(http://odjt9j2ec.bkt.clouddn.com/%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90.png)
 
 之后就是修改上面说的CNAME了，把你的域名写入CNAME即可。
 
