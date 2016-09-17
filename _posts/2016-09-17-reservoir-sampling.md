@@ -27,17 +27,17 @@ description: 水库采样
 
 综上，可以看到，对于序列中的n个对象，均会以等概方式被选到。
 
-现在通过几个leetcode的例子来看下。
+现在通过两个leetcode的例子来看下。
 
-### Random Pick Index
+### 1.Random Pick Index
 
 
 Given an array of integers with possible duplicates, randomly output the index of a given target number. You can assume that the given target number must exist in the array.
 
-Note:
+**Note:**
 The array size can be very large. Solution that uses too much extra space will not pass the judge.
 
-Example:
+**Example:**
 
 ```
 int[] nums = new int[] {1,2,3,3,3};
@@ -49,6 +49,7 @@ solution.pick(3);
 // pick(1) should return 0. Since in the array only nums[0] is equal to 1.
 solution.pick(1);
 ```
+我的C++代码如下：
 
 ```cpp
 class Solution {
@@ -80,9 +81,70 @@ public:
  \*/
 ```
 
-
 上面这题其实就是考虑如何从n中随机取出某个值为target的下标，可以按照Reservoir Sampling的思路计算。
+
 > 注：此时我们假设C++中的rand()%n函数是完全随机的，实则不是。因为rand()是一个有上限的数，它会令小一些的数更高概率出现。
 
+### 2.Linked List Random Node
 
+Given a singly linked list, return a random node's value from the linked list. Each node must have the same probability of being chosen.
 
+**Follow up:**
+What if the linked list is extremely large and its length is unknown to you? Could you solve this efficiently without using extra space?
+
+**Example:**
+
+```
+// Init a singly linked list [1,2,3].
+ListNode head = new ListNode(1);
+head.next = new ListNode(2);
+head.next.next = new ListNode(3);
+Solution solution = new Solution(head);
+
+// getRandom() should return either 1, 2, or 3 randomly. Each element should have equal probability of returning.
+solution.getRandom();
+```
+
+我的C++代码：
+
+```cpp
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    /** @param head The linked list's head. Note that the head is guanranteed to be not null, so it contains at least one node. */
+    Solution(ListNode* head) {
+        h = head;
+    }
+    
+    /** Returns a random node's value. */
+    int getRandom() {
+        int rd = 1;
+        ListNode* tmp = h;
+        ListNode* res = NULL;
+        while(tmp){
+            if(rand()%rd==0)
+                res = tmp;
+            tmp = tmp->next;
+            rd++;
+        }
+        return res->val;
+    }
+private:
+    ListNode* h;
+};
+
+/**
+ \* Your Solution object will be instantiated and called as such:
+ \* Solution obj = new Solution(head);
+ \* int param_1 = obj.getRandom();
+ \*/
+```
+
+思路类似，不做过多赘述。
