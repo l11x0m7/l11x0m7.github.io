@@ -50,8 +50,7 @@ solution.pick(3);
 solution.pick(1);
 ```
 
-
-<code class="c++">{% highlight c++ linenos %}
+```cpp
 class Solution {
 public:
     vector<int> nums;
@@ -79,8 +78,11 @@ public:
  \* Solution obj = new Solution(nums);
  \* int param_1 = obj.pick(target);
  \*/
-{% highlight c++ linenos %}</code class="c++">
+```
+
 
 上面这题其实就是考虑如何从n中随机取出某个值为target的下标，可以按照Reservoir Sampling的思路计算。
 > 注：此时我们假设C++中的rand()%n函数是完全随机的，实则不是。因为rand()是一个有上限的数，它会令小一些的数更高概率出现。
+
+
 
