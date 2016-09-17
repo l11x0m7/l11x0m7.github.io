@@ -21,7 +21,7 @@ description: 水库采样
 
 * 先将第一个对象放入内存，即选中该对象
 * 对每一个后面的对象$$i$$
-	* 有$\frac1i$的概率会用新值覆盖旧的值
+	* 有$$\frac1i$$的概率会用新值覆盖旧的值
 	* 有<img src="http://chart.googleapis.com/chart?cht=tx&chl=1-\frac{1}{i}" style="border:none;">的概率会丢弃新的值
 * 根据上面的情况，如果总共有k个对象，那么对象1会以概率<img src="http://chart.googleapis.com/chart?cht=tx&chl=\frac12*\frac23*\ldots\frac{n-1}n=\frac{1}{n}" style="border:none;">被选中，对象2会以概率<img src="http://chart.googleapis.com/chart?cht=tx&chl=1*\frac12*\frac23*\ldots\frac{n-1}n=\frac{1}{n}" style="border:none;">被选中，同理对象3会以概率<img src="http://chart.googleapis.com/chart?cht=tx&chl=\frac13*\ldots\frac{n-1}n=\frac{1}{n}" style="border:none;">被选中
 
