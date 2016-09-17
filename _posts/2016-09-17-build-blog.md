@@ -130,7 +130,7 @@ jekyll是一个基于ruby开发的，专用于构建静态网站的程序。它�
 上面没注释的可以不用管，不妨碍使用。主要的几个文件的说明：
 
 * _config.yml：保存配置，该配置将影响jekyll构造网站的各种行为。
-* \_includes：该目录下的文件可以用来作为公共的内容被其他文章引用，就跟C语言include头文件的机制完全一样，jekyll在解析时会对标记{% <span>include</span> %}扩展成对应的在\_includes文件夹中的文件。
+* \_includes：该目录下的文件可以用来作为公共的内容被其他文章引用，就跟C语言include头文件的机制完全一样，jekyll在解析时会对标记<span>{</span><span>%</span> <span>include</span> <span>%</span><span>}</span>扩展成对应的在\_includes文件夹中的文件。
 * _layouts：该目录下的文件作为主要的模板文件。
 * _posts：文章或网页应当放在这个目录中，但需要注意的是，文章的文件名必须是YYYY-MM-DD-title，里面可以放html文件，也可以放markdown文件。
 * _site：这是jekyll默认的转化结果存放的目录，我的模板里没用到。
