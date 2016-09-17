@@ -36,3 +36,5 @@ git commit -m "refresh" # 将修改的内容融入到本地代码仓库
 git pull origin master # 本地同步线上，如果线上没有修改，可以忽略
 git push -u origin master # 将本地代码仓库同步到线上
 ```
+
+### 2.创建/导入Jekyll模板
