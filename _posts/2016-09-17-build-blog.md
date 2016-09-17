@@ -53,27 +53,81 @@ jekyll是一个基于ruby开发的，专用于构建静态网站的程序。它�
 
 了解原理后，我们看看Jekyll的工程结构（以我使用的模板为例）：
 
+```
+.
+├── 404.html # 访问时产生404错误时返回的页面
+├── CNAME # 里面保存着域名，如果买过域名的话，可以通过这个来绑定
+├── Gruntfile.js
+├── Interview.html
+├── LICENSE
+├── README.md
+├── _config.yml # 配置文件
+├── _includes # 类似c++的include头文件
+│   ├── footer.html # 设置你的博客（包括所有）的底部内容
+│   ├── head.html # 设置你的博客的顶部内容
+│   └── nav.html # 设置你的博客的标签内容（上方右边）
+├── _layouts # 博客主要的显示格式
+│   ├── default.html # 默认格式，类似于类里的基类
+│   ├── page.html # 每个标签（如home、tags）下的格式
+│   └── post.html # 每篇博文的格式
+├── _posts # 存放你提交的博文，注意命名格式
+│   ├── 2016-09-15-mid-moon-fest.md
+│   ├── 2016-09-16-happy-day.md
+│   ├── 2016-09-17-build-blog.md
+│   └── 2016-09-17-reservoir-sampling.md
+├── about.md # about页面的数据
+├── archive.md # archive页面的数据
+├── css # 这个不用管，基本是一些额外功能的样式表，如代码高亮、latex公式等。
+│   ├── backtop.css
+│   ├── bootstrap.css
+│   ├── bootstrap.min.css
+│   ├── clean-blog.css
+│   ├── clean-blog.min.css
+│   └── syntax.css
+├── feed.xml
+├── fonts # 字体，不用管
+│   ├── glyphicons-halflings-regular.eot
+│   ├── glyphicons-halflings-regular.svg
+│   ├── glyphicons-halflings-regular.ttf
+│   ├── glyphicons-halflings-regular.woff
+│   └── glyphicons-halflings-regular.woff2
+├── img # 存放图片资源文件
+│   ├── Back-Top_Arrow.png
+│   ├── black.jpg
+│   ├── blue.jpg
+│   ├── dolphin.gif
+│   ├── facebook.jpg
+│   ├── favicon.ico
+│   ├── favicon.png
+│   ├── green.jpg
+│   ├── orange.jpg
+│   ├── red.jpg
+│   ├── semantic.jpg
+│   ├── skyhigh.ico
+│   ├── skyhigh1107.jpg
+│   ├── twitter.jpg
+│   └── zhihu.jpg
+├── index.html # 博客的主页
+├── js
+│   ├── backtop.js
+│   ├── bootstrap.js
+│   ├── bootstrap.min.js
+│   ├── clean-blog.js
+│   ├── clean-blog.min.js
+│   ├── jquery.js
+│   └── jquery.min.js
+├── less
+│   ├── clean-blog.less
+│   ├── mixins.less
+│   └── variables.less
+├── mkblog.sh # 我自己写的创建博客的脚本，注意创建的博文文件命名方式以及开头的信息说明
+├── package.json
+├── tags.md # tags页面的数据
+├── upload.sh # 我自己写的上传博文的脚本
+└── zone.md # zone页面的数据
+```
 
-上面没注释的可以不用管，不妨碍使用。主要的几个文件的说明：
 
-* _config.yml：保存配置，该配置将影响jekyll构造网站的各种行为。
-* _includes：该目录下的文件可以用来作为公共的内容被其他文章引用，就跟C语言include头文件的机制完全一样，jekyll在解析时会对{% include %}标记扩展成对应的在_includes文件夹中的文件。
-* _layouts：该目录下的文件作为主要的模板文件。
-* _posts：文章或网页应当放在这个目录中，但需要注意的是，文章的文件名必须是YYYY-MM-DD-title，里面可以放html文件，也可以放markdown文件。
-* _site：这是jekyll默认的转化结果存放的目录，我的模板里没用到。
-* assets：这个目录没有强制的要求，主要目的是存放你的资源文件，图片、样式表、脚本等，我的模板里没用到。
-
-### 4.注册、解析与绑定域名（可选）
-
-关于域名的科普，请戳[这里](http://www.pchou.info/ssgithubPage/2013-01-05-build-github-blog-page-03.html)。
-
-可以到[dnspod](https://www.dnspod.cn/)或者[godaddy](https://sg.godaddy.com/zh)上购买域名，不过好像dnspod购买类似.com或.cn的域名还需要实名认证，需要审核材料等，比较浪费时间，可以直接在godaddy上购买域名，不用繁琐的步骤即可使用。
-
-购买域名后，需要对域名进行解析，解析的目的是把你的域名放到dns服务器上，这样你在浏览器中输入网址的时候才能够响应。但是如何才能够和github上的地址关联起来呢？可以在域名解析页面配置如下（图片截取自我在dnspod购买的域名解析网页）：
-
-![域名解析](http://odjt9j2ec.bkt.clouddn.com/%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90.png)
-
-之后就是修改上面说的CNAME了，把你的域名写入CNAME即可。
 
 
 ### 5.总结
