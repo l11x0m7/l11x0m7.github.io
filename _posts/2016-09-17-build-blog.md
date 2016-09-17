@@ -39,9 +39,9 @@ git push -u origin master # 将本地代码仓库同步到线上
 
 ### 2.创建/导入Jekyll模板
 
-1. 自行创建Jekyll项目，可以参考[一步步在GitHub上创建博客主页](http://www.pchou.info/ssgithubPage/2013-01-03-build-github-blog-page-01.html)。
+* 自行创建Jekyll项目，可以参考[一步步在GitHub上创建博客主页](http://www.pchou.info/ssgithubPage/2013-01-03-build-github-blog-page-01.html)。
 
-2. 直接fork别人的Jekyll模板。我用的是[这里](https://github.com/cnfeat/blog.io)的模板。将fork到自己账号下的模板（项目里的所有内容）全都复制到我们上面创建的项目里。
+* 直接fork别人的Jekyll模板。我用的是[这里](https://github.com/cnfeat/blog.io)的模板。将fork到自己账号下的模板（项目里的所有内容）全都复制到我们上面创建的项目里。
 
 然后直接登录`https://username.github.io`即可看到一个成熟的独立博客啦！
 
@@ -136,3 +136,20 @@ jekyll是一个基于ruby开发的，专用于构建静态网站的程序。它�
 * _site：这是jekyll默认的转化结果存放的目录，我的模板里没用到。
 * assets：这个目录没有强制的要求，主要目的是存放你的资源文件，图片、样式表、脚本等，我的模板里没用到。
 
+### 4.注册、解析与绑定域名（可选）
+
+关于域名的科普，请戳[这里](http://www.pchou.info/ssgithubPage/2013-01-05-build-github-blog-page-03.html)。
+
+可以到[dnspod](https://www.dnspod.cn/)或者[godaddy](https://sg.godaddy.com/zh)上购买域名，不过好像dnspod购买类似.com或.cn的域名还需要实名认证，需要审核材料等，比较浪费时间，可以直接在godaddy上购买域名，不用繁琐的步骤即可使用。
+
+购买域名后，需要对域名进行解析，解析的目的是把你的域名放到dns服务器上，这样你在浏览器中输入网址的时候才能够响应。但是如何才能够和github上的地址关联起来呢？可以在域名解析页面配置如下（图片截取自我在dnspod购买的域名解析网页）：
+
+![域名解析](http://odjt9j2ec.bkt.clouddn.com/%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90.png)
+
+之后就是修改上面说的CNAME了，把你的域名写入CNAME即可。
+
+
+### 5.总结
+虽然这篇博客写的比较粗浅，但是把主要的步骤都说明了一下，并贴出了具体的链接。总的来说，使用github来搭建博客，功能不会像WordPress那样强大，或者是自己购买服务器搭建web服务那样灵活。但是正是因为有很多内容与机制都被Jekyll封装起来了，我们也没必要花费太大的精力在里面，毕竟我们主要的目的是用它来存放我们平时写的博客嘛，哈哈。因此省去了后端的操作，以及直接使用前端的模板，这样就把整个过程的工作量大大降低了，我们要做的就是了解流程和原理，知道如何去修改和配置文件以达到我们想要的目的。关于功能的扩建，比如站内搜索、流量统计等，如果需要的话，也是可以加进去的，这里就不赘述了。
+
+希望这篇文章对大家有用。谢谢！！
