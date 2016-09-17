@@ -11,7 +11,7 @@ description: 水库采样
 
 > Reservoir sampling is a family of randomized algorithms for randomly choosing a sample of k items from a list S containing n items, where n is either a very large or unknown number. Typically n is large enough that the list doesn't fit into main memory.
 
->——Wiki
+> ——Wiki
 
 存储采样是指从一个包含n个对象的列表S中随机抽取出k个对象作为样本，n要么很大要么未知。典型的n通常大到无法将整个列表存入主内存。
 
@@ -20,7 +20,7 @@ description: 水库采样
 假设有n个对象，我们要从中等概选取k个对象，步骤如下：
 
 * 先将第一个对象放入内存，即选中该对象
-* 对每一个后面的对象<span>$$$i$$$</span>
+* 对每一个后面的对象i
 	* 有1/i的概率会用新值覆盖旧的值
 	* 有1-1/i的概率会丢弃新的值
 * 根据上面的情况，如果总共有k个对象，那么
