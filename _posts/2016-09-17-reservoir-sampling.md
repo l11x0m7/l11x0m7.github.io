@@ -51,36 +51,5 @@ solution.pick(1);
 ```
 
 
-{% highlight c++ linenos %}
-class Solution {
-public:
-    vector<int> nums;
-    Solution(vector<int> nums) {
-        this->nums = nums;
-        srand(NULL);
-    }
-    int pick(int target) {
-        int cnt = 0;
-        int ind = -1;
-        for(int i=0;i<nums.size();i++){
-            if(nums[i]==target){
-                cnt++;
-                if(ind==-1)
-                    ind = i;
-                else if(rand()%cnt==0)
-                    ind = i;
-            }
-        }
-        return ind;
-    }
-    };
-/**
- \* Your Solution object will be instantiated and called as such:
- \* Solution obj = new Solution(nums);
- \* int param_1 = obj.pick(target);
- \*/
-{% highlight c++ linenos %}
 
-上面这题其实就是考虑如何从n中随机取出某个值为target的下标，可以按照Reservoir Sampling的思路计算。
-> 注：此时我们假设C++中的rand()%n函数是完全随机的，实则不是。因为rand()是一个有上限的数，它会令小一些的数更高概率出现。
 
