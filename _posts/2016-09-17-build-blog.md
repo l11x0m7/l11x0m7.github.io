@@ -146,7 +146,11 @@ jekyll是一个基于ruby开发的，专用于构建静态网站的程序。它�
 
 <img src="http://odjt9j2ec.bkt.clouddn.com/%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90.png">
 
-之后就是修改上面说的CNAME了，把你的域名写入CNAME即可。
+如果上面添加的A记录（域名绑定IP）不能生效，则可以添加一条CNAME记录（域名绑定域名）。格式为：
+
+主机记录：@	记录类型：CNAME	记录值：username.github.io
+
+之后就是修改上面说你的github项目里的CNAME（这里的CNAME文件是要和域名解析时填写的记录对应）了，把你的域名写入CNAME文件即可。比如我的CNAME文件里写的是：[skyhigh233.com](skyhigh233.com)。
 
 
 ### 5.总结
