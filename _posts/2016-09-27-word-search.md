@@ -14,6 +14,7 @@ description: 两个词搜索的例子与Trie树
 Trie树是一种比较简单的字典树，它通过前缀来构造单词的路径。当搜索一个单词的时候可以从根节点出发，一直找到单词节点（可以使用一个变量来标定）。如果该单词能够找到单词节点，那么说明这个词在字典里，否则不在（单词未搜索完或者搜索完但是未达到单词节点）。
 
 如果字典里的字都是由小写字母构成（26个），那么可以使用如下数据结构：
+
 ```cpp
 struct TreeNode{
         bool isword;
@@ -26,9 +27,9 @@ struct TreeNode{
 ```
 
 其中，每个变量的含义如下：
-* isword：判定是否为一个单词节点（即单词搜索到此处是否可以形成一个单词）
-* word：如果是一个单词节点，则把该单词存入到word里
-* next：表示下一个字母，共26种可能，'a'到'z'
+* isword：判定是否为一个单词节点（即单词搜索到此处是否可以形成一个单词）;
+* word：如果是一个单词节点，则把该单词存入到word里;
+* next：表示下一个字母，共26种可能，'a'到'z'.
 
 ### 词搜索
 
@@ -47,9 +48,7 @@ struct TreeNode{
 
 单词可以由按顺序的相邻单元的字母组成，其中相邻单元指的是水平或者垂直方向相邻。每个单元中的字母最多只能使用一次。
 
-```
 
-```
 给出board =
 
 [
@@ -62,12 +61,14 @@ struct TreeNode{
 
 ]
 
-word = "ABCCED"， ->返回 true,
+word = **"ABCCED"**， ->返回 true,
 
-word = "SEE"，-> 返回 true,
+word = **"SEE"**，-> 返回 true,
 
-word = "ABCB"， -> 返回 false.
+word = **"ABCB"**， -> 返回 false.
 ```
+
+我的代码如下：
 
 ```cpp
 class Solution {
@@ -140,23 +141,24 @@ dcan
 
 
 dog:
-doaf
-agai
+**do**af
+a**g**ai
 dcan
 dad:
-doaf
-agai
-dcan
+**d**oaf
+**a**gai
+**d**can
 can:
 doaf
 agai
-dcan
+d**can**
 again:
 doaf
-agai
-dcan
+**agai**
+dca**n**
 ```
 
+我的代码如下：
 
 ```cpp
 class Solution {
