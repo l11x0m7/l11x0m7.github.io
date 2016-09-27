@@ -142,20 +142,35 @@ dcan
 ```
 
 dog:
+
 **do**af
+
 a**g**ai
+
 dcan
+
 dad:
+
 **d**oaf
+
 **a**gai
+
 **d**can
+
 can:
+
 doaf
+
 agai
+
 d**can**
+
 again:
+
 doaf
+
 **agai**
+
 dca**n**
 
 
