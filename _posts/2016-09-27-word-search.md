@@ -141,37 +141,23 @@ dcan
 返回 {"dog", "dad", "can", "again"}
 ```
 
-dog:
-
-**do**af<br/>
-a**g**ai
-
-dcan
-
-dad:
-
-**d**oaf
-
-**a**gai
-
-**d**can
-
-can:
-
-doaf
-
-agai
-
-d**can**
-
-again:
-
-doaf
-
-**agai**
-
-dca**n**
-
+dog:  
+**do**af  
+a**g**ai  
+dcan  
+dad:  
+**d**oaf  
+**a**gai  
+**d**can  
+can:  
+doaf  
+agai  
+d**can**  
+again:  
+doaf  
+**agai**  
+dca**n**  
+```
 
 我的代码如下：
 
