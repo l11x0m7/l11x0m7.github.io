@@ -62,11 +62,11 @@ struct TreeNode{
 
 ]
 
-word = **"ABCCED"**， ->返回 true,
+word = "ABCCED"， ->返回 true,
 
-word = **"SEE"**，-> 返回 true,
+word = "SEE"，-> 返回 true,
 
-word = **"ABCB"**， -> 返回 false.
+word = "ABCB"， -> 返回 false.
 ```
 
 我的代码如下：
@@ -139,7 +139,7 @@ dcan
 {"dog", "dad", "dgdg", "can", "again"}
 
 返回 {"dog", "dad", "can", "again"}
-
+```
 
 dog:
 **do**af
@@ -157,7 +157,7 @@ again:
 doaf
 **agai**
 dca**n**
-```
+
 
 我的代码如下：
 
