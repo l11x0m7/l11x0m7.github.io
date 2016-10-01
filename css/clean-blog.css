@@ -383,6 +383,18 @@ footer .copyright a:hover,
 footer .copyright a:focus {
   color: #44bff2;
 }
+footer .usedwebsite {
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 0;
+}
+footer .usedwebsite a {
+  color: #999999;
+}
+footer .usedwebsite a:hover,
+footer .usedwebsite a:focus {
+  color: #44bff2;
+}
 .floating-label-form-group {
   font-size: 14px;
   position: relative;
