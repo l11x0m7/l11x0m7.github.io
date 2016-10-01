@@ -395,6 +395,10 @@ footer .usedwebsite a:hover,
 footer .usedwebsite a:focus {
   color: #999999;
 }
+footer .search {
+  text-align: center;
+  margin:0 auto;
+}
 .floating-label-form-group {
   font-size: 14px;
   position: relative;
