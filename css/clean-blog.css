@@ -396,7 +396,7 @@ footer .usedwebsite a:focus {
   color: #999999;
 }
 footer .search {
-  text-align: center;
+  text-align: right;
   margin-bottom: 0;
 }
 .floating-label-form-group {
