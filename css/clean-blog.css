@@ -384,7 +384,7 @@ footer .copyright a:focus {
   color: #44bff2;
 }
 footer .usedwebsite {
-  font-size: 20px;
+  font-size: 14px;
   text-align: center;
   margin-bottom: 0;
 }
@@ -393,7 +393,7 @@ footer .usedwebsite a {
 }
 footer .usedwebsite a:hover,
 footer .usedwebsite a:focus {
-  color: #44bff2;
+  color: #999999;
 }
 .floating-label-form-group {
   font-size: 14px;
