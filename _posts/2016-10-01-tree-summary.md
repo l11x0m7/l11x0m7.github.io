@@ -346,6 +346,52 @@ public:
 };
 ```
 
+#### 非递归的方法
+
+思路：其实可以考虑从根节点出发，先将所有左节点存入栈中，之后通过中序遍历判定最后一个左节点是否存在右孩子（不存在的话，那么此时栈顶元素的值等于当前中序遍历的值），如果没有，则回溯（pop），直到找到有右孩子的节点为止。比如上面的例子中：  
+前序遍历：a=[1,2,4,6,5,3]  
+中序遍历：b=[4,6,2,5,1,3]  
+一开始存入栈中的有[1,2,4]，此时栈顶元素4==b[0]，则pop出4，之后再判定4之后的6是否是栈顶元素，即2!=6==b[1]，所以此时6为2的右孩子，将其存入栈中。
+如果删除元素6，则：  
+前序遍历：a=[1,2,4,5,3]  
+中序遍历：b=[4,2,5,1,3]  
+一开始存入栈中的有[1,2,4]，此时栈顶元素4==b[0]，则pop出4，之后再判定4之后的2是否是栈顶元素，即2==2==b[1]，所以此时2为父节点，直接再pop出去，再判定栈顶元素1，可知1!=5==b[3]，所以5是2的右孩子，将其存入栈中。  
+如此对前序遍历循环即可求解。
+
+
+```cpp
+class Solution {
+public:
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        int len = preorder.size();
+        if(len<1)
+            return NULL;
+        stack<TreeNode*> s;
+        int i = 1, j = 0;
+        TreeNode* root = new TreeNode(preorder[0]);
+        s.push(root);
+        for(;i<len;i++){
+            TreeNode* cur = s.top();
+            if(cur->val==inorder[j]){
+                while(!s.empty()&&s.top()->val==inorder[j]){
+                    cur = s.top();
+                    s.pop();
+                    j++;
+                }
+                if(i<len){
+                    cur->right = new TreeNode(preorder[i]);
+                    s.push(cur->right);
+                }
+            }
+            else{
+                cur->left = new TreeNode(preorder[i]);
+                s.push(cur->left);
+            }
+        }
+        return root;
+    }
+```
+
 ### 已知中序遍历和后续遍历，构造二叉树
 
 #### 思路
@@ -383,6 +429,43 @@ public:
         return cur;
     }
 };
+```
+
+#### 非递归的方法
+
+思路：和上面的一样，只不过是要倒过来（同时把中序和后序倒过来）
+
+```cpp
+class Solution {
+public:
+    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+        int len = inorder.size();
+        if(len<1)
+            return NULL;
+        stack<TreeNode*> s;
+        int i = len-2,j = len-1;
+        TreeNode* root = new TreeNode(postorder[len-1]);
+        s.push(root);
+        for(;i>=0;i--){
+            TreeNode* cur = s.top();
+            if(cur->val==inorder[j]){
+                while(!s.empty()&&s.top()->val==inorder[j]){
+                    cur = s.top();
+                    s.pop();
+                    j--;
+                }
+                if(j>=0){
+                    cur->left = new TreeNode(postorder[i]);
+                    s.push(cur->left);
+                }
+            }
+            else{
+                cur->right = new TreeNode(postorder[i]);
+                s.push(cur->right);
+            }
+        }
+        return root;
+    }
 ```
 
 > 注：不能够通过前序和后续构造，因为前序和后序是等价的，只能够区分根节点和非根节点，无法区分左右子树。
