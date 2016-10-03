@@ -3,7 +3,7 @@ layout: post
 title: 树结构算法总结(1) 二叉树的遍历
 date: 2016-10-01 
 categories: blog 
-tags: [tree, lintcode] 
+tags: [算法, lintcode] 
 description: 总结树结构的算法
 --- 
 
