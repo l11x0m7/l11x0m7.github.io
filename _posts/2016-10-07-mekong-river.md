@@ -7,15 +7,11 @@ tags: [影评]
 description: 影评
 --- 
 
-![湄公河行动](http://b.hiphotos.baidu.com/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=529c869ec7fc1e17e9b284632bf99d66/1e30e924b899a9015d3d6abe15950a7b0208f529.jpg)  
+![湄公河行动](http://img1.icswb.com/newspaper_article/36079/57f2a2906efce_watermark1.jpg)  
 **湄公河行动**
 
-![张涵予](http://h.hiphotos.baidu.com/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=44c09093dc0735fa85fd46ebff3864d6/b219ebc4b74543a96dfec84416178a82b8011454.jpg)  
-**张涵予**
-
-![彭于晏](http://d.hiphotos.baidu.com/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=ed2ea057c61b9d169eca923392b7dfea/9d82d158ccbf6c811be21e60b43eb13532fa4064.jpg)  
-**彭于晏**
-
+![张涵予与彭于晏](http://ww4.sinaimg.cn/orj480/71a32d43jw1f8hraumztqj20du0kun0b.jpg)  
+**张涵予与彭于晏**
 
 ### 影评
 
@@ -31,7 +27,7 @@ description: 影评
 
 ![](http://www.86kx.com/uploads/allimg/161007/2306_161007165302_1.jpg)
 
-![](http://b.hiphotos.baidu.com/baike/c0%3Dbaike80%2C5%2C5%2C80%2C26/sign=1359df18908fa0ec6bca6c5f47fe328b/2cf5e0fe9925bc312de91cb35fdf8db1cb137060.jpg)  
+![](http://stock.591hx.com/images/hnimg/201207/06/71/13446438954428505927.jpg)  
 **电影人物——糯卡（上），对应真实人物——糯康（下）**
 
 这部电影里有很多大尺度的镜头（嗯，并不是那种镜头），要不是公安部特批，我估计这部能够划到R18的电影能够在影院上线才有鬼咧。其中比较让我印象深刻三个镜头，一个是商场战里小孩拿机枪扫射行动组组员“大师”，另一个是两个小孩玩俄罗斯轮盘并给了一个小孩输掉的镜头，最后同样是一个小孩带着炸药溜进缉毒厅，将整个部门夷为平地。之所以印象深刻，是因为这种儿童死亡的镜头本就不应该呈现的观众眼前。也许导演是想告诉我们，事实就是如此，它残酷，血淋淋，而你，无可奈何。同时，这种将小孩子作为武器来培养的不人道行为，也和行动组的人的行为形成鲜明的对比，比如“大师”在看到忽然在转角出现的小孩，他并没有下意识去躲避，因为在他心里，孩子都是天使，只是有些不幸堕落了。还有就是最后的搜捕行动中，高刚表示确保不让孩子受伤。  
