@@ -23,7 +23,7 @@ header-img: "img/green.jpg"
 
 ### 关注
 
-github主页:(林旭鸣的Github)[https://github.com/l11x0m7]
+github主页:[林旭鸣的Github](https://github.com/l11x0m7)
 
 ### 代表作
 
