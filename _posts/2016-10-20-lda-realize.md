@@ -40,7 +40,7 @@ $$p(z_i=k|\overrightarrow z_{\neg i}, \overrightarrow w)\propto\frac{n^{(k)}_{m,
 其中：  
 $n^{(k)}_{m,\neg i}$表示文档m中主题为k的词数（不包含当前词i）  
 
-$\sum^K_{k=1}n_{m,\neg i}^{(t)}$表示文档m的总词数（不包含当前词i）  
+$\sum^K_{k=1}n_{m,\neg i}^{(k)}$表示文档m的总词数（不包含当前词i）  
 
 $n^{(t)}_{k,\neg i}$表示主题k下词汇t的词频（不包含当前词i）  
 
