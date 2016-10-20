@@ -35,12 +35,15 @@ LDA模型（Latent Dirichlet Model）用于寻找多个文档内存在的多个�
 LDA的算法是基于Gibbs Sampling算法的，Gibbs Sampling算法又是基于MCMC的。LDA的目的是获得满足w和z的联合分布的样本点（词的主题）。而Gibbs Sampling就是通过迭代某个维度的条件概率（每个维度对应某个文档的某个位置的词）获得平稳状态，而这平稳状态的分布即这条件概率对应的联合概率。所以我们可以通过这种方法，得到稳定分布的样本点。  
 我们需要迭代的条件分布为：
 
-$$p(z_i=k|\overrightarrow z_{\neg i}, \overrightarrow w)\propto\frac{n^{(k)}_{m,\neg i}+\alpha_k}{\sum^K_{k=1}(n_{m,\neg i}^{(t)}+\alpha_k)}*\frac{n^{(t)}_{k,\neg i}+\beta_t}{\sum^V_{t=1}(n_{k,\neg i}^{(t)}+\beta_t)}=\frac{n^{(k)}_{m,\neg i}+\alpha_k}{\sum^K_{k=1}n_{m,\neg i}^{(t)}+\sum^K_{k=1}\alpha_k}*\frac{n^{(t)}_{k,\neg i}+\beta_t}{\sum^V_{t=1}n_{k,\neg i}^{(t)}+\sum^V_{t=1}\beta_t}$$
+$$p(z_i=k|\overrightarrow z_{\neg i}, \overrightarrow w)\propto\frac{n^{(k)}_{m,\neg i}+\alpha_k}{\sum^K_{k=1}(n_{m,\neg i}^{(k)}+\alpha_k)}*\frac{n^{(t)}_{k,\neg i}+\beta_t}{\sum^V_{t=1}(n_{k,\neg i}^{(t)}+\beta_t)}=\frac{n^{(k)}_{m,\neg i}+\alpha_k}{\sum^K_{k=1}n_{m,\neg i}^{(k)}+\sum^K_{k=1}\alpha_k}*\frac{n^{(t)}_{k,\neg i}+\beta_t}{\sum^V_{t=1}n_{k,\neg i}^{(t)}+\sum^V_{t=1}\beta_t}$$
 
 其中：  
 $n^{(k)}_{m,\neg i}$表示文档m中主题为k的词数（不包含当前词i）  
+
 $\sum^K_{k=1}n_{m,\neg i}^{(t)}$表示文档m的总词数（不包含当前词i）  
+
 $n^{(t)}_{k,\neg i}$表示主题k下词汇t的词频（不包含当前词i）  
+
 $\sum^V_{t=1}n_{k,\neg i}^{(t)}$表示主题k的总词数（不包含当前词i）
 
 在给出代码前，需要注意：
