@@ -46,6 +46,10 @@ $n^{(t)}_{k,\neg i}$表示主题k下词汇t的词频（不包含当前词i）
 
 $\sum^V_{t=1}n_{k,\neg i}^{(t)}$表示主题k的总词数（不包含当前词i）
 
+预测公式：
+
+$$p(z_i=k|\overrightarrow z_{\neg i}, \overrightarrow w)\propto\frac{new\_n^{(k)}_{m,\neg i}+\alpha_k}{\sum^K_{k=1}new\_n_{m,\neg i}^{(k)}+\sum^K_{k=1}\alpha_k}*\frac{train\_n{(t)}_{k,i}+new\_n^{(t)}_{k,\neg i}+\beta_t}{\sum^V_{t=1}train\_n_{k,i}^{(t)}+new\_n_{k,\neg i}^{(t)}+\sum^V_{t=1}\beta_t}$$
+
 在给出代码前，需要注意：
 
 * 一篇文档对应多个词，多个主题
@@ -55,8 +59,11 @@ $\sum^V_{t=1}n_{k,\neg i}^{(t)}$表示主题k的总词数（不包含当前词i�
 
 ## 代码
 
-下面给出完整的代码，注释已给出。代码地址为：  
+下面给出完整的代码，注释已给出。数据和代码地址为：  
 [l11x0m7.github:LDA](https://github.com/l11x0m7/LDA)
+
+语料库数据：  
+社会新闻20篇，军事新闻18篇，国际新闻20篇。共58篇文档。
 
 ```python
 # -*- encoding:utf-8 -*-
@@ -71,7 +78,7 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 # 新闻爬虫
-# 爬取新闻的内容有:社会新闻20篇,军事新闻20篇,国际新闻20篇
+# 爬取新闻的内容有:社会新闻20篇,军事新闻18篇,国际新闻20篇
 class NewsScrapy():
     def __init__(self):
         user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.54 Safari/536.5'
@@ -460,3 +467,411 @@ if __name__ == '__main__':
         top_words = '\t'.join(top_words)
         print 'topic{0}\t{1}'.format(topic, top_words)
 ```
+
+## 测试结果
+
+### 每个话题的top20的词
+
+```
+topic0	投票	日本	总统	学生	提供	美国	发生	展示	希望	亿美元	时间	文莱	维生素	希特勒	政策	此事	资产	管理	男孩	土地
+topic1	中国	美国	许某	旅客	乘坐	靖国神社	发展	对象	访问	候选人	车辆	并未	情况	事故	实施	两名	日本	紧急	网友	亿美元
+topic2	中国	时间	美国	公司	出租车	之间	选择	有人	情况	朝鲜	特朗普	一名	发展	减轻	女孩	形势	时期	洗澡	举办	流落
+topic3	中国	日本	中心	支持	杜特	正式	总统	航空	接受	地区	王室	民警	美国	基地	发生	咪咪	土地	人员	当天	收银员
+topic4	美国	中国	日本	意大利	民警	军机	征兵	关系	提升	王室	提出	第一	引发	女子	咪咪	树上	导致	安德森	中午	公司
+topic5	中国	参拜	记者	投票	活动	国家	目的	情况	孟茹	新纳粹	之间	费用	车道	提出	各国	奥巴马	媒体	合作	发生	接受
+topic6	日本	美国	总统	投票	候选人	朝鲜	增加	伊拉克	发布	没想到	账号	国家	提供	对此	领空	医院	计划	民警	许某	未来
+topic7	中国	日本	记者	海外	国家	美国	学生	方式	总统	集团	公司	资料	女士	前往	出口	外交部	飞机	战略	警察	实在
+topic8	中国	日本	总统	公司	泰国	选举人	菲律宾	支持	三国	美国	两人	目标	孩子	纪律	罗纳德	地铁	标题	王室	医院	自民党
+topic9	美国	学生	候选人	记者	泰国	正式	女性	军队	老人	特朗普	王室	发现	基地	总统	许某	日本	选择	俄罗斯	飞机	做法
+topic10	记者	奥巴马	中国	民警	时间	学生	协议	日本	泰国	发现	标题	波音	孩子	时期	展开	情况	榆林市	检查	货车	屯田
+topic11	中国	美国	大选	男子	一名	资源	盗窃	学生	日本政府总统	事发	对此	日本	时间	发生	记者	现场	有人	网站	儿子
+topic12	美国	家长	日本	学生	商品	苏富比	男子	国王	情况	发现	期间	一点	人员	数量	靖国神社	议员	包括	犯罪	这是	驾驶
+topic13	总统	网友	中国	日本	作用	影响	男子	时间	标题	基地	特朗普	阮志	位于	战争	实际上	下午	三名	收入	靖国神社发布
+topic14	美国	日本	全球	波音	泰国	总统	参拜	战斗机	菲律宾	中心	孩子	国际	建立	影响	资产	奥巴马	增加	日本政府	关系	投票
+topic15	中国	美国	日本	记者	老王	王室	投票	网友	司机	政治	三星	公司	监控	介绍	华商报	系统	确实	两个	最终	真的
+topic16	日本	中国	美国	记者	男子	调查	市场	训练	经济	财富	当天	民警	相关	分析	危险	希望	媒体	关系	发现	国防部
+topic17	日本	美国	总统	中国	男子	告诉	王室	费用	死亡	时间	超过	菲律宾	欧洲	奥巴马	记者	特朗普	民警	遭受	位于	公司
+topic18	中国	发现	一名	日本	公司	泰国	经济	国会	尔特	总统	约合	孩子	下午	火枪	为例	特朗普	中国日报	条件	学生	发言人
+topic19	中国	王室	美国	日本	泰国	靖国神社	安装	食物	三国	小区	接近	项目	家长	男子	学生	全球	巴基斯坦	进一步	军队	巴尔
+```
+
+### 每篇文档的top5 topics中的top5 words
+
+```
+document0:
+topic19	中国	王室	美国	日本	泰国
+topic14	美国	日本	全球	波音	泰国
+topic3	中国	日本	中心	支持	杜特
+topic7	中国	日本	记者	海外	国家
+topic18	中国	发现	一名	日本	公司
+document1:
+topic18	中国	发现	一名	日本	公司
+topic19	中国	王室	美国	日本	泰国
+topic17	日本	美国	总统	中国	男子
+topic15	中国	美国	日本	记者	老王
+topic8	中国	日本	总统	公司	泰国
+document2:
+topic16	日本	中国	美国	记者	男子
+topic11	中国	美国	大选	男子	一名
+topic0	投票	日本	总统	学生	提供
+topic10	记者	奥巴马	中国	民警	时间
+topic15	中国	美国	日本	记者	老王
+document3:
+topic7	中国	日本	记者	海外	国家
+topic9	美国	学生	候选人	记者	泰国
+topic13	总统	网友	中国	日本	作用
+topic16	日本	中国	美国	记者	男子
+topic11	中国	美国	大选	男子	一名
+document4:
+topic12	美国	家长	日本	学生	商品
+topic1	中国	美国	许某	旅客	乘坐
+topic4	美国	中国	日本	意大利	民警
+topic6	日本	美国	总统	投票	候选人
+topic10	记者	奥巴马	中国	民警	时间
+document5:
+topic19	中国	王室	美国	日本	泰国
+topic0	投票	日本	总统	学生	提供
+topic9	美国	学生	候选人	记者	泰国
+topic15	中国	美国	日本	记者	老王
+topic6	日本	美国	总统	投票	候选人
+document6:
+topic19	中国	王室	美国	日本	泰国
+topic15	中国	美国	日本	记者	老王
+topic10	记者	奥巴马	中国	民警	时间
+topic7	中国	日本	记者	海外	国家
+topic13	总统	网友	中国	日本	作用
+document7:
+topic8	中国	日本	总统	公司	泰国
+topic3	中国	日本	中心	支持	杜特
+topic4	美国	中国	日本	意大利	民警
+topic19	中国	王室	美国	日本	泰国
+topic2	中国	时间	美国	公司	出租车
+document8:
+topic16	日本	中国	美国	记者	男子
+topic15	中国	美国	日本	记者	老王
+topic8	中国	日本	总统	公司	泰国
+topic0	投票	日本	总统	学生	提供
+topic3	中国	日本	中心	支持	杜特
+document9:
+topic0	投票	日本	总统	学生	提供
+topic6	日本	美国	总统	投票	候选人
+topic4	美国	中国	日本	意大利	民警
+topic10	记者	奥巴马	中国	民警	时间
+topic17	日本	美国	总统	中国	男子
+document10:
+topic5	中国	参拜	记者	投票	活动
+topic7	中国	日本	记者	海外	国家
+topic3	中国	日本	中心	支持	杜特
+topic19	中国	王室	美国	日本	泰国
+topic14	美国	日本	全球	波音	泰国
+document11:
+topic2	中国	时间	美国	公司	出租车
+topic16	日本	中国	美国	记者	男子
+topic17	日本	美国	总统	中国	男子
+topic10	记者	奥巴马	中国	民警	时间
+topic3	中国	日本	中心	支持	杜特
+document12:
+topic1	中国	美国	许某	旅客	乘坐
+topic11	中国	美国	大选	男子	一名
+topic7	中国	日本	记者	海外	国家
+topic6	日本	美国	总统	投票	候选人
+topic0	投票	日本	总统	学生	提供
+document13:
+topic4	美国	中国	日本	意大利	民警
+topic19	中国	王室	美国	日本	泰国
+topic7	中国	日本	记者	海外	国家
+topic1	中国	美国	许某	旅客	乘坐
+topic13	总统	网友	中国	日本	作用
+document14:
+topic2	中国	时间	美国	公司	出租车
+topic7	中国	日本	记者	海外	国家
+topic1	中国	美国	许某	旅客	乘坐
+topic6	日本	美国	总统	投票	候选人
+topic0	投票	日本	总统	学生	提供
+document15:
+topic16	日本	中国	美国	记者	男子
+topic3	中国	日本	中心	支持	杜特
+topic19	中国	王室	美国	日本	泰国
+topic1	中国	美国	许某	旅客	乘坐
+topic15	中国	美国	日本	记者	老王
+document16:
+topic7	中国	日本	记者	海外	国家
+topic1	中国	美国	许某	旅客	乘坐
+topic12	美国	家长	日本	学生	商品
+topic0	投票	日本	总统	学生	提供
+topic17	日本	美国	总统	中国	男子
+document17:
+topic19	中国	王室	美国	日本	泰国
+topic15	中国	美国	日本	记者	老王
+topic2	中国	时间	美国	公司	出租车
+topic0	投票	日本	总统	学生	提供
+topic9	美国	学生	候选人	记者	泰国
+document18:
+topic1	中国	美国	许某	旅客	乘坐
+topic2	中国	时间	美国	公司	出租车
+topic10	记者	奥巴马	中国	民警	时间
+topic9	美国	学生	候选人	记者	泰国
+topic3	中国	日本	中心	支持	杜特
+document19:
+topic9	美国	学生	候选人	记者	泰国
+topic2	中国	时间	美国	公司	出租车
+topic18	中国	发现	一名	日本	公司
+topic4	美国	中国	日本	意大利	民警
+topic19	中国	王室	美国	日本	泰国
+document20:
+topic10	记者	奥巴马	中国	民警	时间
+topic1	中国	美国	许某	旅客	乘坐
+topic13	总统	网友	中国	日本	作用
+topic0	投票	日本	总统	学生	提供
+topic5	中国	参拜	记者	投票	活动
+document21:
+topic10	记者	奥巴马	中国	民警	时间
+topic15	中国	美国	日本	记者	老王
+topic13	总统	网友	中国	日本	作用
+topic17	日本	美国	总统	中国	男子
+topic4	美国	中国	日本	意大利	民警
+document22:
+topic6	日本	美国	总统	投票	候选人
+topic2	中国	时间	美国	公司	出租车
+topic15	中国	美国	日本	记者	老王
+topic7	中国	日本	记者	海外	国家
+topic17	日本	美国	总统	中国	男子
+document23:
+topic19	中国	王室	美国	日本	泰国
+topic4	美国	中国	日本	意大利	民警
+topic18	中国	发现	一名	日本	公司
+topic14	美国	日本	全球	波音	泰国
+topic13	总统	网友	中国	日本	作用
+document24:
+topic5	中国	参拜	记者	投票	活动
+topic19	中国	王室	美国	日本	泰国
+topic2	中国	时间	美国	公司	出租车
+topic3	中国	日本	中心	支持	杜特
+topic12	美国	家长	日本	学生	商品
+document25:
+topic2	中国	时间	美国	公司	出租车
+topic12	美国	家长	日本	学生	商品
+topic8	中国	日本	总统	公司	泰国
+topic10	记者	奥巴马	中国	民警	时间
+topic14	美国	日本	全球	波音	泰国
+document26:
+topic13	总统	网友	中国	日本	作用
+topic10	记者	奥巴马	中国	民警	时间
+topic9	美国	学生	候选人	记者	泰国
+topic18	中国	发现	一名	日本	公司
+topic8	中国	日本	总统	公司	泰国
+document27:
+topic10	记者	奥巴马	中国	民警	时间
+topic12	美国	家长	日本	学生	商品
+topic17	日本	美国	总统	中国	男子
+topic0	投票	日本	总统	学生	提供
+topic13	总统	网友	中国	日本	作用
+document28:
+topic17	日本	美国	总统	中国	男子
+topic11	中国	美国	大选	男子	一名
+topic0	投票	日本	总统	学生	提供
+topic14	美国	日本	全球	波音	泰国
+topic16	日本	中国	美国	记者	男子
+document29:
+topic3	中国	日本	中心	支持	杜特
+topic12	美国	家长	日本	学生	商品
+topic1	中国	美国	许某	旅客	乘坐
+topic2	中国	时间	美国	公司	出租车
+topic15	中国	美国	日本	记者	老王
+document30:
+topic2	中国	时间	美国	公司	出租车
+topic4	美国	中国	日本	意大利	民警
+topic8	中国	日本	总统	公司	泰国
+topic12	美国	家长	日本	学生	商品
+topic16	日本	中国	美国	记者	男子
+document31:
+topic3	中国	日本	中心	支持	杜特
+topic13	总统	网友	中国	日本	作用
+topic17	日本	美国	总统	中国	男子
+topic2	中国	时间	美国	公司	出租车
+topic14	美国	日本	全球	波音	泰国
+document32:
+topic6	日本	美国	总统	投票	候选人
+topic8	中国	日本	总统	公司	泰国
+topic0	投票	日本	总统	学生	提供
+topic17	日本	美国	总统	中国	男子
+topic11	中国	美国	大选	男子	一名
+document33:
+topic16	日本	中国	美国	记者	男子
+topic14	美国	日本	全球	波音	泰国
+topic18	中国	发现	一名	日本	公司
+topic3	中国	日本	中心	支持	杜特
+topic5	中国	参拜	记者	投票	活动
+document34:
+topic13	总统	网友	中国	日本	作用
+topic2	中国	时间	美国	公司	出租车
+topic3	中国	日本	中心	支持	杜特
+topic14	美国	日本	全球	波音	泰国
+topic12	美国	家长	日本	学生	商品
+document35:
+topic0	投票	日本	总统	学生	提供
+topic15	中国	美国	日本	记者	老王
+topic2	中国	时间	美国	公司	出租车
+topic16	日本	中国	美国	记者	男子
+topic1	中国	美国	许某	旅客	乘坐
+document36:
+topic9	美国	学生	候选人	记者	泰国
+topic1	中国	美国	许某	旅客	乘坐
+topic6	日本	美国	总统	投票	候选人
+topic13	总统	网友	中国	日本	作用
+topic17	日本	美国	总统	中国	男子
+document37:
+topic17	日本	美国	总统	中国	男子
+topic12	美国	家长	日本	学生	商品
+topic9	美国	学生	候选人	记者	泰国
+topic14	美国	日本	全球	波音	泰国
+topic1	中国	美国	许某	旅客	乘坐
+document38:
+topic1	中国	美国	许某	旅客	乘坐
+topic14	美国	日本	全球	波音	泰国
+topic15	中国	美国	日本	记者	老王
+topic0	投票	日本	总统	学生	提供
+topic16	日本	中国	美国	记者	男子
+document39:
+topic19	中国	王室	美国	日本	泰国
+topic11	中国	美国	大选	男子	一名
+topic14	美国	日本	全球	波音	泰国
+topic3	中国	日本	中心	支持	杜特
+topic17	日本	美国	总统	中国	男子
+document40:
+topic18	中国	发现	一名	日本	公司
+topic2	中国	时间	美国	公司	出租车
+topic10	记者	奥巴马	中国	民警	时间
+topic7	中国	日本	记者	海外	国家
+topic17	日本	美国	总统	中国	男子
+document41:
+topic9	美国	学生	候选人	记者	泰国
+topic10	记者	奥巴马	中国	民警	时间
+topic17	日本	美国	总统	中国	男子
+topic7	中国	日本	记者	海外	国家
+topic16	日本	中国	美国	记者	男子
+document42:
+topic7	中国	日本	记者	海外	国家
+topic1	中国	美国	许某	旅客	乘坐
+topic3	中国	日本	中心	支持	杜特
+topic12	美国	家长	日本	学生	商品
+topic15	中国	美国	日本	记者	老王
+document43:
+topic11	中国	美国	大选	男子	一名
+topic5	中国	参拜	记者	投票	活动
+topic15	中国	美国	日本	记者	老王
+topic2	中国	时间	美国	公司	出租车
+topic6	日本	美国	总统	投票	候选人
+document44:
+topic19	中国	王室	美国	日本	泰国
+topic17	日本	美国	总统	中国	男子
+topic5	中国	参拜	记者	投票	活动
+topic7	中国	日本	记者	海外	国家
+topic16	日本	中国	美国	记者	男子
+document45:
+topic10	记者	奥巴马	中国	民警	时间
+topic0	投票	日本	总统	学生	提供
+topic14	美国	日本	全球	波音	泰国
+topic5	中国	参拜	记者	投票	活动
+topic19	中国	王室	美国	日本	泰国
+document46:
+topic0	投票	日本	总统	学生	提供
+topic19	中国	王室	美国	日本	泰国
+topic15	中国	美国	日本	记者	老王
+topic9	美国	学生	候选人	记者	泰国
+topic6	日本	美国	总统	投票	候选人
+document47:
+topic15	中国	美国	日本	记者	老王
+topic1	中国	美国	许某	旅客	乘坐
+topic17	日本	美国	总统	中国	男子
+topic9	美国	学生	候选人	记者	泰国
+topic2	中国	时间	美国	公司	出租车
+document48:
+topic1	中国	美国	许某	旅客	乘坐
+topic17	日本	美国	总统	中国	男子
+topic4	美国	中国	日本	意大利	民警
+topic5	中国	参拜	记者	投票	活动
+topic6	日本	美国	总统	投票	候选人
+document49:
+topic2	中国	时间	美国	公司	出租车
+topic19	中国	王室	美国	日本	泰国
+topic17	日本	美国	总统	中国	男子
+topic11	中国	美国	大选	男子	一名
+topic10	记者	奥巴马	中国	民警	时间
+document50:
+topic1	中国	美国	许某	旅客	乘坐
+topic19	中国	王室	美国	日本	泰国
+topic12	美国	家长	日本	学生	商品
+topic6	日本	美国	总统	投票	候选人
+topic16	日本	中国	美国	记者	男子
+document51:
+topic18	中国	发现	一名	日本	公司
+topic15	中国	美国	日本	记者	老王
+topic3	中国	日本	中心	支持	杜特
+topic9	美国	学生	候选人	记者	泰国
+topic13	总统	网友	中国	日本	作用
+document52:
+topic3	中国	日本	中心	支持	杜特
+topic16	日本	中国	美国	记者	男子
+topic9	美国	学生	候选人	记者	泰国
+topic2	中国	时间	美国	公司	出租车
+topic8	中国	日本	总统	公司	泰国
+document53:
+topic1	中国	美国	许某	旅客	乘坐
+topic9	美国	学生	候选人	记者	泰国
+topic17	日本	美国	总统	中国	男子
+topic7	中国	日本	记者	海外	国家
+topic15	中国	美国	日本	记者	老王
+document54:
+topic19	中国	王室	美国	日本	泰国
+topic15	中国	美国	日本	记者	老王
+topic17	日本	美国	总统	中国	男子
+topic16	日本	中国	美国	记者	男子
+topic4	美国	中国	日本	意大利	民警
+document55:
+topic13	总统	网友	中国	日本	作用
+topic3	中国	日本	中心	支持	杜特
+topic4	美国	中国	日本	意大利	民警
+topic12	美国	家长	日本	学生	商品
+topic10	记者	奥巴马	中国	民警	时间
+document56:
+topic11	中国	美国	大选	男子	一名
+topic12	美国	家长	日本	学生	商品
+topic2	中国	时间	美国	公司	出租车
+topic4	美国	中国	日本	意大利	民警
+topic19	中国	王室	美国	日本	泰国
+document57:
+topic4	美国	中国	日本	意大利	民警
+topic17	日本	美国	总统	中国	男子
+topic3	中国	日本	中心	支持	杜特
+topic7	中国	日本	记者	海外	国家
+topic11	中国	美国	大选	男子	一名
+```
+
+### 预测文档0的top5的话题的top5的词
+
+```
+topic2	中国	时间	美国	公司	出租车
+topic17	日本	美国	总统	中国	男子
+topic7	中国	日本	记者	海外	国家
+topic4	美国	中国	日本	意大利	民警
+topic13	总统	网友	中国	日本	作用
+```
+
+## 总结
+
+### 时间复杂度
+
+LDA主题能够较为有效的总结多篇文档的主题，并给出每个主题下的关键词。但是由于每次迭代的时候需要循环所有文档的所有词，因此其效率很低。如果迭代n次，共m篇文档，每篇大约N个词，主题数为k，则时间复杂度为O(n*m*N*k)。比较好的解决方法是并行化处理。
+
+### 空间复杂度
+
+如果总共有V个词汇，则空间复杂度为O(kV)。因此如果单机训练要取得较好的效果，需要大量时间。
+
+### 主题数的选择
+
+可以使用HDP等较为复杂的模型自动确定主题数K，但是模型复杂，计算复杂。可以通过设置不同的K，训练后验证比较求得最佳值，或采用设置不同的topic数量，画出topic_number-perplexity曲线。Thomas L. Grifﬁths等人在《Finding scientific topics》也提出过一个验证方法，画出topic_number-logP(w|T)曲线，然后找到曲线中的纵轴最高点便是topic数量的最佳值。
+
+### 超参数的选择
+
+工程上一般取$\alpha=50/K,\beta=0.01,iter=1000$。
