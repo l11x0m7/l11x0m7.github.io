@@ -52,7 +52,7 @@ $$p(z_i=k|\overrightarrow z_{\neg i}, \overrightarrow w)\propto\frac{new\_n^{(k)
 
 Perplexity计算公式：
 
-$$perplexity(D_test)=exp\{-\frac{\sum_{d=1}^Mlogp(w_d)}{\sum_{d=1}^MN_d}\}$$
+$$perplexity(D_{test})=exp\{-\frac{\sum_{d=1}^Mlogp(w_d)}{\sum_{d=1}^MN_d}\}$$
 
 其中
 
