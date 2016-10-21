@@ -50,6 +50,14 @@ $\sum^V_{t=1}n_{k,\neg i}^{(t)}$表示主题k的总词数（不包含当前词i�
 
 $$p(z_i=k|\overrightarrow z_{\neg i}, \overrightarrow w)\propto\frac{new\_n^{(k)}_{m,\neg i}+\alpha_k}{\sum^K_{k=1}new\_n_{m,\neg i}^{(k)}+\sum^K_{k=1}\alpha_k}*\frac{train\_n{(t)}_{k,i}+new\_n^{(t)}_{k,\neg i}+\beta_t}{\sum^V_{t=1}(train\_n_{k,i}^{(t)}+new\_n_{k,\neg i}^{(t)})+\sum^V_{t=1}\beta_t}$$
 
+Perplexity计算公式：
+
+$$perplexity(D_test)=exp\{-\frac{\sum_{d=1}^Mlogp(w_d)}{\sum_{d=1}^MN_d}\}$$
+
+其中
+
+$$logp(w_d)=\sum_{i\subset d}log{\sum_{z\subset d}(p(w_i|z)*p(z|d))}$$
+
 在给出代码前，需要注意：
 
 * 一篇文档对应多个词，多个主题
@@ -304,7 +312,7 @@ class LDAModel():
                         pdzzmulpzw = 1. if pdzzmulpzw == 0. else pdzzmulpzw
                         # print pdzzmulpzw
                         pp -= np.log2(pdzzmulpzw)
-                        print pp
+                        # print pp
                 pp /= self.wordnum
                 pp = np.exp(pp)
 
