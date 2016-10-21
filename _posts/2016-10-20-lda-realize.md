@@ -168,8 +168,8 @@ class LDAModel():
     def __init__(self, K, copora, alpha=None, beta=None, iteration=None):
         # K个主题
         self.K = K
-        # alpha工程取值一般为50/K
-        self.alpha = alpha if alpha else 50.0/self.K
+        # alpha工程取值一般为0.1
+        self.alpha = alpha if alpha else 0.1
         # beta工程取值一般为0.01
         self.beta = beta if beta else 0.01
         # 迭代次数一般取值为1000
@@ -935,4 +935,4 @@ LDA主题能够较为有效的总结多篇文档的主题，并给出每个主�
 
 ### 超参数的选择
 
-工程上一般取$\alpha=50/K,\beta=0.01,iter=1000$。
+工程上一般取$\alpha=0.1,\beta=0.01,iteration=1000$。
