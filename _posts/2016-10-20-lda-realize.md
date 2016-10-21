@@ -20,7 +20,7 @@ description: LDA模型
 
 ## 模型比较
 
-LDA模型（Latent Dirichlet Model）用于寻找多个文档内存在的多个主题的模型。和LSA不同的是，LSA需要使用SVD找到的隐形变量是未知属性的。也就是说，LSA后文档或词的每一维所代表的含义不明确。  
+LDA模型（Latent Dirichlet Allocation）用于寻找多个文档内存在的多个主题的模型。和LSA不同的是，LSA需要使用SVD找到的隐形变量是未知属性的。也就是说，LSA后文档或词的每一维所代表的含义不明确。  
 而对于PLSA模型，它主要是考虑到了文档和词汇之间的关系是通过主题来联系的。即一篇文档的生成过程为：
 
 * 按概率选择多个主题中的一个主题（多项分布）
@@ -74,11 +74,12 @@ import re
 import random
 import numpy as np
 import copy
+import json
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
 # 新闻爬虫
-# 爬取新闻的内容有:社会新闻20篇,军事新闻18篇,国际新闻20篇
+# 爬取新闻的内容有:社会新闻18篇,军事新闻20篇,国际新闻20篇
 class NewsScrapy():
     def __init__(self):
         user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.54 Safari/536.5'
@@ -171,7 +172,7 @@ class LDAModel():
         self.ndsum = object # D     每个文档的总词数
         self.theta = object # doc->topic    D*K
         self.phi = object   # topic->word   K*V
-        self.z = object     # (m,w)对应每篇文档的每个词的具体主题
+        self.z = object     # D*V  (m,w)对应每篇文档的每个词的具体主题
         # 3个语料整合到一起
         self.corpora = list()
         for theme in copora:
@@ -184,12 +185,43 @@ class LDAModel():
         self.D = len(self.corpora)
         cut_docs = self.cut(self.corpora)
         # 分词并且id化的文档
-        self.word2id, self.id2word, self.id_cut_docs = self.createDict(cut_docs)
+        self.word2id, self.id2word, self.id_cut_docs, self.wordnum = self.createDict(cut_docs)
         self.V = len(self.id2word)
         # 初始化参数
         self.initial(self.id_cut_docs)
         # gibbs采样,进行文本训练
         self.gibbsSamppling()
+
+        # 保存word2id,id_cut_docs,z,theta,phi,以便应用的时候使用
+        with open('data/result/word2id', 'w') as fw:
+            for word, id in self.word2id.iteritems():
+                fw.write(word+'\t'+str(id)+'\n')
+
+        with open('data/result/id_cut_docs', 'w') as fw:
+            for doc in self.id_cut_docs:
+                for vocab in doc:
+                    fw.write(str(vocab)+'\t')
+                fw.write('\n')
+
+        with open('data/result/z', 'w') as fw:
+            for doc in self.z:
+                for vocab in doc:
+                    fw.write(str(vocab)+'\t')
+                fw.write('\n')
+
+        with open('data/result/theta', 'w') as fw:
+            for doc in self.theta:
+                for topic in doc:
+                    fw.write(str(topic)+'\t')
+                fw.write('\n')
+
+        with open('data/result/phi', 'w') as fw:
+            for topic in self.phi:
+                for vocab in topic:
+                    fw.write(str(vocab)+'\t')
+                fw.write('\n')
+
+
 
     # 文档分词,去无用词
     # 可以考虑去除文本低频词
@@ -209,12 +241,14 @@ class LDAModel():
     # 创建word2id,id2word和document字典
     def createDict(self, cut_docs):
         word2id = dict()
+        wordnum = 0
         for i, doc in enumerate(cut_docs):
             for j, word in enumerate(doc):
+                wordnum += 1
                 if not word2id.has_key(word):
                     word2id[word] = len(word2id)
                 cut_docs[i][j] = word2id[word]
-        return word2id, dict(zip(word2id.values(), word2id.keys())), cut_docs
+        return word2id, dict(zip(word2id.values(), word2id.keys())), cut_docs, wordnum
 
     # 初始化参数
     def initial(self, id_cut_docs):
@@ -258,6 +292,25 @@ class LDAModel():
                     self.z[i,j] = new_theme
             sys.stdout.write('\rIteration:{0} done!'.format(iter+1))
             sys.stdout.flush()
+
+
+            # 计算perplexity,比较耗时
+            if (iter+1)%100 == 0:
+                pp = 0.
+                for m in range(self.D):
+                    for w in range(self.V):
+                        pdzzmulpzw = np.sum((self.nd[m,:]/float(np.sum(self.nd[m,:]))).flatten()*\
+                                    (self.nw[:,w]/map(float,np.sum(self.nw, 1))).flatten())
+                        pdzzmulpzw = 1. if pdzzmulpzw == 0. else pdzzmulpzw
+                        # print pdzzmulpzw
+                        pp -= np.log2(pdzzmulpzw)
+                        print pp
+                pp /= self.wordnum
+                pp = np.exp(pp)
+
+                sys.stdout.write('\rIteration:{0} done!\tPerplexity:{1}'.format(iter+1, pp))
+                sys.stdout.flush()
+
         # 更新theta和phi
         self.updatePara()
 
