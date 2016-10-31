@@ -1,6 +1,6 @@
 --- 
 layout: post 
-title: 《APPLYING DEEP LEARNING TO ANSWER SELECTION: A STUDY AND AN OPEN TASK》浅见 
+title: 《APPLYING  
 date: 2016-10-31 
 categories: blog 
 tags: [NLP, CNN, 论文] 
@@ -35,7 +35,8 @@ CNN利用了三个重要的思路，能够帮助改善机器学习系统：稀�
 
 2. 该论文损失函数使用的是Hinge Loss  
 
-
+$$L=max\{0, m-cos(V_Q,V_{A+})+cos(V_Q,V_{A-})\}$$
+$m$为margin。
 
 ### 框架（详细说明下框架2）  
 框架1：
