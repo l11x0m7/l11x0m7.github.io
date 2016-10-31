@@ -4,7 +4,7 @@ title: 论文浅见《APPLYING DEEP LEARNING TO ANSWER SELECTION: A STUDY AND AN
 date: 2016-10-31 
 categories: blog 
 tags: [NLP, CNN, 论文] 
-description: 
+description: 关于用CNN做QA的论文
 --- 
 
 # 论文浅见《APPLYING DEEP LEARNING TO ANSWER SELECTION: A STUDY AND AN OPEN TASK》
