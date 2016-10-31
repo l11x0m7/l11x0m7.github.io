@@ -34,7 +34,7 @@ CNN利用了三个重要的思路，能够帮助改善机器学习系统：稀�
 
 1. 两个baseline：BOW and IR model
 
-2. 该论文损失函数使用的是Hinge Loss：$L=max{0, m-cos(V_Q,V_{A+})+cos(V_Q,V_{A-})}$
+2. 该论文损失函数使用的是Hinge Loss：$L=max\\{0, m-cos(V_Q,V_{A+})+cos(V_Q,V_{A-})\\}$
 ，其中$m$为margin。
 
 ### 框架（详细说明框架2）  
