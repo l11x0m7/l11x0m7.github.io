@@ -1,13 +1,13 @@
 --- 
 layout: post 
-title: 论文浅见《APPLYING DEEP LEARNING TO ANSWER SELECTION: A STUDY AND AN OPEN TASK》
+title: 《APPLYING DEEP LEARNING TO ANSWER SELECTION: A STUDY AND AN OPEN TASK》浅见 
 date: 2016-10-31 
 categories: blog 
 tags: [NLP, CNN, 论文] 
-description: 关于用CNN做QA的论文
+description: 关于用CNN做QA的论文 
 --- 
 
-# 论文浅见《APPLYING DEEP LEARNING TO ANSWER SELECTION: A STUDY AND AN OPEN TASK》
+# 《APPLYING DEEP LEARNING TO ANSWER SELECTION: A STUDY AND AN OPEN TASK》浅见
 
 ## 零、主要目的
 
@@ -33,7 +33,10 @@ CNN利用了三个重要的思路，能够帮助改善机器学习系统：稀�
 
 1. 两个baseline：BOW and IR model
 
-2. Hinge Loss: $L=max\{0, m-cos(V_Q,V_{A+})+cos(V_Q,V_{A-})\}$，$m$为margin。
+2. 该论文损失函数使用的是Hinge Loss  
+
+$$L=max\{0, m-cos(V_Q,V_{A+})+cos(V_Q,V_{A-})\}$$
+$m$为margin。
 
 ### 框架（详细说明下框架2）  
 框架1：
@@ -50,7 +53,7 @@ Q语句和A语句分别处理，各自独立使用HL层、CNN层、P层和T层�
 * HL(Hidden Layer)使用tanh函数，输出为**[batch_size, sequence_length, hidden_size]**
 * 之后经过CNN层，为带多个filter的单卷积层，输出为**[batch_size, sequence_size-filter_size+1, 1, channels]**，经过P(1-max-pooling)后为**[batch_size, 1, 1, channels]**
 * 如果有n个不同类型的filter，则最后输出为**[batch_size, 1, 1, channels*n]**
-* 再经过reshape后，可以转为**[batch_size, channels*n]**，之后再计算batch里每个样本的余弦相似度，最后输出为**[batch_size]**。
+* 再经过reshape后，可以转为**[batch_size, channels*n]**，之后再计算batch里每个样本的余弦相似度，最后输出为**[batch_size]**
 
 框架3：
 
