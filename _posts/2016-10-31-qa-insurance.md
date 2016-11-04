@@ -410,4 +410,4 @@ with tf.device('/gpu:0'):
 * [数据](https://github.com/shuzi/insuranceQA.git)
 * [QA问答系统中的深度学习技术实现](http://www.52nlp.cn/qa%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%9C%AF%E5%AE%9E%E7%8E%B0)
 * [APPLYING DEEP LEARNING TO ANSWER SELECTION:A STUDY AND AN OPEN TASK](https://arxiv.org/pdf/1508.01585.pdf)
-* [我的代码]()
+* [我的代码](https://github.com/l11x0m7/InsuranceQA)
