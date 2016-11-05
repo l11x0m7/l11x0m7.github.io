@@ -25,24 +25,24 @@ $$lift(A,B)=\frac{P(A\bigcupB)}{P(A)P(B)}$$
 
 当提升度小于1，则A的出现和B的出现是负相关的；当提升度大于1，则A的出现和B的出现是正相关的。当提升度等于1，则A和B是独立的。
 
-#### $\chi^2$
+#### $\chi^2$值
 
-$$\chi^2=\Sigma{\frac{(观测值-期望值)^2}{期望值}}$$
+$$\chi^2=\sum{\frac{(观测-期望)^2}{期望}}$$
 
 
 由于上述两个相关度量和零事务相关，容易收到零事务的影响，因此有时候这两个度量的表现会很差，因此我们推荐使用下面的评估模式，对相关性进行度量。
 
-> **零事务**即$\overlineA\overlineB$的个数，表明A和B都不出现。这部分是用户不感兴趣的，应该刨除这部分的影响。
+> **零事务**即$\barA\barB$的个数，表明A和B都不出现。这部分是用户不感兴趣的，应该刨除这部分的影响。
 
 ### 其他评估模式
 
 #### 全置信度(all_confidence)
 
-$$all_conf(A,B)=\frac{sup(A\bigcupB)}{max\{sup(A),sup(B)\}}=min{P(A|B),P(B|A)}$$
+$$all\_conf(A,B)=\frac{sup(A\bigcupB)}{max\{sup(A),sup(B)\}}=min{P(A|B),P(B|A)}$$
 
 #### 最大置信度(max_confidence)
 
-$$max_conf(A,B)=$min\{P(A|B),P(B|A)\}$$
+$$max\_conf(A,B)=$min\{P(A|B),P(B|A)\}$$
 
 #### Kulczynski
 
@@ -50,7 +50,7 @@ $$Kulc(A,B)=\frac12(P(A|B)+P(B|A))$$
 
 #### 余弦
 
-$$cosine(A,B)=\sqrt{(P(A\midB)\timesP(B\midA))}$$
+$$cosine(A,B)=\sqrt{(P(A|B)*P(B|A))}$$
 
 以上四个度量仅仅和两个条件概率有关，并且都在0到1范围。且具有以下性质：
 
@@ -64,6 +64,7 @@ $$cosine(A,B)=\sqrt{(P(A\midB)\timesP(B\midA))}$$
 
 这样，则需要引入不平衡比来衡量两个项集的不平衡程度。
 
-$$IR(A,B)=\frac{\midsup{(A)-sup(B)\mid}{sup(A)+sup(B)-sup(A\bigcupB)}$$
+
+$$IR(A,B)=\frac{|sup(A)-sup(B)|}{sup(A)+sup(B)-sup(A\bigcupB)}$$
 
 IR值越大，说明越不平衡。一般结合IR和上述四种度量来衡量项集的相关性。
