@@ -273,27 +273,27 @@ There are 4098 lines
 下面看一下不用super来初始化的时候，在钻石型继承中出现的问题。
 
 ```python
-	class MyBaseClass(object):
-        def __init__(self, value):
-            self.value = value
+class MyBaseClass(object):
+    def __init__(self, value):
+        self.value = value
 
-    class TimesFive(MyBaseClass):
-        def __init__(self, value):
-            MyBaseClass.__init__(self, value)
-            self.value *= 5
+class TimesFive(MyBaseClass):
+    def __init__(self, value):
+        MyBaseClass.__init__(self, value)
+        self.value *= 5
 
-    class PlusTwo(MyBaseClass):
-        def __init__(self, value):
-            MyBaseClass.__init__(self, value)
-            self.value += 2
-	# 多重继承，即继承多个父类
-    class ThisWay(TimesFive, PlusTwo):
-        def __init__(self, value):
-            TimesFive.__init__(self, value)
-            PlusTwo.__init__(self, value)
+class PlusTwo(MyBaseClass):
+    def __init__(self, value):
+        MyBaseClass.__init__(self, value)
+        self.value += 2
+# 多重继承，即继承多个父类
+class ThisWay(TimesFive, PlusTwo):
+    def __init__(self, value):
+        TimesFive.__init__(self, value)
+        PlusTwo.__init__(self, value)
 
-    foo = ThisWay(5)
-    print 'Should be (5*5)+2 but is', foo.value
+foo = ThisWay(5)
+print 'Should be (5*5)+2 but is', foo.value
 
 >>>
 Should be (5*5)+2 but is 7
@@ -305,57 +305,57 @@ Should be (5*5)+2 but is 7
 
 ```python
 # python2风格
-	class MyBaseClass(object):
-        def __init__(self, value):
-            self.value = value
+class MyBaseClass(object):
+    def __init__(self, value):
+        self.value = value
 
-    class TimesFive(MyBaseClass):
-        def __init__(self, value):
-            super(TimesFive, self).__init__(value)
-            self.value *= 5
+class TimesFive(MyBaseClass):
+    def __init__(self, value):
+        super(TimesFive, self).__init__(value)
+        self.value *= 5
 
-    class PlusTwo(MyBaseClass):
-        def __init__(self, value):
-            super(PlusTwo, self).__init__(value)
-            self.value += 2
+class PlusTwo(MyBaseClass):
+    def __init__(self, value):
+        super(PlusTwo, self).__init__(value)
+        self.value += 2
 
-    class ThisWay(TimesFive, PlusTwo):
-        def __init__(self, value):
-            super(ThisWay, self).__init__(value)
+class ThisWay(TimesFive, PlusTwo):
+    def __init__(self, value):
+        super(ThisWay, self).__init__(value)
 
-    foo = ThisWay(5)
-    print 'Should be (5*5)+2 and it is', foo.value
+foo = ThisWay(5)
+print 'Should be (5*5)+2 and it is', foo.value
 
-    # 调用顺序
-    from pprint import pprint
-    pprint(ThisWay.mro())
+# 调用顺序
+from pprint import pprint
+pprint(ThisWay.mro())
     
 # python3风格
-	class MyBaseClass(object):
-        def __init__(self, value):
-            self.value = value
+class MyBaseClass(object):
+    def __init__(self, value):
+        self.value = value
 
-    class TimesFive(MyBaseClass):
-        def __init__(self, value):
-            # 或者super().__init__(value)
-            super(__class__, self).__init__(value)
-            self.value *= 5
+class TimesFive(MyBaseClass):
+    def __init__(self, value):
+        # 或者super().__init__(value)
+        super(__class__, self).__init__(value)
+        self.value *= 5
 
-    class PlusTwo(MyBaseClass):
-        def __init__(self, value):
-            super(__class__, self).__init__(value)
-            self.value += 2
+class PlusTwo(MyBaseClass):
+    def __init__(self, value):
+        super(__class__, self).__init__(value)
+        self.value += 2
 
-    class ThisWay(TimesFive, PlusTwo):
-        def __init__(self, value):
-            super().__init__(value)
+class ThisWay(TimesFive, PlusTwo):
+    def __init__(self, value):
+        super().__init__(value)
 
-    foo = ThisWay(5)
-    print 'Should be (5*5)+2 and it is', foo.value
+foo = ThisWay(5)
+print 'Should be (5*5)+2 and it is', foo.value
 
-    # 调用顺序
-    from pprint import pprint
-    pprint(ThisWay.mro())
+# 调用顺序
+from pprint import pprint
+pprint(ThisWay.mro())
 
 
 >>>
@@ -381,41 +381,41 @@ mix-in是指只实现了单个功能（方法）的类，或者继承这些类�
 > hasattr函数可以判定某个类实例里有没有某个成员或方法
 
 ```python
-    class ToDictMixin(object):
-        def to_dict(self):
-            return self._traverse_dict(self.__dict__)
-        def _traverse_dict(self, instance_dict):
-            output = {}
-            for key, value in instance_dict.iteritems():
-                cur = self._traverse(key, value)
-                # 不现实空值
-                if cur is not None:
-                    output[key] = cur
-            return output
-        def _traverse(self, key, value):
-            # 当然也可以写成isinstance(value, BinaryTree),但是为了通用性,一般写父类
-            if isinstance(value, ToDictMixin):
-                return value.to_dict()
-            # 下面三个该例子中没有用到,可以注释掉
-            # elif isinstance(value, dict):
-            #     return self._traverse_dict(value)
-            # elif isinstance(value, list):
-            #     return [self._traverse(key, i) for i in value]
-            # elif hasattr(value, '__dict__'):
-            #     return self._traverse_dict(value.__dict__)
-            else:
-                return value
+class ToDictMixin(object):
+    def to_dict(self):
+        return self._traverse_dict(self.__dict__)
+    def _traverse_dict(self, instance_dict):
+        output = {}
+        for key, value in instance_dict.iteritems():
+            cur = self._traverse(key, value)
+            # 不现实空值
+            if cur is not None:
+                output[key] = cur
+        return output
+    def _traverse(self, key, value):
+        # 当然也可以写成isinstance(value, BinaryTree),但是为了通用性,一般写父类
+        if isinstance(value, ToDictMixin):
+            return value.to_dict()
+        # 下面三个该例子中没有用到,可以注释掉
+        # elif isinstance(value, dict):
+        #     return self._traverse_dict(value)
+        # elif isinstance(value, list):
+        #     return [self._traverse(key, i) for i in value]
+        # elif hasattr(value, '__dict__'):
+        #     return self._traverse_dict(value.__dict__)
+        else:
+            return value
 
-    class BinaryTree(ToDictMixin):
-        def __init__(self, value, left=None, right=None):
-            self.value = value
-            self.left = left
-            self.right = right
+class BinaryTree(ToDictMixin):
+    def __init__(self, value, left=None, right=None):
+        self.value = value
+        self.left = left
+        self.right = right
 
-    tree = BinaryTree(10, left=BinaryTree(7, right=BinaryTree(10)),
-                      right=BinaryTree(3, left=BinaryTree(11)))
+tree = BinaryTree(10, left=BinaryTree(7,right=BinaryTree(10)), 
+right=BinaryTree(3, left=BinaryTree(11)))
 
-    print tree.to_dict()
+print tree.to_dict()
     
 >>>
 {'right': {'value': 3, 'left': {'value': 11}}, 
