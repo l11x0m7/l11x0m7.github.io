@@ -1,30 +1,30 @@
 --- 
 layout: post 
-title: 《Effective Python》读书笔记
+title: 《Effective Python》读书笔记(三) 类和继承
 date: 2016-11-16 
 categories: blog 
 tags: [Python] 
-description: 读书笔记
+description: effective python读书笔记3
 --- 
 
-# 《Effective Python》读书笔记
+# 《Effective Python》读书笔记（三） 类和继承
 
 ### 23.尽量使用挂钩函数来作为简单接口的接收函数
 
 挂钩函数就相当于如下形式所示。
 
 ```python
-	def log_missing():
-        print 'Add key'
-        return 0
-    current = {'green':12, 'blue':3}
-    increments = [('red', 5), ('blue', 17), ('orange', 9)]
-    # log_missing为挂钩函数
-    result = collections.defaultdict(log_missing, current)
-    print dict(result)
-    for key, amount in increments:
-        result[key] += amount
-    print dict(result)
+def log_missing():
+    print 'Add key'
+    return 0
+current = {'green':12, 'blue':3}
+increments = [('red', 5), ('blue', 17), ('orange', 9)]
+# log_missing为挂钩函数
+result = collections.defaultdict(log_missing, current)
+print dict(result)
+for key, amount in increments:
+    result[key] += amount
+print dict(result)
 
 {'blue': 3, 'green': 12}
 Add key
@@ -35,22 +35,23 @@ Add key
 如果需要记录状态数，可以创建一个辅助类。
 
 ```python
-	current = {'green':12, 'blue':3}
-    increments = [('red', 5), ('blue', 17), ('orange', 9)]
-    # 如果要记录状态值,可以用辅助类
-    class CountMissing(object):
-        def __init__(self):
-            self.added = 0
-        def missing(self):
-            self.added += 1
-            return 0
-    cm = CountMissing()
-    result = collections.defaultdict(cm.missing, current)
-    print dict(result)
-    for key, amount in increments:
-        result[key] += amount
-    print dict(result)
+current = {'green':12, 'blue':3}
+increments = [('red', 5), ('blue', 17), ('orange', 9)]
+# 如果要记录状态值,可以用辅助类
+class CountMissing(object):
+    def __init__(self):
+        self.added = 0
+    def missing(self):
+        self.added += 1
+        return 0
+cm = CountMissing()
+result = collections.defaultdict(cm.missing, current)
+print dict(result)
+for key, amount in increments:
+    result[key] += amount
+print dict(result)
     
+>>>
 {'blue': 3, 'green': 12}
 {'blue': 20, 'orange': 9, 'green': 12, 'red': 5}
 ```
@@ -58,25 +59,25 @@ Add key
 当然也可以使用__call__函数，来让类的实例也能够像函数一样被调用。当使用callable()时，会返回True。
 
 ```python
-	current = {'green':12, 'blue':3}
-    increments = [('red', 5), ('blue', 17), ('orange', 9)]
-    # 如果要记录状态值,也可以这么写,用__call__
-    class CountMissing(object):
-        def __init__(self):
-            self.added = 0
-        def __call__(self, *args, **kwargs):
-            self.added += 1
-            return 0
+current = {'green':12, 'blue':3}
+increments = [('red', 5), ('blue', 17), ('orange', 9)]
+# 如果要记录状态值,也可以这么写,用__call__
+class CountMissing(object):
+    def __init__(self):
+        self.added = 0
+    def __call__(self, *args, **kwargs):
+        self.added += 1
+        return 0
 
-    cm = CountMissing()
-    result = collections.defaultdict(cm, current)
-    print dict(result)
-    for key, amount in increments:
-        result[key] += amount
-    print dict(result)
-    print callable(cm)
+cm = CountMissing()
+result = collections.defaultdict(cm, current)
+print dict(result)
+for key, amount in increments:
+    result[key] += amount
+print dict(result)
+print callable(cm)
 
-
+>>>
 {'blue': 3, 'green': 12}
 {'blue': 20, 'orange': 9, 'green': 12, 'red': 5}
 True
@@ -179,6 +180,9 @@ with TemporaryDirectory() as tmpdir:
     result = mapreduce(tmpdir)
 
 print('There are', result, 'lines')
+
+>>>
+There are 4098 lines
 ```
 
 上面的Worker这一大类和InputData这一大类需要通过mapreduce这个方法连接起来，并且如果我需要创建新的Worker或InputData，那么扩展起来就不太方便了。
@@ -254,6 +258,9 @@ with TemporaryDirectory() as tmpdir:
     config = {'data_dir': tmpdir}
     result = mapreduce(LineCountWorker, PathInputData, config)
 print('There are', result, 'lines')
+
+>>>
+There are 4098 lines
 ```
 
 > 在python中，每个类只能有一个构造器，即一个__init__方法
