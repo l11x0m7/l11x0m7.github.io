@@ -377,7 +377,7 @@ mix-in是指只实现了单个功能（方法）的类，或者继承这些类�
 下面以用于类的序列化的mix-in组件为例。
 
 > isinstance函数可以动态检测对象类型
-> __dict__可以打印类实例的所有成员值，并以键值对的形成出现
+> __dict__可以打印类实例的所有成员值和类实例的默认私有成员值（如__module__等），并以键值对的形成出现
 > hasattr函数可以判定某个类实例里有没有某个成员或方法
 
 ```python
@@ -469,4 +469,135 @@ serialized = """{
 deserialized = DatacenterRack.from_json(serialized)
 roundtrip = deserialized.to_json()
 assert json.loads(serialized) == json.loads(roundtrip)
+```
+
+### 27.多用public属性，少用private属性
+
+各个属性值的含义：
+
+> self.field表示public成员
+> self._field表示protect成员
+> self.__field表示私有成员，它可以被类内部方法访问，在类外，可以通过instance._Class__field被访问，Class就是该类对应的名称。因此python无法保证private成员的私密性。
+> self.__len___()表示类中的特殊成员或方法
+
+一般情况下，不要在类内定义private成员，应多用protect代替。在下面一种情况下，可以使用private，来防止子类的属性覆盖同名的超类属性。
+
+```python
+class ApiClass(object):
+    def __init__(self):
+        self._value = 5
+
+    def get(self):
+        return self._value
+
+class Child(ApiClass):
+    def __init__(self):
+        super().__init__()
+        self._value = 'hello'  # Conflicts
+
+a = Child()
+print(a.get(), 'and', a._value, 'should be different')
+
+>>>
+hello and hello should be different
+
+class ApiClass(object):
+    def __init__(self):
+        self.__value = 5
+
+    def get(self):
+        return self.__value
+
+class Child(ApiClass):
+    def __init__(self):
+        super().__init__()
+        self._value = 'hello'  # OK!
+
+a = Child()
+print(a.get(), 'and', a._value, 'are different')
+
+>>>
+5 and hello are different
+```
+
+### 28.继承collections.abc（在python3里有）以实现自定义的容器类型
+
+collections.abc中定义了很多容器的抽象基类，如果要自定义容器，最好就是继承需要的抽象基类，然后实现抽象基类当中的某些特殊方法（如__getitems__和__len__都是特殊方法），那么自定义类就具备了抽象基类提供的其他方法，如count和index方法。  
+下面给出一个使用collections.abc中的Sequence抽象基类实现自定义容器的实例。
+
+> 索引访问（`比如foo[0]`）其实就是调用`__getitem__()`方法（比如`foo.__getitem__(0)`）
+> 使用`len(a)`相当于调用`a.__len__()`
+
+```python
+# 实现__getitem__()方法
+class IndexableNode(BinaryNode):
+	# 前序遍历
+    def _search(self, count, index):
+        found = None
+        if self.left:
+            found, count = self.left._search(count, index)
+        if not found and count == index:
+            found = self
+        else:
+            count += 1
+        if not found and self.right:
+            found, count = self.right._search(count, index)
+        return found, count
+        # Returns (found, count)
+
+    def __getitem__(self, index):
+        found, _ = self._search(0, index)
+        if not found:
+            raise IndexError('Index out of range')
+        return found.value
+
+# 实现__len__()方法
+class SequenceNode(IndexableNode):
+    def __len__(self):
+        _, count = self._search(0, None)
+        return count
+
+# 载入模块
+from collections.abc import Sequence
+
+class BetterNode(SequenceNode, Sequence):
+    pass
+
+tree = BetterNode(
+    10,
+    left=BetterNode(
+        5,
+        left=BetterNode(2),
+        right=BetterNode(
+            6, right=BetterNode(7))),
+    right=BetterNode(
+        15, left=BetterNode(11))
+)
+
+print('Index of 7 is', tree.index(7))
+print('Count of 10 is', tree.count(10))
+
+>>>
+Index of 7 is 3
+Count of 10 is 1
+```
+
+当然，如果自定义的容器比较简单，可以直接继承像list、dict、set这样的类，然后加入自己的方法。实例如下：
+
+```python
+class FrequencyList(list):
+    def __init__(self, data):
+        super(FrequencyList, self).__init__(data)
+
+    def frequency(self):
+        count = collections.defaultdict(lambda:0, {})
+        for item in self:
+            count[item] += 1
+        return dict(count)
+
+fl = FrequencyList(['a', 'b', 'c', 'c', 'a', 'd', 'f', 'b'])
+print repr(fl.frequency())
+
+>>>
+{'a': 2, 'c': 2, 'b': 2, 'd': 1, 'f': 1}
 ```
