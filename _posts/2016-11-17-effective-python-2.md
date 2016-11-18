@@ -153,15 +153,15 @@ percentages = normalize(visits)
 print percentages
 ```
 
-> 对于`iter()`函数，当visits为iter容器时，iter(visits)返回一个新的容器（iter(visits) is iter(visits)返回False）；当visits为迭代器时，iter(visits)返回迭代器本身（iter(visits) is iter(visits)返回True）
+> 对于`iter()`函数，当visits为iter容器时，`iter(visits)`返回一个新的容器（`iter(visits) is iter(visits)`返回`False`）；当visits为迭代器时，`iter(visits)`返回迭代器本身（`iter(visits) is iter(visits)`返回`True`）
 
 ### 18.用数量可变的位置参数减少视觉杂讯
 
-符号"*"用于函数的位置参数。作为函数的位置形参时实现打包功能，而作为函数的位置实参时实现拆包功能。
+符号'*'用于函数的位置参数。作为函数的位置形参时实现打包功能，而作为函数的位置实参时实现拆包功能。
 
 ### 19.用关键字参数来表达可选的行为
 
-符号"**"用于函数的关键字参数。
+符号'**'用于函数的关键字参数。
 
 ### 20.注意函数的默认参数为动态值的情况
 
