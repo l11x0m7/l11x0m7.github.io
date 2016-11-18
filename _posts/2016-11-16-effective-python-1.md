@@ -1,7 +1,7 @@
 --- 
 layout: post 
 title: 《Effective Python》读书笔记(一) 用Pythonic来思考
-date: 2016-11-17 
+date: 2016-11-16 
 categories: blog 
 tags: [Python] 
 description: effective python读书笔记1

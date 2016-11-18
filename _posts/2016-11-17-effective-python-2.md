@@ -1,7 +1,7 @@
 --- 
 layout: post 
 title: 《Effective Python》读书笔记(二) 函数
-date: 2016-11-18 
+date: 2016-11-17 
 categories: blog 
 tags: [Python] 
 description: effective python读书笔记2

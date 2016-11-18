@@ -1,7 +1,7 @@
 --- 
 layout: post 
 title: 《Effective Python》读书笔记(三) 类和继承
-date: 2016-11-16 
+date: 2016-11-18 
 categories: blog 
 tags: [Python] 
 description: effective python读书笔记3
