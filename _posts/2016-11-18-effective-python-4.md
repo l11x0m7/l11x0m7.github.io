@@ -38,7 +38,7 @@ fibonacci((2,), {})->(0, 1)
 fibonacci((3,), {})->(1, (0, 1))
 ```
 
-上面的修饰相当于是`fibonacci = trace(fibonacci)`，也就是说调用`fibonacci(3)`等价于调用`trace(fibonacci)(3)`等价于调用`wrapper(3)`。而且fibonacci已经不是原来的函数了，而是wrapper函数，通过help函数可以查看得知：
+上面的修饰相当于是`fibonacci = trace(fibonacci)`，也就是说调用`fibonacci(3)`等价于调用`trace(fibonacci)(3)`等价于调用`wrapper(3)`。而且fibonacci已经不是原来的函数了，而是`wrapper`函数，通过`help`函数可以查看得知：
 
 ```python
 help(fibonacci)
@@ -166,6 +166,7 @@ DEBUG:my_logger:This is my message!
 * python2里用的是copy_reg
 
 使用pickle存储的时候，需要考虑一下三种情况：  
+
 * 新的类中添加了新的属性
 * 新的类中删除了原有某些属性
 * 新的类名称更改
