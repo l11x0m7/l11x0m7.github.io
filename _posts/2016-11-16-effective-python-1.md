@@ -15,9 +15,9 @@ description: effective python读书笔记1
 
 ### 3.bytes、str和unicode的区别
 
-> 在python3中，bytes是一种包含8位值的序列（utf-8、ascii、gbk等），str是一种包含unicode字符的序列
-> 在python2中，str是一种包含8位值的序列（utf-8、ascii、gbk等），unicode是一种包含unicode字符的序列
-> 在读写文件时，总以'rb'或'wb'开启文件，表示读写二进制数据
+* 在python3中，bytes是一种包含8位值的序列（utf-8、ascii、gbk等），str是一种包含unicode字符的序列
+* 在python2中，str是一种包含8位值的序列（utf-8、ascii、gbk等），unicode是一种包含unicode字符的序列
+* 在读写文件时，总以'rb'或'wb'开启文件，表示读写二进制数据
 
 
 ### 4.用辅助函数将复杂的表达式封装起来
@@ -62,9 +62,9 @@ print next(it)
 
 ### 11.用zip函数同时遍历两个迭代器
 
-如果有两个相互关联的对象，可以直接使用zip来遍历。
+如果有两个相互关联的对象，可以直接使用`zip`来遍历。
 
-> 受封装的那些迭代器中，只要有一个耗尽，zip就不再产生元组了，此时可以使用itertools.zip_longest（python2里有itertools.izip_longest）函数
+> 受封装的那些迭代器中，只要有一个耗尽，`zip`就不再产生元组了，此时可以使用`itertools.zip_longest`（python2里有`itertools.izip_longest`）函数
 
 ### 12.不要在for和while循环后面写else块
 
@@ -72,6 +72,6 @@ print next(it)
 
 ### 13.合理利用try/except/else/finally结构中的每个代码块
 
-> 如果try块没有发生异常，就执行else块，否则执行except块（需要被捕捉到才行）
-> finally总是执行
-> try块处理可能出现异常的内容（比如处理读取的文件内容），except块接收来自try块的可能异常，else块处理接下来的部分，finally块用来清理善后（比如关闭文件）
+* 如果try块没有发生异常，就执行else块，否则执行except块（需要被捕捉到才行）
+* finally总是执行
+* try块处理可能出现异常的内容（比如处理读取的文件内容），except块接收来自try块的可能异常，else块处理接下来的部分，finally块用来清理善后（比如关闭文件）
