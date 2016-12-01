@@ -188,3 +188,4 @@ $$
 # 参考
 [xgboost introduction](https://xgboost.readthedocs.io/en/latest/model.html)
 
+[Practical XGBoost in Python](http://education.parrotprediction.teachable.com/courses/enrolled/practical-xgboost-in-python)
