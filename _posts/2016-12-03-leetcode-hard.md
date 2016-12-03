@@ -18,7 +18,9 @@ description:
 * 两点坐标重叠
 
 复杂度：  
-O(n^2logn)
+O(n^2)
+
+注意如果使用的是map而不是unordered_map，则是O(n^2logn)。
 
 代码：
 
