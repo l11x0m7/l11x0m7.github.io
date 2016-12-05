@@ -449,3 +449,66 @@ private:
  * obj.set(key,value);
  */
 ```
+
+# 466. Count The Repetitions
+
+#### 题目
+
+Define `S = [s,n]` as the string S which consists of n connected strings s. For example, `["abc", 3]` ="abcabcabc".
+
+On the other hand, we define that string s1 can be obtained from string s2 if we can remove some characters from s2 such that it becomes s1. For example, “abc” can be obtained from “abdbec” based on our definition, but it can not be obtained from “acbbe”.
+
+You are given two non-empty strings s1 and s2 (each at most 100 characters long) and two integers 0 ≤ n1 ≤ 106 and 1 ≤ n2 ≤ 106. Now consider the strings S1 and S2, where `S1=[s1,n1]` and `S2=[s2,n2]`. Find the maximum integer M such that `[S2,M]` can be obtained from `S1`.
+
+**Example**  
+
+```
+Input:
+s1="acb", n1=4
+s2="ab", n2=2
+
+Return:
+2
+```
+
+#### 思路
+这道题考虑这样两种情况：
+
+* s2在s1中的出现有一定的循环规律，比如s1=“eacfgeae”，n1=5，s2=“ea”，这样每2个s1可以出现4个s2，且有一个s2被分割了。这里有种特殊情况就是刚好没被分割，但是做法和被分割的一样。
+* s2在s1中没有出现规律。
+
+这样，我们只要遍历n1次s1，找到有没有循环规律，如果有，则跳出，没有则执行到结束。
+
+时间复杂度：O(n1*len(s1))
+
+#### 代码
+
+```cpp
+class Solution {
+public:
+    int getMaxRepetitions(string s1, int n1, string s2, int n2) {
+        int len1 = s1.size();
+        int len2 = s2.size();
+        int a[n1]{};
+        int b[len2+1]{};
+        int j = 0;
+        int m = 0;
+        int k = 1;
+        for(;k<=n1;k++){
+            for(auto c:s1){
+                if(c==s2[j])j++;
+                if(j==len2){
+                    m++;
+                    j = 0;
+                }
+            }
+            a[k] = m;
+            if(!j||b[j])break;
+            b[j] = k;
+        }
+        if(n1==k)return a[n1]/n2;
+        n1 -= b[j];
+        return (n1 / (k - b[j]) * (a[k] - a[b[j]]) + a[n1 % (k - b[j]) + b[j]]) / n2;
+    }
+};
+```
