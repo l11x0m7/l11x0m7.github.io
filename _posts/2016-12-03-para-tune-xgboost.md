@@ -11,12 +11,6 @@ description: 翻译xgboost调参指南
 
 ## 介绍
 
-If things don’t go your way in predictive modeling, use XGboost.  XGBoost algorithm has become the ultimate weapon of many data scientist. It’s a highly sophisticated algorithm, powerful enough to deal with all sorts of irregularities of data.
-
-Building a model using XGBoost is easy. But, improving the model using XGBoost is difficult (at least I struggled a lot). This algorithm uses multiple parameters. To improve the model, parameter tuning is must. It is very difficult to get answers to practical questions like – Which set of parameters you should tune ? What is the ideal value of these parameters to obtain optimal output ?
-
-This article is best suited to people who are new to XGBoost. In this article, we’ll learn the art of parameter tuning along with some useful information about XGBoost. Also, we’ll practice this algorithm using a  data set in Python.
-
 如果在使用你的预测模型的时候事情没有进展的那么顺利，可以考虑使用XGboost。XGBoost算法是很多数据科学家强有力的武器。它是一个高度复杂的算法，强大到足以解决任何非规则数据。  
 使用XGBoost建模很简单，但是使用XGBoost来改进模型是很困难的。这个算法使用了很多参数。为了改进模型，调参非常必要。需要调节哪些参数，以及如何获取最理想的参数值，这些问题都很难回答。  
 这篇文章最适合那些XGBoost使用新手。在这篇文章里，我们可以学习到调参的艺术，以及一些关于XGBoost方面的有用的信息。当然，我们会使用数据集来在Python中实践。
