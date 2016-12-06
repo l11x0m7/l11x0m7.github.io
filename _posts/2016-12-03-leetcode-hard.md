@@ -182,9 +182,6 @@ Design and implement a data structure for Least Recently Used (LRU) cache. It sh
 
 ```cpp
 # 第一种
-
-
-```
 struct Node{
     int key;
     int value;
@@ -277,6 +274,8 @@ public:
         // delete h;
     }
 };
+```
+
 ```cpp
 # 第二种
 class LRUCache{
