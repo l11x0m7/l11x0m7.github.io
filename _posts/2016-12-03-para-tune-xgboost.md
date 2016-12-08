@@ -128,6 +128,7 @@ description: 翻译xgboost调参指南
 	* Same as the subsample of GBM. Denotes the fraction of observations to be randomly samples for each tree.
 	* Lower values make the algorithm more conservative and prevents overfitting but too small values might lead to under-fitting.
 	* Typical values: 0.5-1
+	* 用于训练模型的子样本占整个样本集合的比例。如果设置为0.5则意味着XGBoost将随机的从整个样本集合中随机的抽取出50%的子样本建立树模型，这能够防止过拟合
 8. colsample_bytree [default=1]
 	* Similar to max_features in GBM. Denotes the fraction of columns to be randomly samples for each tree.
 	* Typical values: 0.5-1
@@ -177,6 +178,47 @@ lambda –> reg_lambda
 alpha –> reg_alpha  
 
 记得使用标准xgboost接口来fit function的时候传入num_boosting_rounds参数。
+
+#### Console Parameters
+
+The following parameters are only used in the console version of xgboost
+以下参数只能够在控制台使用，即只能在调用的时候传入。比如在train函数里，其参数列表为：
+
+def train(params, dtrain, num_boost_round=10, evals=(), obj=None, feval=None,
+          maximize=False, early_stopping_rounds=None, evals_result=None,
+          verbose_eval=True, xgb_model=None, callbacks=None, learning_rates=None):
+
+params和其他参数需要分别传入。          
+
+1. use_buffer [ default=1 ] 
+	* 是否为输入创建二进制的缓存文件，缓存文件可以加速计算。缺省值为1 
+2. num_round 
+	* boosting迭代计算次数
+3. data 
+	* 输入数据的路径 
+4. test:data 
+	* 测试数据的路径 
+5. save_period [default=0] 
+	* 表示保存第i*save_period次迭代的模型。例如save_period=10表示每隔10迭代计算XGBoost将会保存中间结果，设置为0表示每次计算的模型都要保持。 
+6. task [default=train] options: train, pred, eval, dump 
+	* train：训练明显 
+	* pred：对测试数据进行预测 
+	* eval：通过eval[name]=filenam定义评价指标 
+	* dump：将学习模型保存成文本格式 
+7. model_in [default=NULL] 
+	* 指向模型的路径在test, eval, dump都会用到，如果在training中定义XGBoost将会接着输入模型继续训练 
+8. model_out [default=NULL] 
+	* 训练完成后模型的保持路径，如果没有定义则会输出类似0003.model这样的结果，0003是第三次训练的模型结果
+9. model_dir [default=models] 
+	* 输出模型所保存的路径。 
+10. fmap 
+	* feature map, used for dump model 
+11. name_dump [default=dump.txt] 
+	* name of model dump file 
+12. name_pred [default=pred.txt] 
+	* 预测结果文件 
+13. pred_margin [default=0] 
+	* 输出预测的边界，而不是转换后的概率
 
 ## 参考
 
