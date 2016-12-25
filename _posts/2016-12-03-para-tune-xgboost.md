@@ -223,4 +223,4 @@ params和其他参数需要分别传入。
 ## 参考
 
 * [Complete Guide to Parameter Tuning in XGBoost (with codes in Python)](https://www.analyticsvidhya.com/blog/2016/03/complete-guide-parameter-tuning-xgboost-with-codes-python/)
-
+* [XGBoost参数](http://blog.csdn.net/zc02051126/article/details/46711047)
