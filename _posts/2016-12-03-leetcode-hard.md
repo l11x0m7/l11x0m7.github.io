@@ -511,3 +511,133 @@ public:
     }
 };
 ```
+
+# 472. Concatenated Words
+
+#### 题目
+
+Given a list of words (without duplicates), please write a program that returns all concatenated words in the given list of words.
+
+A concatenated word is defined as a string that is comprised entirely of at least two shorter words in the given array.
+
+**Example:**
+
+```
+Input: ["cat","cats","catsdogcats","dog","dogcatsdog","hippopotamuses","rat","ratcatdogcat"]
+
+Output: ["catsdogcats","dogcatsdog","ratcatdogcat"]
+
+Explanation: "catsdogcats" can be concatenated by "cats", "dog" and "cats"; 
+ "dogcatsdog" can be concatenated by "dog", "cats" and "dog"; 
+"ratcatdogcat" can be concatenated by "rat", "cat", "dog" and "cat".
+```
+
+**Note:**  
+
+1. The number of elements of the given array will not exceed **10,000**.
+2. The length sum of elements in the given array will not exceed **600,000**.
+3. All the input string will only include lower case letters.
+4. The returned elements order does not matter.
+
+#### 思路1
+
+Trie思路：  
+
+* 先对所有词建立一棵Trie树，把所有单词路径都存进去。
+* 用dfs遍历每个词，看这个词能否被拆成两个或两个以上的词。这里要注意，最后一个Test会TLE，所以可以用静态空间代替堆空间来建立Trie树，以减少内存使用。
+
+#### 代码1
+
+```cpp
+struct Node{
+    bool isword;
+    Node* child[26];
+    Node(){
+        isword = false;
+        memset(child, NULL, sizeof(Node*)*26);
+    }
+};
+class Solution {
+public:
+    vector<string> findAllConcatenatedWordsInADict(vector<string>& words) {
+        vector<string> res;
+        static Node node_pool[60000], *root = node_pool;
+        memset(node_pool, 0, sizeof(node_pool));
+        int count = 1;
+        Node* r;
+        for(auto i:words){
+            r = root;
+            for(int j=0;j<i.size();j++){
+                if(r->child[i[j]-'a']==nullptr)
+                    r->child[i[j]-'a'] = &node_pool[count++];
+                r = r->child[i[j]-'a'];
+            }
+            r->isword = true;
+        }
+        for(auto word:words){
+            if(dfs(word, root, 0, 0))
+                res.push_back(word);
+        }
+        return res;
+    }
+    bool dfs(string& word, Node* r, int ind, int count){
+        if(ind>=word.size()){
+            if(count>=2)
+                return true;
+            return false;
+        }
+        Node* root = r;
+        int i = ind;
+        while(i<word.size()&&r->child[word[i]-'a']!=nullptr){
+            r = r->child[word[i]-'a'];
+            i++;
+            if(r->isword&&dfs(word, root, i, count+1)){
+                return true;
+            }
+        }
+        return false;
+    }
+};
+```
+#### 思路2
+
+DP思路：
+
+* 对每个词先进行排序，短的放前面，长的放后面。
+* 对每个词进行遍历，看这个词能否被拆成多个词，如果可以，则存入res，如果不能，则作为单词存入set
+
+#### 代码2
+
+```cpp
+class Solution {
+public:
+    vector<string> findAllConcatenatedWordsInADict(vector<string>& words) {
+        vector<string> res;
+        unordered_set<string> s;
+        auto comp = [](string a, string b){return a.size()<b.size();};
+        sort(words.begin(), words.end(), comp);
+        for(auto word:words){
+            if(dfs(word, s))
+                res.push_back(word);
+            else
+                s.insert(word);
+        }
+        return res;
+    }
+    bool dfs(string& word, unordered_set<string>& s){
+        if(word=="")
+            return false;
+        vector<bool> dp(word.size()+1, false);
+        dp[0] = true;
+        for(int i=1;i<=word.size();i++){
+            for(int j=i-1;j>=0;j--){
+                if(dp[j]&&s.find(word.substr(j, i-j))!=s.end()){
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+        return dp[word.size()];
+    }
+};
+```
