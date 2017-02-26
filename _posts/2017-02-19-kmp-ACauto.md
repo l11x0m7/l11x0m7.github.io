@@ -86,19 +86,177 @@ void search(string s, string p) {
 	}
 }
 
-   int main()  
+int main()  
    {  
       string a = "abcdcabc";
       string b = "bc";
       search(a, b);
    }
+
+// 输出结果
+from 1 to 2
+from 6 to 7
 ```
 
 ### AC自动机
 
-待补充……
+AC自动机用于多模匹配。
+
+#### AC自动机的基本原理
+
+和KMP算法一样，AC自动机也是用于匹配。它的基本思路和KMP类似。
+
+* 构建模式字典的Trie树
+* 寻找Trie树中每个结点的fail指针（即KMP的next指针），即失配的时候下一个跳转的结点，和KMP一样，该指针指向root（当完全没有和当前匹配的子串后缀相同的前缀）或者指向前后缀一样且next中包含失配点的点
+* 利用构建的Trie树进行搜索即可，一旦失配就通过fail指针跳转，直到重新匹配或者指向root
+
+比如给定5个单词：`say she shr he her`，可以构造如下的Trie树：
+
+![Trie](http://odjt9j2ec.bkt.clouddn.com/kmp-trie.jpg)
+
+寻找每个结点的fail指针所指向的结点：
+
+![fail nodes](http://odjt9j2ec.bkt.clouddn.com/kmp-trie_fail.JPG)
+
+#### 代码实现
+
+```cpp
+#include <iostream>
+#include <map>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <stack>
+#include <queue>
+#include <cstdio>
+#include <string>
+#include <stdio.h>
+
+using namespace std;
+const int kind = 26;
+
+//Trie树结点
+struct Trie {
+	Trie* next[kind];
+	// 如果是一个单词，则为1
+	int count;
+	// 匹配失败的跳转指针
+	Trie* fail;
+	// 当前字符，非必要
+	char c;	
+	// 该具体单词
+	string word;
+	Trie() {
+		count = 0;
+		fail = nullptr;
+		memset(next, 0, sizeof(next));
+		word = "";
+		c = '0';
+	}
+};
+
+//用于测试Trie树是否构造正确
+void test(Trie* root) {
+	queue<Trie*> q;
+	q.push(root);
+	while(!q.empty()) {
+		Trie* cur = q.front();
+		q.pop();
+		for(int i=0;i<kind;i++) {
+			if(cur->next[i] == nullptr)
+				continue;
+			Trie* tmp = cur;
+			tmp = tmp->next[i];
+			char c = (tmp->fail == nullptr)?'0':(tmp->fail->c);
+			cout<<tmp->c<<':'<<c<<endl;
+			q.push(tmp);
+		}
+	}
+}
+
+// 用于构造Trie树
+void buildTrie(vector<string>& p, Trie* root) {
+	if(root == nullptr)
+		return;
+	for(string s : p) {
+		Trie* r = root;
+		for(auto c : s) {
+			if(r->next[c - 'a'] == nullptr) {
+				r->next[c - 'a'] = new Trie();
+				r->next[c - 'a']->c = c;
+			}
+			r = r->next[c - 'a'];
+		}
+		r->count++;
+		r->word = s;
+	}
+}
+
+
+// 创建AC自动机
+void acAuto(vector<string>& p, Trie* root) {
+	buildTrie(p, root);
+	queue<Trie*> q;
+	if(root == nullptr)
+		return;
+	q.push(root);
+	while(!q.empty()) {
+		Trie* cur = q.front();
+		q.pop();
+		for(int i=0;i<kind;i++) {
+			if(cur->next[i] == nullptr)
+				continue;
+			if(cur == root) cur->next[i]->fail = root;
+			else {
+				Trie* p = cur->fail;
+				while(p != root && p->next[i] == nullptr) p = p->fail;
+				if(p->next[i] != nullptr) p = p->next[i];
+				cur->next[i]->fail = p;
+			}
+			q.push(cur->next[i]);
+		}
+	}
+}
+
+
+// 搜索匹配
+void acSearch(vector<string>& p, string& s) {
+	Trie* root = new Trie();
+	acAuto(p, root);
+	Trie* r = root;
+	// test for trie
+	// test(r);
+
+	for(int i=0;i<s.size();i++) {
+		while(r != root && r->next[s[i] - 'a'] == nullptr) r = r->fail;
+
+		if(r->next[s[i] - 'a'] != nullptr) r = r->next[s[i] - 'a'];
+
+		if(r->count > 0) {
+			cout<<i-r->word.size()+1<<'\t'<<i<<'\t';
+			cout<<r->word<<endl;
+			r = r->fail;
+		}
+	}
+}
+
+
+int main() { 
+  string s = "asfojfdidjfdfgdiddiids";
+  vector<string> p;
+  p.push_back("did");
+  p.push_back("fdf");
+  acSearch(p, s);
+}
+
+// 输出结果
+6	8	did
+10	12	fdf
+14	16	did
+```
 
 ### 参考
 
 1. [KMP算法之总结篇](http://www.cnblogs.com/mfryf/archive/2012/08/15/2639565.html)
 2. [KMP算法详解](http://blog.csdn.net/yutianzuijin/article/details/11954939/)
+3. [AC自动机算法详解](http://www.cppblog.com/mythit/archive/2009/04/21/80633.html)
