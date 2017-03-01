@@ -642,3 +642,53 @@ public:
     }
 };
 ```
+
+# 517. Super Washing Machines
+
+#### 题目
+
+You have n super washing machines on a line. Initially, each washing machine has some dresses or is empty.
+
+For each move, you could choose any m (1 ≤ m ≤ n) washing machines, and pass one dress of each washing machine to one of its adjacent washing machines at the same time .
+
+Given an integer array representing the number of dresses in each washing machine from left to right on the line, you should find the minimum number of moves to make all the washing machines have the same number of dresses. If it is not possible to do it, return -1.
+
+#### 思路
+
+把所有机器的move最小和转化成每台机器的必需move的最大值（保证每台机器在调整平衡的时候被尽可能多的使用，表示不断重复利用），那么这些机器的最大值中的最大值就是所有机器的move最小值。
+
+对于一台机器来说，计算它左边的机器缺多少（或多多少）件衣服l，右边同样记为r。之后要让左右两边的数平衡，需要考虑l和r的取值：
+
+1. `l >= 0 && r >= 0` 则表示左右都缺衣服，那么需要当前机器输送衣服给左右两边的机器。当前机器（这种情况只有当前机器需要操作）需要操作l+r次；
+2. `l < 0 && r >= 0` 则表示左边多，右边少，需要操作`max(l, r)`次；
+3. `l >= 0 && r < 0` 则表示左边少，右边多，需要操作`max(l, r)`次；
+4. `l < 0 && r < 0`表示两边都多衣服，则需要操作`max(l, r)`次，即把多余的衣服给当前机器。
+
+#### 代码
+
+```cpp
+class Solution {
+public:
+    int findMinMoves(vector<int>& machines) {
+        int len = machines.size();
+        int sum[len+1];
+        sum[0] = 0;
+        for(int i=0;i<len;i++)
+            sum[i+1] = machines[i] + sum[i];
+        if(sum[len] % len != 0) return -1;
+        int avg = sum[len] / len;
+        int l, r;
+        int res = 0;
+        for(int i=0;i<len;i++) {
+            l = i * avg - sum[i];
+            r = (len-i-1) * avg - (sum[len] - sum[i+1]);
+            if(l >= 0 && r >= 0)
+                res = max(res, l + r);
+            else
+                res = max(res, max(abs(l), abs(r)));
+            // cout<<res<<endl;
+        }
+        return res;
+    }
+};
+```
