@@ -692,3 +692,79 @@ public:
     }
 };
 ```
+
+
+
+# 502. IPO
+
+#### 题目
+
+Suppose LeetCode will start its IPO soon. In order to sell a good price of its shares to Venture Capital, LeetCode would like to work on some projects to increase its capital before the IPO. Since it has limited resources, it can only finish at most k distinct projects before the IPO. Help LeetCode design the best way to maximize its total capital after finishing at most k distinct projects.
+
+You are given several projects. For each project i, it has a pure profit Pi and a minimum capital of Ci is needed to start the corresponding project. Initially, you have W capital. When you finish a project, you will obtain its pure profit and the profit will be added to your total capital.
+
+To sum up, pick a list of at most k distinct projects from given projects to maximize your final capital, and output your final maximized capital.
+
+
+**Example 1:**
+
+```
+Input: k=2, W=0, Profits=[1,2,3], Capital=[0,1,1].
+
+Output: 4
+
+Explanation: Since your initial capital is 0, you can only start the project indexed 0.
+After finishing it you will obtain profit 1 and your capital becomes 1.
+With capital 1, you can either start the project indexed 1 or the project indexed 2.
+Since you can choose at most 2 projects, you need to finish the project indexed 2 to get the maximum capital.
+Therefore, output the final maximized capital, which is 0 + 1 + 3 = 4.
+```
+
+Note:
+
+1. You may assume all numbers in the input are non-negative integers.
+2. The length of Profits array and Capital array will not exceed 50,000.
+3. The answer is guaranteed to fit in a 32-bit signed integer.
+
+#### 思路
+
+此题的思路就是贪婪算法+优先级队列。
+
+一开始我有W块钱，只能买W以及以下的东西，但是买了以后不花钱（因为是pure profit），且可以净赚`Profit[i]`块，但只能买k个，且不重样。那么一个简单的思路就是我每次买的时候，先扫描我能买的，然后选择可以获得的净利润`Profit[i]`，循环k遍，就得到最大的利润。
+
+但是上述做法的复杂度为`O(n*k)`，是暴力解法。其实可以把一开始的数据分在两个容器里，用优先级队列存放我能够的买的东西的`Profit[i]`，另一个用按`Capital`排序的vector存放我暂时买不了的东西的`pair(Capital[i], Profit[i])`。这样我每次买的时候，从优先级队列中取出最大利益值，并更新W，之后再根据更新过的W从vector中选择我现在可以买的东西的`Profit[i]`到优先级队列中。
+
+#### 代码
+
+```cpp
+class Solution {
+public:
+    int findMaximizedCapital(int k, int W, vector<int>& Profits, vector<int>& Capital) {
+        int len = Profits.size();
+        priority_queue<int> pq;
+        vector<pair<int, int>> cp;
+        for(int i=0;i<len;i++) {
+            if(Profits[i]>0) {
+                if(W>=Capital[i])
+                    pq.push(Profits[i]);
+                else
+                    cp.push_back(pair<int, int>(Capital[i], Profits[i]));
+            }
+        }
+        auto f = [](pair<int, int> a, pair<int, int> b) {return a.first<b.first;};
+        sort(cp.begin(), cp.end(), f);
+        while(k--) {
+            if(pq.empty())
+                return W;
+            W += pq.top();
+            pq.pop();
+            int i = 0;
+            while(!cp.empty()&&cp[i].first<=W) {
+                pq.push(cp[i].second);
+                cp.erase(cp.begin());
+            }
+        }
+        return W;
+    }
+};
+```
