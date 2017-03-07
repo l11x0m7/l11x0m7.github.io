@@ -768,3 +768,70 @@ public:
     }
 };
 ```
+
+
+# 514. Freedom Trail
+
+#### 题目
+
+[Freedom Trail](https://leetcode.com/problems/freedom-trail/?tab=Description)
+
+
+#### 思路
+
+比较正式的思路就是DP，每次我们考虑两个多源问题：
+
+1. 从上面的哪个位置跳到当前匹配的位置（对应多个来源）；
+2. 从上面的位置跳到匹配key中当前字符的ring所在的位置（对应多个目的）。
+
+其实就是从ring中的哪个上一目标位置跳到ring中的哪个当前目标位置。
+
+这样，我们可以用`dp[i][j]`来存储目标`key[i]`对应的跳到`ring[j]`的步数，可见`key[i] == ring[j]`，而从多个源跳入当前位置`j`，则需要遍历多个源，然后选择`dp[i][j]`为跳入`j`的步数最小值。
+
+当然也可以用DFS方法来遍历每一种可能。
+
+
+#### DP代码
+```cpp
+class Solution {
+public:
+    int findRotateSteps(string ring, string key) {
+        int m = ring.size();
+        int n = key.size();
+        if(m < 1 || n < 1)
+            return 0;
+        int dp[n+1][m];
+        memset(dp, 0, sizeof(dp));
+        set<int> pre;
+        pre.insert(0);
+        for(int i=0;i<n;i++) {
+            set<int> tmp;
+            for(int j=0;j<m;j++) {
+                if(key[i] == ring[j]) {
+                    // cout<<j<<ring[j]<<endl;
+                    for(auto k : pre) {
+                        int step = abs(j - k);
+                        step = min(step, m - step);
+                        int jump = dp[i][k] + step + 1;
+                        if(dp[i+1][j] != 0)
+                            dp[i+1][j] = min(dp[i+1][j], jump);
+                        else
+                            dp[i+1][j] = jump;
+                        // cout<<dp[i+1][j]<<endl;
+                    }
+                    tmp.insert(j);
+                }
+            }
+            pre = tmp;
+        }
+        int res = INT_MAX;
+        for(int i=0;i<m;i++) {
+            // cout<<dp[n][i];
+            if(ring[i] == key[n-1])
+                res = min(res, dp[n][i]);
+        }
+        return res;
+    }
+};
+```
+
