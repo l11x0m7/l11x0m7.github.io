@@ -1,6 +1,6 @@
 --- 
 layout: post 
-title: Leetcode的Hard难度题目汇总
+title: Leetcode的Hard难度题目汇总（持续更新）
 date: 2016-12-03 
 categories: blog 
 tags: [算法, leetcode] 
@@ -835,3 +835,79 @@ public:
 };
 ```
 
+# 546. Remove Boxes
+
+#### 题目
+
+Given several boxes with different colors represented by different positive numbers. 
+You may experience several rounds to remove boxes until there is no box left. Each time you can choose some continuous boxes with the same color (composed of k boxes, `k >= 1`), remove them and get `k*k` points.
+Find the maximum points you can get.
+
+
+**Example 1:**
+
+Input:
+
+```
+[1, 3, 2, 2, 2, 3, 4, 3, 1]
+```
+
+Output:
+
+```
+23
+```
+
+Explanation:  
+
+```
+[1, 3, 2, 2, 2, 3, 4, 3, 1] 
+----> [1, 3, 3, 4, 3, 1] (3*3=9 points) 
+----> [1, 3, 3, 3, 1] (1*1=1 points) 
+----> [1, 1] (3*3=9 points) 
+----> [] (2*2=4 points)
+```
+
+**Note:** The number of boxes `n` would not exceed 100.
+
+#### 思路
+
+这题的思路参考了[Python, Fast DP with Explanation](https://discuss.leetcode.com/topic/84307/python-fast-dp-with-explanation)
+
+使用DP+DFS来完成。`dp[i][j][k]`表示从i和j之间的子数组在i之前共有k个值等于`boxes[i]`的条件下的最大得分数。这样，每个`dp[i][j][k]`的值有两种方式：
+
+* 如果从i到m（`i<m<=j`）的数都等于`boxes[i]`，那么我们就可以考虑让前面的`k`个和这`m-i`个数合并，那么和为`helper(boxes, dp, m+1, j, 0) + (k+1) * (k+1)`
+* 如果从m+1到j当中存在某个位置l，使得`boxes[l] == boxes[m]`，那么就把该数前面的`m+1`到`l-1`的数合并，为`helper(boxes, dp, m+1, l-1, 0)`；并加上从`l`到`j`的合并的所有数，为`helper(boxes, dp, l, j, k+1)`
+
+其实第一种情况也可以拆解成第二种情况，按多步完成，但是由于多个数连在一起进行消除的分数一定比单个拆开来要高，所以可以单独做这一步。
+
+
+
+#### 代码
+
+```cpp
+class Solution {
+public:
+    int removeBoxes(vector<int>& boxes) {
+        int n = boxes.size();
+        int dp[100][100][100] = {0};
+        return helper(boxes, dp, 0, n-1, 0);
+    }
+    int helper(vector<int>& boxes, int dp[][100][100], int i, int j, int k) {
+        if(i>j)return 0;
+        if(dp[i][j][k] != 0)
+            return dp[i][j][k];
+        int m = i;
+        while(m+1<=j && boxes[i] == boxes[m+1]) m++;
+        k = k + (m-i);
+        int res = helper(boxes, dp, m+1, j, 0) + (k+1) * (k+1);
+        for(int l=m+1;l<=j;l++) {
+            if(boxes[l] == boxes[m]) {
+                res = max(res, helper(boxes, dp, m+1, l-1, 0) + helper(boxes, dp, l, j, k+1));
+            }
+        }
+        dp[m][j][k] = res;
+        return res;
+    }
+};
+```
