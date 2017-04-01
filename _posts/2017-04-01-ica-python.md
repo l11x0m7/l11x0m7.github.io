@@ -288,6 +288,8 @@ if __name__ == '__main__':
 
 [ICA(独立成分分析)在信号盲源分离中的应用](http://blog.csdn.net/cai2016/article/details/52983473)  
 [史上最直白的ICA教程](http://blog.csdn.net/lizhe_dashuju/article/details/50263339)  
+[史上最直白的ICA教程pdf](http://odjt9j2ec.bkt.clouddn.com/ica-%E5%8F%B2%E4%B8%8A%E6%9C%80%E7%9B%B4%E7%99%BD%E7%9A%84ICA%E6%95%99%E7%A8%8B.pdf)  
 [Independent Component Analysis:
 Algorithms and Applications](http://mlsp.cs.cmu.edu/courses/fall2013/lectures/ICA_Hyvarinen.pdf)  
-[白化](http://deeplearning.stanford.edu/wiki/index.php/%E7%99%BD%E5%8C%96)
+[白化](http://deeplearning.stanford.edu/wiki/index.php/%E7%99%BD%E5%8C%96)  
+[Indepdent Componet analysis](http://odjt9j2ec.bkt.clouddn.com/ica-2001%28E-book%29Independent%20Component%20Analysis.pdf)  
