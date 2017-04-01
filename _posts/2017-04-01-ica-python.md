@@ -20,12 +20,12 @@ description: 实现ICA算法来做信号分离
 sklearn源码里给出的一段话个人觉得不错：
 
 ```
-The data matrix X is considered to be a linear combination of non-Gaussian (independent) components i.e. X = AS where columns of S contain the independent components and A is a linear mixing matrix. In short ICA attempts to `un-mix' the data by estimating an un-mixing matrix W where ``S = W K X.``
+The data matrix X is considered to be a linear combination of non-Gaussian (independent) components i.e. X = AS where columns of S contain the independent components and A is a linear mixing matrix. In short ICA attempts to `un-mix` the data by estimating an un-mixing matrix W where ``S = W K X.``
 ```
 
 ### 注意
 
-能够分离的先决条件是：各个信号独立且非高斯。
+能够分离的先决条件是：各个信号独立，非高斯，且接收源的个数（X的大小）等于独立源的个数（S的大小）。
 
 ### 代码
 
