@@ -1,10 +1,10 @@
 --- 
 layout: post 
-title: 
+title: ICA算法之算法实现
 date: 2017-04-01 
 categories: blog 
-tags: [, ] 
-description: 
+tags: [ICA, 数学] 
+description: 实现ICA算法来做信号分离
 --- 
 
 # ICA算法之算法实现
