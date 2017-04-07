@@ -15,9 +15,9 @@ $$softmax:\hat{y}_i=a_i^L=\frac{e^{z_i^L}}{\sum_je^{z_j^L}}$$
 
 $$ground truth(one\ hot\ vector):y$$
 
-$$C_{ce}=-y^T\*log(\hat{y})-(1-y^T)\*log(1-\hat{y})=-log\hat{y_k}-\sum_{l\neqk}log(1-\hat{y_l})$$
+$$C_{ce}=-y^T*log(\hat{y})-(1-y^T)*log(1-\hat{y})=-log\hat{y_k}-\sum_{l\neq{k}}log(1-\hat{y_l})$$
 
-$$C_{nll}=-y^T*log(\hat{y})=\sum_ly_l\*log(\hat{y_l})$$
+$$C_{nll}=-y^T*log(\hat{y})=\sum_ly_l*log(\hat{y_l})$$
 
 $$\delta_i^L=\frac{\partial{C}}{\partial{z_i^L}}$$
 
@@ -29,7 +29,7 @@ $$\delta_i^L=\frac{\partial{C}}{\partial{z_i^L}}$$
 
 $$\frac{\partial{C}}{\partial{z_i^L}}=-\frac{\hat{y_i}^{'}}{\hat{y_i}}=-\frac{\sigma^{'}(z_i^L)}{\sigma(z_i^L)}=\hat{y_i}-1$$
 
-同理，当$i\neqk$时：
+同理，当$i\neq{k}$时：
 
 $$\frac{\partial{C}}{\partial{z_i^L}}=\frac{\hat{y_i}^{'}}{1-\hat{y_i}}=\frac{\sigma^{'}(z_i^L)}{1-\sigma(z_i^L)}=\hat{y_i}$$
 
@@ -41,11 +41,11 @@ $$\delta^L=\frac{\partial{C}}{\partial{z^L}}=\hat{y}-y$$
 
 当$i=k$时（即我们求偏导的那个神经元的输出就是正确类别的那个输出，此时$y_i=y_k=1$）:
 
-$$\frac{\partial{C}}{\partial{z_i^L}}=\frac{\partial{C}}{\partial{a_k^L}}\frac{\partial{a_k^L}}{\partial{z_i^L}}=-\frac{1}{a_k^L}\*[a_k^L-a_k^L*a_i^L]=a_i^L-1$$
+$$\frac{\partial{C}}{\partial{z_i^L}}=\frac{\partial{C}}{\partial{a_k^L}}\frac{\partial{a_k^L}}{\partial{z_i^L}}=-\frac{1}{a_k^L}*[a_k^L-a_k^L*a_i^L]=a_i^L-1$$
 
-同理，当$i\neqk$时：
+同理，当$i\neq{k}$时：
 
-$$\frac{\partial{C}}{\partial{z_i^L}}=\frac{\partial{C}}{\partial{a_k^L}}\frac{\partial{a_k^L}}{\partial{z_i^L}}=-\frac{1}{a_k^L}\*[-a_k^L*a_i^L]=a_i^L$$
+$$\frac{\partial{C}}{\partial{z_i^L}}=\frac{\partial{C}}{\partial{a_k^L}}\frac{\partial{a_k^L}}{\partial{z_i^L}}=-\frac{1}{a_k^L}*[-a_k^L*a_i^L]=a_i^L$$
 
 综上：
 
