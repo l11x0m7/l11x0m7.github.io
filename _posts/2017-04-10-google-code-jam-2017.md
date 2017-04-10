@@ -1,9 +1,9 @@
 --- 
 layout: post 
-title: 
+title: Google Code Jam 2017——资格赛
 date: 2017-04-10 
 categories: blog 
-tags: [, ] 
+tags: [算法] 
 description: google code jam
 --- 
 
