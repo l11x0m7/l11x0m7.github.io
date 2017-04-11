@@ -59,3 +59,8 @@ int * const a表示a是一个指针常量，初始化的时候必须固定指向
 // 这样会发生错误，因为int* const是一个指针常量，不能够改变该指针的值，但可以改变该指针所指向的变量i。
 ```
 
+### 3. lower_bound和higher_bound的区别
+
+对于某个已经**排序**的`vector<int> s`，其`lower_bound`和`upper_bound`分别取到以给定值为下界的最大值，只是包含和不包含的区别。
+
+简单讲，就是`lower_bound`返回大于等于给定数的最小值，而`upper_bound`返回大于给定数的最小值。
