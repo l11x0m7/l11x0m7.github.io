@@ -911,3 +911,179 @@ public:
     }
 };
 ```
+
+
+# 564. Find the Closest Palindrome
+
+#### 题目
+
+Given an integer n, find the closest integer (not including itself), which is a palindrome.
+
+The 'closest' is defined as absolute difference minimized between two integers.
+
+**Example 1:**
+
+```
+Input: "123"
+Output: "121"
+```
+
+**Note:**
+
+1. The input n is a positive integer represented by string, whose length will not exceed 18.
+2. If there is a tie, return the smaller one as answer.
+
+
+#### 思路
+
+首先，对于一个数，只考虑它的前一半。比如`12367`，那么它的前一半就是`123`。现在对该前半部分进行调整，那么离它最近的回文的前缀一定在`[12221,12321,12421]`当中。考虑另一种情况，如果是边缘值，比如`1000`，`9999`，那么离他们最近的就是[999,1001]中的一个，或者`[10001,9999]`中的一个。所以，先得到这些所有的候选词，然后选出最近的或者题目最优的。步骤如下：
+
+1. 对`s`，求出`s`的前缀部分`head`;
+2. 对`head`求`[head-1,head,head+1]`对应的回文；
+3. 对`s`求相应位数与高一位位数的边界值（如果s为4位，则求出1001，999，9999，10001）；
+4. 对以上的候选值进行筛选。
+
+> 注意，本题使用long long即可，因为long long最长表示比10^18大。
+
+#### 代码
+
+```cpp
+class Solution {
+public:
+    string nearestPalindromic(string n) {
+        int len = n.size();
+        vector<string> candidates;
+        for(int i=len-1;i<=len;i++) {
+            for(int j=-1;j<=1;j+=2) {
+                candidates.push_back(to_string((long long)pow(10, i) + (long long)j));
+            }
+        }
+        string pre = n.substr(0, (len+1)/2);
+        // cout<<pre<<endl;
+        for(int i=-1;i<=1;i++) {
+            string cur = to_string(stoll(pre) + (long long)i);
+            string lat = cur;
+            reverse(lat.begin(), lat.end());
+            if(len % 2 == 1)
+                cur = cur.substr(0, cur.size()-1) + lat;
+            else
+                cur += lat;
+            candidates.push_back(cur);
+        }
+        string res = "";
+        for(string s: candidates) {
+            if(s != n && (res == "" || abs(stoll(res) - stoll(n))>abs(stoll(s) - stoll(n)) || (abs(stoll(res) - stoll(n))==abs(stoll(s) - stoll(n)) && stoll(s) < stoll(res))))
+                res = s;
+        }
+        return res;
+    }
+};
+```
+
+
+# 552. Student Attendance Record II
+
+#### 题目
+
+Given a positive integer n, return the number of all possible attendance records with length n, which will be regarded as rewardable. The answer may be very large, return it after mod $10^9$ + 7.
+
+A student attendance record is a string that only contains the following three characters:
+
+1. 'A' : Absent.
+2. 'L' : Late.
+3. 'P' : Present.
+
+A record is regarded as rewardable if it doesn't contain more than one 'A' (absent) or more than two continuous 'L' (late).
+
+**Example 1:**
+
+```
+Input: n = 2
+Output: 8 
+Explanation:
+There are 8 records with length 2 will be regarded as rewardable:
+"PP" , "AP", "PA", "LP", "PL", "AL", "LA", "LL"
+Only "AA" won't be regarded as rewardable owing to more than one absent times. 
+```
+
+**Note:** The value of n won't exceed 100,000.
+
+
+#### 思路
+
+使用`dp[i][j]`。假设i表示对应的第i个数，j只有3个值`0,1,2`对应`A,L,P`，dp表示在当前位置取三个值对应的符合要求的情况。考虑三种情况：
+
+1. 当前位i放`P`时，前面的可以随意放，就是`dp[i][0]+dp[i][1]+dp[i][2]`
+2. 当前位i放`L`时，前面一位可以是`A`或`P`，或者放`L`且`i-2`位置不放`L`
+3. 当前位i放`A`时，前面所有的不能出现`A`，那么就是`dp[i-1][0] + dp[i-2][0] + dp[i-3][0]`，第一个表示`i-1`放`P`且前面无`A`，第二个表示`i-1`放`L`且`i-2`放`P`且前面无`A`，第三个表示`i-1`放`L`且`i-2`放`L`且`i-3`放`P`且前面无`A`的个数。
+
+#### 代码
+
+MLE的代码：
+
+
+```cpp
+class Solution {
+public:
+    int checkRecord(int n) {
+        if(n < 1)
+            return 0;
+        if(n == 1)
+            return 3;
+        vector<vector<long long>> dp(n+1, vector<long long>(3, 0));
+        // A L P
+        dp[0][0] = 1;
+        dp[1][0] = 1;
+        dp[1][1] = 1;
+        dp[1][2] = 1;
+        dp[2][0] = 2;
+        dp[2][1] = 3;
+        dp[2][2] = 3;
+        for(int i=3;i<=n;i++) {
+            dp[i][2] = (dp[i-1][0] + dp[i-1][1] + dp[i-1][2]) % 1000000007;
+            dp[i][1] = ((dp[i-2][0] + dp[i-2][2]) + dp[i-1][0] + dp[i-1][2]) % 1000000007;
+            dp[i][0] = (dp[i-1][0] + dp[i-2][0] + dp[i-3][0]) % 1000000007;
+        }
+        return (dp[n][0] + dp[n][1] + dp[n][2]) % 1000000007;
+    }
+};
+```
+
+修改后的代码：
+
+```cpp
+class Solution {
+public:
+    int checkRecord(int n) {
+        if(n < 1)
+            return 0;
+        if(n == 1)
+            return 3;
+        if(n == 2)
+            return 8;
+        long long dp00 = 1;
+        long long dp10 = 1;
+        long long dp11 = 1;
+        long long dp12 = 1;
+        long long dp20 = 2;
+        long long dp21 = 3;
+        long long dp22 = 3;
+        long long dp30 = 0;
+        long long dp31 = 0;
+        long long dp32 = 0;
+        for(int i=3;i<=n;i++) {
+            dp32 = (dp20 + dp21 + dp22) % 1000000007;
+            dp31 = (dp10 + dp12 + dp20 + dp22) % 1000000007;
+            dp30 = (dp20 + dp10 + dp00) % 1000000007;
+            dp00 = dp10;
+            dp12 = dp22;
+            dp11 = dp21;
+            dp10 = dp20;
+            dp22 = dp32;
+            dp21 = dp31;
+            dp20 = dp30;
+        }
+        return (dp30 + dp31 + dp32) % 1000000007;
+    }
+};
+```
