@@ -1087,3 +1087,52 @@ public:
     }
 };
 ```
+
+# 493. Reverse Pairs
+
+#### 题目
+
+https://leetcode.com/problems/reverse-pairs/#/description
+
+#### 思路
+
+有三种思路：merge、BST、BIT
+
+可参考下面的链接（general problems）：
+
+https://discuss.leetcode.com/topic/79227/general-principles-behind-problems-similar-to-reverse-pairs/6
+
+#### 代码
+
+按照merge sort的思路：
+
+
+```cpp
+class Solution {
+public:
+    int reversePairs(vector<int>& nums) {
+        int res = merge(nums.begin(), nums.end());
+        // for(int i=0;i<nums.size();i++)
+        //     cout<<nums[i]<<endl;
+        return res;
+    }
+    int merge(vector<int>::iterator l, vector<int>::iterator r) {
+        if(r - l <= 1)
+            return 0;
+        auto mid = l + (r - l - 1) / 2;
+        int res = merge(l, mid + 1) + merge(mid + 1, r);
+        auto tmp = mid;
+        auto tmp2 = r - 1;
+        while(tmp != l-1 && tmp2 != mid) {
+            if(*tmp > 2 * (long long)*tmp2) {
+                res += (tmp2 - mid);
+                tmp--;
+            }
+            else
+                tmp2--;
+        }
+        inplace_merge(l, mid + 1, r);
+        return res;
+    }
+};
+```
