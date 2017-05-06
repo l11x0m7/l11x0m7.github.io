@@ -1190,3 +1190,40 @@ public:
     }
 };
 ```
+
+# 132. Palindrome Partitioning II
+
+#### 题目
+
+https://leetcode.com/problems/palindrome-partitioning-ii/#/description
+
+#### 思路
+
+对于每个子串对于子串`s[0...j]`，它被cut的最小次数为：`min(cut(s[0...j]), cut(s[0...i-1]) + 1)`，对于所有为palindrome串的`s[i...j]`
+
+#### 代码
+
+```cpp
+class Solution {
+public:
+    int minCut(string s) {
+        int N = s.size();
+        int mincut[N + 1];
+        vector<vector<bool>> isPalin(N, vector<bool>(N, false));
+        for(int i=0;i<N;i++) isPalin[i][i] = true;
+        for(int i=0;i<=N;i++)mincut[i] = i - 1;
+        for(int i=0;i<N;i++) {
+            for(int j=i;j>=0;j--) {
+                if(s[j] == s[i]) {
+                    if(i - j >= 2 && !isPalin[j+1][i-1])
+                        continue;
+                    mincut[i + 1] = min(mincut[i + 1], mincut[j] + 1);
+                    isPalin[j][i] = true;
+                }
+            }
+        }
+        return mincut[N];
+    }
+};
+```
+
