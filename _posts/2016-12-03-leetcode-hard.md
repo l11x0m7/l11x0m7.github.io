@@ -1136,3 +1136,57 @@ public:
     }
 };
 ```
+
+# 483. Smallest Good Base
+
+#### 题目
+
+https://leetcode.com/problems/smallest-good-base/#/description
+
+#### 思路
+
+这道题不难，主要是二分搜索。但是难在double（在使用pow的时候的return值）和unsigned long long之间的转化。因为在值很大的情况下，double转ull会有位丢失，需要注意。
+
+二分搜索：
+
+* 给定数n，确定其最多能用几个1表示，那么肯定是在二进制的情况下，1最多；而最少可以用1个1表示，那么base就等于n。得到可表示n的1的个数范围[2, d]；
+* 降序遍历[2, d]，然后考虑在k个1的条件下，二分搜索base的值（此时base值范围在[2, pow(n, 1/(k-1))+1]内），使得base满足pow(base, k-1)+...+pow(base, 0)=n，则返回base；
+* 如果都找不到，则返回n本身。
+
+#### 代码
+
+```cpp
+typedef unsigned long long ll;
+class Solution {
+public:
+    string smallestGoodBase(string n) {
+        ll m = (ll)stoll(n);
+        int count = 2;
+        while((1LL<<count) < m) count++;
+        while(count-- > 1) {
+            ll lower = 2;
+            ll upper = count == 1 ? m : (ll)pow(m, 1./count) + 1;
+            while(lower <= upper) {
+                ll mid = (lower + upper) / 2;
+                ll c = cal(mid, count + 1);
+                if(c < m)
+                    lower = mid + 1;
+                else if(c > m)
+                    upper = mid - 1;
+                else
+                    return to_string(mid);
+            }
+        }
+        return n;
+    }
+    ll cal(ll mid, int k) {
+        ll res = 0;
+        ll count = 1;
+        while(k--) {
+            res += count;
+            count *= mid;
+        }
+        return res;
+    }
+};
+```
