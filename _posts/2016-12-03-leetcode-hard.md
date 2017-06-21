@@ -1227,3 +1227,58 @@ public:
 };
 ```
 
+# 600. Non-negative Integers without Consecutive Ones
+
+#### 题目
+
+https://leetcode.com/problems/non-negative-integers-without-consecutive-ones/#/solutions
+
+
+#### 思路
+
+先不考虑这题，我们先假设，给定比特数n，求该比特数对应的`Non-negative Integers without Consecutive Ones`数量(设为f)。  
+
+* 当n=2时，有`00, 01, 10`共3个；  
+* 当n=3时，有`000, 001, 010, 100, 101`共5个。  
+
+其实可以看到`f(2)=3, f(3)=5`，即`f(XXX)=f(0XX)+f(10X)`，即`f(3)=f(2)+f(1)`。
+
+因此，放到这题里，就是需要求出小于等于某个数的所有结果。举例：  
+
+* 当`num=100`时，即`num=1100100`，那么`1100100 = 0000000~0111111 + 1000000~1011111 + 1100000~1100011 + 1100100`，由于`1100000`已经有两个1，因此后面的都可以忽略，即`1100100 = 0000000~0111111 + 1000000~1011111`，即`res=f(6)+f(5)=34`
+* 当`num=9`时，即`num=1001`，那么`1001 = 0000~0111 + 1000~1000 + 1001`，即`res=f(3)+f(0)+1=7`
+
+#### 代码
+
+```cpp
+class Solution {
+public:
+    int findIntegers(int num) {
+        int fib[32] = {0};
+        fib[0] = 1;
+        int pre = 1;
+        for(int i=1;i<32;i++) {
+            fib[i] = fib[i-1] + pre;
+            pre = fib[i-1];
+        }
+        string bin = "";
+        while(num) {
+            bin = bin + to_string(num&1);
+            num >>= 1;
+        }
+        int res = 0;
+        int pre_bit = 0;
+        for(int i=bin.size()-1;i>=0;i--) {
+            if(bin[i] == '1') {
+                res += fib[i];
+                if(pre_bit == 1)return res;
+                pre_bit = 1;
+                // cout<<i<<" "<<fib[i]<<endl;
+            }
+            else
+                pre_bit = 0;
+        }
+        return 1 + res;
+    }
+};
+```
