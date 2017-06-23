@@ -1282,3 +1282,78 @@ public:
     }
 };
 ```
+
+# 4. Median of Two Sorted Arrays
+
+#### 题目
+
+https://leetcode.com/problems/median-of-two-sorted-arrays/
+
+#### 思路
+
+思路参考链接：https://discuss.leetcode.com/topic/4996/share-my-o-log-min-m-n-solution-with-explanation
+
+就是说，需要先明确中值的意义：找到某个值，使得比这个值小的数和比这个数大的数的个数相同。
+
+* 首先确认长度最小的数组`n1`，对它进行二分查找。因为如果对长序列查找，那么对应短序列的index会出错；
+* 如果当前在`n1`的index为`i`，那么考虑`len1+len2-i-j==i+j-1`，即左侧长度和右侧长度一样，那么在`n2`的index为`j=(len1+len2+1)/2-i`；
+* 当`n1[i-1] <= n2[j] && n1[i] >= n2[j-1]`时，就找到了对应的`i`，此时中值为`m+n为奇数：max(n1[i-1],n2[j-1]); m+n为偶数：(max(n1[i-1],n2[j-1])+min(n1[i],n2[j]))/2`
+* 当`n1[i-1] > n2[j]`时，`right=i-1`；
+* 当`n1[i] < n2[j-1]`时，`left=i+1`.
+
+
+
+#### 代码
+
+```cpp
+class Solution {
+public:
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        int len1 = nums1.size();
+        int len2 = nums2.size();
+        vector<int> n1 = nums1, n2 = nums2;
+        if(len1 > len2) {
+            n1 = nums2;
+            n2 = nums1;
+            swap(len1, len2);
+        }
+        if(len1 == 0) {
+            return (n2[len2/2] + n2[(len2-1)/2]) / 2.;
+        }
+        int l = 0;
+        int r = len1;
+        int i, j;
+        // cout<<len1<<" "<<len2<<endl;
+        while(l <= r) {
+            i = (l + r) / 2;
+            j = (len1+len2+1) / 2 - i;
+            if(i > 0 && n1[i-1] > n2[j]) {
+                r = i-1;
+            }
+            else if(i < len1 && n2[j-1] > n1[i]) {
+                l = i+1;
+            }
+            else
+                break;
+        }
+        int maxlef;
+        if(i == 0)
+            maxlef = n2[j-1];
+        else if(j == 0)
+            maxlef = n1[i-1];
+        else
+            maxlef = max(n1[i-1], n2[j-1]);
+        int minright;
+        if(j == len2)
+            minright = n1[i];
+        else if(i == len1)
+            minright = n2[j];
+        else
+            minright = min(n1[i], n2[j]);
+        if((len1 + len2) % 2 == 1)
+            return maxlef;
+        else
+            return ((double)maxlef + (double)minright) / 2.;
+    }
+};
+```
