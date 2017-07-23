@@ -1,10 +1,10 @@
 --- 
 layout: post 
-title: 有趣的transformer
+title: 有趣的transformer 
 date: 2017-07-21 
 categories: blog 
 tags: [DeepLearning, NLP] 
-description: transformer里面的神奇
+description: transformer里面的神奇 
 --- 
 
 # 有趣的transformer
@@ -76,16 +76,16 @@ embedding：input embedding、positional embedding和softmax前的linear层共�
 
 用了三个方法：  
 
-1. residual dropout
+* residual dropout
 
 ![](http://odjt9j2ec.bkt.clouddn.com/transformer-Pasted%20Graphic8.png)
 ￼
 
-2. attention dropout
+* attention dropout
 
 ![](http://odjt9j2ec.bkt.clouddn.com/transformer-Pasted%20Graphic9.png)
 
-3. label smoothing
+* label smoothing
 ￼
 ![](http://odjt9j2ec.bkt.clouddn.com/transformer-Pasted%20Graphic10.png)
 
