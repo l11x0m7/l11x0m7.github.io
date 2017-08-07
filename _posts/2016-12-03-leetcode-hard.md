@@ -1357,3 +1357,51 @@ public:
     }
 };
 ```
+
+# 632. Smallest Range
+
+#### 题目
+
+https://leetcode.com/problems/smallest-range/description/
+
+#### 思路
+
+考虑最差的情况就是所有有序数组的最小值中的最小值作为range左侧，最大值作为range右侧。使用优先级队列按有序数组的第一个数进行排列，每次pop出队列中最小的值，并更新range。直到某个数组里的数pop完为止，此时表明当前range不包含所有的数组。
+
+#### 代码
+
+```cpp
+typedef vector<int>::iterator vit;
+class Solution {
+public:
+    struct comp {
+        bool operator() (pair<vit, vit> a, pair<vit, vit> b) {
+            return *a.first > *b.first;
+        }
+    };
+    vector<int> smallestRange(vector<vector<int>>& nums) {
+        priority_queue<pair<vit, vit>, vector<pair<vit, vit>>, comp> pq;
+        int low = INT_MAX;
+        int high = INT_MIN;
+        for(int i=0;i<nums.size();i++) {
+            low = min(low, nums[i][0]);
+            high = max(high, nums[i][0]);
+            pq.push(make_pair(nums[i].begin(), nums[i].end()));
+        }
+        vector<int> res = {low, high};
+        while(1) {
+            auto head = pq.top();
+            pq.pop();
+            ++head.first;
+            if(head.first == head.second)
+                break;
+            pq.push(head);
+            low = *pq.top().first;
+            high = max(high, *head.first);
+            if(high - low < res[1] - res[0])
+                res = {low, high};
+        }
+        return res;
+    }
+};
+```
