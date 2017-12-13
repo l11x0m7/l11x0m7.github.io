@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Note for Neural Text Generation: A Practical Guide
+title: Note for "Neural Text Generation: A Practical Guide"
 date: 2017-12-13
 categories: blog
 tags: [NLP, 论文]
@@ -25,7 +25,7 @@ description: 神经文本生成的encoder-decoder框架实际操作指南
 
 training loss:
 
-![](http://odjt9j2ec.bkt.clouddn.com/ntg-guide-1.png)
+![](file:///home/sky/%E5%9B%BE%E7%89%87/2017-12-13%2015:42:51%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png)
 
 
 ### Decoding overview
@@ -88,17 +88,15 @@ Perplexity不能较好的反映模型效果。n-gram的metrics如BLEU和ROUGE也
 
 ##### 解决short output
 
-* length penalty and length bonus
-
-![](http://odjt9j2ec.bkt.clouddn.com/ntg-guide-2.png)
+![](imgs/20171213-164044.png)
 
 * coverage penalty
 
-![](http://odjt9j2ec.bkt.clouddn.com/ntg-guide-3.png)
+![](imgs/20171213-164829.png)
 
 ##### 约束target length与source length接近
 
-![](http://odjt9j2ec.bkt.clouddn.com/ntg-guide-4.png)
+![](imgs/20171213-164923.png)
 
 #### Decoded output repeats
 
@@ -108,12 +106,11 @@ Perplexity不能较好的反映模型效果。n-gram的metrics如BLEU和ROUGE也
 
 多样性可以通过以下方法：
 
-1. 
-![](http://odjt9j2ec.bkt.clouddn.com/ntg-guide-5.png)
+![](imgs/20171213-170036.png)
 
-2. 在beam search过程中加入一个penalty
+在beam search过程中加入一个penalty
 
-3. 最大化target与source的互信息
+最大化target与source的互信息
 
 ## References
 
