@@ -9,3 +9,8 @@ description: 蚂蚁金服店铺定位比赛解决方案
 
 # 阿里天池-蚂蚁金服 店铺定位 Rank2解决方案
 
+不瞎搞了，专心科研。PPT在References中。
+
+## References
+
+[答辩ppt](http://odjt9j2ec.bkt.clouddn.com/contest-mayi-%E3%80%90BDCI%202017%E3%80%91%E5%95%86%E9%93%BA%E5%AE%9A%E4%BD%8D_PRIS_%E7%AD%94%E8%BE%A9PPT.pptx)
