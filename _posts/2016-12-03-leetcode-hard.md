@@ -1405,3 +1405,36 @@ public:
     }
 };
 ```
+
+# 768. Max Chunks To Make Sorted II
+
+#### 题目
+
+https://leetcode.com/problems/max-chunks-to-make-sorted-ii/description/
+
+#### 思路
+
+其实还是找每个值的排序下标（pos）与在原数组中的下标（arr），那么对于某个数，其包含的排序线段范围为[min(i, pos[i]), max(pos[i], i)]，因此合并重叠的线段，最终得到的不重叠的线段个数即为结果。
+
+代码中简化了找非重叠线段。
+
+#### 代码
+
+```cpp
+class Solution {
+public:
+    int maxChunksToSorted(vector<int>& arr) {
+        int n = arr.size();
+        vector<int> pos(n);
+        iota(pos.begin(), pos.end(), 0);
+        sort(pos.begin(), pos.end(), [&arr](int a, int b){return arr[a] == arr[b] ? a < b : arr[a] < arr[b];});
+        int max_n = 0;
+        int res = 0;
+        for(int i=0;i<n;i++) {
+            max_n = max(max_n, pos[i]);
+            if(max_n == i) res++;
+        }
+        return res;
+    }
+};
+```
