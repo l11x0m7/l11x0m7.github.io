@@ -1438,3 +1438,49 @@ public:
     }
 };
 ```
+
+
+# 765. Couples Holding Hands
+
+#### 题目
+
+https://leetcode.com/problems/couples-holding-hands/description/
+
+#### 思路
+
+这题是寻找查并集的思路。以例子`[0, 2, 1, 3]`来说，如果0和2坐一起，那么就寻找2的couple，即为3，再看和3坐一起的1的couple，是0，因此这两组couple（4个人）构成一个环，假设环的vertex个数是n，则需要交换n-1次。因此就是判断row中有多少个环，之后按每个环的大小把结果相加。假设有k个环，每个环大小为n_1, n_2, ..., n_k，那么result=n_1+n_2+n_3+...+n_k-k。
+
+#### 代码
+
+```cpp
+class Solution {
+public:
+    int minSwapsCouples(vector<int>& row) {
+        unordered_map<int, int> m;
+        for(int i=0;i<row.size();i++) {
+            m[row[i]] = i;
+        }
+        int res = 0;
+        for(int i=0;i<row.size();i+=2) {
+            if(m.find(row[i+1]) != m.end()) {
+                int count = 0;
+                int start = get_couple(row[i]);
+                int cur_pos = row[i+1];
+                m.erase(row[i]);
+                m.erase(row[i+1]);
+                while(start != cur_pos) {
+                    int pos = m[get_couple(cur_pos)];
+                    cur_pos = row[get_couple(pos)];
+                    res += 1;
+                    m.erase(cur_pos);
+                    m.erase(row[pos]);
+                }
+            }
+        }
+        return res;
+    }
+    int get_couple(int n) {
+        return n + (n % 2 == 0 ? 1 : -1);
+    }
+};
+```
