@@ -1484,3 +1484,82 @@ public:
     }
 };
 ```
+
+
+# 212. Word Search II
+
+#### 题目
+
+https://leetcode.com/problems/couples-holding-hands/description/
+
+#### 思路
+
+* 首先构建字典的trie树，这里需要注意的是，一个词可能是另一个词的前缀；
+* 之后以每个board上的字母为开头，搜索trie树，只要是搜索到词，就存起来，并将该词设为已搜索（防止之后又搜到该词），同时继续沿着当前trie树节点继续往下搜索（可能该词只是一个前缀，后面还有词）
+
+#### 代码
+
+```cpp
+struct Trie {
+    Trie* next[26];
+    bool isword;
+    bool isfound;
+    string word;
+    Trie() {
+        isword = false;
+        isfound = false;
+        for(int i=0;i<26;i++)
+            next[i] = nullptr;
+    }
+};
+class Solution {
+public:
+    vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
+        vector<string> res;
+        int m = board.size();
+        if(m < 1)
+            return res;
+        int n = board[0].size();
+        Trie* root = buildTrie(words);
+        vector<vector<bool>> flag(m, vector<bool>(n, false));
+        
+        for(int i=0;i<m;i++) {
+            for(int j=0;j<n;j++) {
+                solve(board, i, j, flag, root, res);
+            }
+        }
+        return res;
+    }
+    void solve(vector<vector<char>>& board, int i, int j, vector<vector<bool>>& flag, Trie* root, vector<string>& res) {
+        if(i < 0 || i >= board.size() || j < 0 || j >= board[0].size())
+            return;
+        if(!flag[i][j] && root->next[board[i][j]-'a'] != nullptr) {
+            // cout<<board[i][j]<<" "<<root->next[board[i][j]-'a']->isword<<" "<<root->next[board[i][j]-'a']->isfound<<endl;
+            if(root->next[board[i][j]-'a']->isword && !root->next[board[i][j]-'a']->isfound) {
+                res.push_back(root->next[board[i][j]-'a']->word);
+                root->next[board[i][j]-'a']->isfound = true;
+            }
+            flag[i][j] = true;
+            solve(board, i-1, j, flag, root->next[board[i][j]-'a'], res);
+            solve(board, i+1, j, flag, root->next[board[i][j]-'a'], res);
+            solve(board, i, j-1, flag, root->next[board[i][j]-'a'], res);
+            solve(board, i, j+1, flag, root->next[board[i][j]-'a'], res);
+            flag[i][j] = false;
+        }
+    }
+    Trie* buildTrie(vector<string>& words) {
+        Trie* root = new Trie();
+        for(string& s : words) {
+            Trie* r = root;
+            for(char c : s) {
+                if(!r->next[c - 'a'])
+                    r->next[c - 'a'] = new Trie();
+                r = r->next[c - 'a'];
+            }
+            r->isword = true;
+            r->word = s;
+        }
+        return root;
+    }
+};
+```
