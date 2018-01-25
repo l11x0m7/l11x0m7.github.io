@@ -1563,3 +1563,101 @@ public:
     }
 };
 ```
+
+# 87. Scramble String
+
+#### 题目
+
+https://leetcode.com/problems/scramble-string/description/
+
+#### 思路
+
+使用dp的思路：  
+首先考虑s1和s2的两个子串：`s1[i, i+len]`和`s2[j, j+len]`，用`bool dp[i][j][len]`这两个子串来表示这两个子串是否是scramble的。它可以通过以下方式确定：
+
+* `dp[i][j][k]`与`dp[i+k][j+k][len-k]`是scramble的
+* `dp[i+k][j][len-k]`与`dp[i][j+len-k][k]`是scramble的
+
+使用递归的思路：  
+考虑子串`s1[0, i], s2[0, i], s1[i+1, n], s2[i+1, n]`，也有两种scramble的方式：
+
+* `s1[0, i]`与`s2[0, i]`是scramble的且`s1[i, n]`与`s2[i, n]`是scramble的
+* `s1[0, i]`与`s2[n-i, n]`是scramble的且`s1[i+1, n]`与`s2[0, n-i]`是scramble的
+
+
+#### 代码
+
+* dp方法
+
+```cpp
+class Solution {
+public:
+    bool isScramble(string s1, string s2) {
+        int len1 = s1.size();
+        int len2 = s2.size();
+        if(s1 == s2)
+            return true;
+        if(len1 == 0 || len2 == 0 || len1 != len2)
+            return false;
+        int count[26] = {0};
+        for(int i=0; i<len1; i++)
+        {
+            count[s1[i]-'a']++;
+            count[s2[i]-'a']--;
+        }
+        for(int i=0; i<26; i++)
+        {
+            if(count[i]!=0)
+                return false;
+        }
+        bool dp[len1][len1][len1+1];
+        memset(dp, 0, sizeof(dp));
+        for(int i=0;i<len1;i++)
+            for(int j=0;j<len1;j++)
+                dp[i][j][1] = (s1[i] == s2[j]);
+        for(int len=2;len<=len1;len++) {
+            for(int i=0;i<len1 && i<=len1-len;i++) {
+                for(int j=0;j<len1 && j<=len1-len;j++) {
+                    for(int k=1;k<len;k++) {
+                        dp[i][j][len] = dp[i][j][len] || (dp[i][j][k] && dp[i+k][j+k][len-k]) || (dp[i][j+k][len-k] && dp[i+len-k][j][k]);
+                    }
+                }
+            }
+        }
+        return dp[0][0][len1];
+    }
+};
+```
+
+
+* 递归方法
+
+```cpp
+class Solution {
+public:
+    bool isScramble(string s1, string s2) {
+        int len1 = s1.size();
+        int len2 = s2.size();
+        if(s1 == s2)
+            return true;
+        int count[26] = {0};
+        for(int i=0; i<len1; i++)
+        {
+            count[s1[i]-'a']++;
+            count[s2[i]-'a']--;
+        }
+        for(int i=0; i<26; i++)
+        {
+            if(count[i]!=0)
+                return false;
+        }
+        for(int i=1;i<len1;i++) {
+            if(isScramble(s1.substr(0, i), s2.substr(0, i)) && isScramble(s1.substr(i), s2.substr(i)))
+                return true;
+            if(isScramble(s1.substr(0, i), s2.substr(len1-i)) && isScramble(s1.substr(i), s2.substr(0, len1-i)))
+                return true;
+        }
+        return false;
+    }
+};
+```
