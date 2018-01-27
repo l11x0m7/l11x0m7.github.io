@@ -16,7 +16,8 @@ description: 算法模板
 ```cpp
 typedef long long ll;
 int a[20];
-ll dp[20][state];//不同题目状态不同\n
+ll dp[20][state];//不同题目状态不同
+
 ll dfs(int pos,/*state变量*/,bool lead/*前导零*/,bool limit/*数位上界变量*/)//不是每个题都要判断前导零
 {  
     //递归边界，既然是按位枚举，最低位是0，那么pos==-1说明这个数我枚举完了
