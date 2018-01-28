@@ -1661,3 +1661,137 @@ public:
     }
 };
 ```
+
+# 773. Sliding Puzzle
+
+#### 题目
+
+https://leetcode.com/contest/weekly-contest-69/problems/sliding-puzzle/
+
+#### 思路
+
+每个地图表示一个状态，使用bfs的思路去搜索，每走k步，记录下走k步的所有状态，如果走到ending，直接返回结果，如果把每种状态都遍历了还是没有走到ending，则返回-1。
+
+#### 代码
+
+```cpp
+class Solution {
+public:
+    int slidingPuzzle(vector<vector<int>>& board) {
+        using state = vector<vector<int>>;
+        queue<state> way;
+        map<state, int> m;
+        way.push(board);
+        m[board] = 0;
+        state end = {{1,2,3}, {4,5,0}};
+        int movex[4] = {0,0,1,-1};
+        int movey[4] = {1,-1,0,0};
+        while(!way.empty()) {
+            state cur = way.front();
+            way.pop();
+            if(cur == end)
+                return m[cur];
+            int pos_x, pos_y;
+            for(int i=0;i<2;i++) {
+                for(int j=0;j<3;j++) {
+                    if(cur[i][j] == 0) {
+                        pos_x = i;
+                        pos_y = j;
+                        break;
+                    }
+                }
+            }
+            
+            for(int i=0;i<4;i++) {
+                if(pos_x+movex[i] >= 2 || pos_x+movex[i] < 0 || pos_y+movey[i] >= 3 || pos_y+movey[i] < 0)
+                    continue;
+                auto s = cur;
+                // cout<<pos_x+movex[i]<<pos_y+movey[i]<<endl;
+                swap(s[pos_x][pos_y], s[pos_x+movex[i]][pos_y+movey[i]]);
+                if(m.find(s) == m.end()) {
+                    way.push(s);
+                    m[s] = m[cur] + 1;
+                }
+            }
+        }
+        return -1;
+    }
+};
+```
+
+
+# 774. Minimize Max Distance to Gas Station
+
+#### 题目
+
+https://leetcode.com/contest/weekly-contest-69/problems/minimize-max-distance-to-gas-station/
+
+#### 思路
+
+##### dp方法
+
+首先设dp[i][j]，i表示第i个距离（假设10个加油站，则有9个距离），j表示共可以加j个加油站。那么当前的最大距离最小值就是`min(dp[i][j], max(dp[i][k], distance[i] / (k+1))), k=0,1,...,j`。这个方法时间复杂度为$O(nM^2)$，空间复杂度可以用滚动数组优化到$O(2*M)$，不过提交的时候会报MLE错误。
+
+
+##### 二分搜索方法
+
+假设我们要找的最小值在begin到end范围，那么每次判定mid=(begin+end)/2是否满足要求即可。该值所满足的要求是，对每个距离，求得每个距离划分到小于等于mid长度所需要的加油站数总和，如果该和小于等于K，则表明mid还能够再小，则让end=mid；否则，让begin=mid，直到`end-begin <= 1e-6`为止。
+
+
+#### 代码
+
+##### dp
+
+```cpp
+class Solution {
+public:
+    double minmaxGasDist(vector<int>& stations, int K) {
+        vector<vector<double>> dp(2, vector<double>(K+1, (double)INT_MAX));
+        int n = stations.size();
+        for(int s=0;s<=K;s++)
+            dp[1][s] = 0.0d;
+        for(int i=0;i<n-1;i++) {
+            int len = stations[i+1] - stations[i];
+            for(int s=0;s<=K;s++)
+                    dp[i%2][s] = (double)INT_MAX;
+            for(int j=0;j<=K;j++) {
+                for(int k=0;k<=j;k++) {
+                    dp[i%2][j] = min(dp[i%2][j], max(dp[(i+1)%2][j-k], (double)len / (k+1)));
+                }
+                // cout<<i<<" "<<j<<" "<<dp[i%2][j]<<endl;
+            }
+        }
+        return dp[n%2][K];
+    }
+};
+```
+
+
+##### 二分
+
+```cpp
+class Solution {
+public:
+    double minmaxGasDist(vector<int>& stations, int K) {
+        int n = stations.size();
+        double begin = 0, end = 1e8;
+        while(end - begin > 1e-6) {
+            double mid = (begin + end) / 2;
+            if(check(mid, stations, K)) {
+                end = mid;
+            }
+            else
+                begin = mid;
+        }
+        return end;
+    }
+    bool check(double mid, vector<int>& stations, int K) {
+        int used = 0;
+        for(int i=1;i<stations.size();i++) {
+            int len = stations[i] - stations[i-1];
+            used += (int)ceil(len / mid) - 1;
+        }
+        return used <= K;
+    }
+};
+```
