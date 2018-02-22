@@ -85,7 +85,6 @@ priority_queue接受三个初始化参数，分别为`存储单元基本类型�
 对于自定义的比较函数初始化方法，可以是对自定义类重载小于操作符即（`<`），也可以是重载函数操作符对象（即`()`），也可以使用lambda函数。现在主要介绍后面两种常用的方法。
 
 ```cpp
-
 // 重载函数操作符对象
 
 struct mycmp{
@@ -103,7 +102,6 @@ auto cmp = [](vector<int> a, vector<int> b){return a[0] < b[0];};
 priority_queue<vector<int>, vector<vector<int>>, decltype(cmp)> pq(cmp);
 
 priority_queue<vector<int>, vector<vector<int>>, function<bool(vector<int>&, vector<int>&)>> pq(cmp);
-
 ```
 
 
