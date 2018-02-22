@@ -1795,3 +1795,50 @@ public:
     }
 };
 ```
+
+
+
+# 778. Swim in Rising Water
+
+#### 题目
+
+https://leetcode.com/problems/swim-in-rising-water/description/
+
+#### 思路
+
+使用dijkstra算法直接找到最优路径。每个节点与其相邻四个节点路径的cost就是`grid[i][j]`，表示从起点到点(i, j)需要的cost。这样我们每次从优先级队列中取出当前cost最小的点，从该点继续出发，向目标位置前进，直到到达终点。
+
+#### 代码
+
+```cpp
+class Solution {
+public:
+    int swimInWater(vector<vector<int>>& grid) {
+        int n = grid.size();
+        int start = grid[0][0];
+        int val = grid[n-1][n-1];
+        int res = max(start, val);
+        priority_queue<vector<int>, vector<vector<int>>, greater<vector<int>>> pq;
+        vector<vector<bool>> visited(n, vector<bool>(n, false));
+        visited[0][0] = true;
+        vector<int> dir({-1, 0, 1, 0, -1});
+        pq.push({res, 0, 0});
+        while(!pq.empty()) {
+            auto cur = pq.top();
+            int x = cur[1], y = cur[2];
+            pq.pop();
+            res = max(res, cur[0]);
+            for(int i=0;i<4;i++) {
+                int new_x = x + dir[i], new_y = y + dir[i+1];
+                if(new_x >= 0 && new_x < n && new_y >= 0 && new_y < n && !visited[new_x][new_y]) {
+                    if(new_x == n-1 && new_y == n-1)
+                        return res;
+                    pq.push({grid[new_x][new_y], new_x, new_y});
+                    visited[new_x][new_y] = true;
+                }
+            }
+        }
+        return -1;
+    }
+};
+```
