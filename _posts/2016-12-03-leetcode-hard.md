@@ -1629,7 +1629,6 @@ public:
 };
 ```
 
-
 递归方法：
 
 ```cpp
@@ -1740,7 +1739,7 @@ https://leetcode.com/contest/weekly-contest-69/problems/minimize-max-distance-to
 
 #### 代码
 
-##### dp
+dp方法：
 
 ```cpp
 class Solution {
@@ -1767,7 +1766,7 @@ public:
 ```
 
 
-##### 二分
+二分方法：
 
 ```cpp
 class Solution {
