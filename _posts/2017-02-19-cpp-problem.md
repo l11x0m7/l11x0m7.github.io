@@ -86,7 +86,7 @@ priority_queue接受三个初始化参数，分别为`存储单元基本类型�
 
 ```cpp
 
-# 重载函数操作符对象
+// 重载函数操作符对象
 
 struct mycmp{
     bool operator()(vector<int> a, vector<int> b){
@@ -96,7 +96,7 @@ struct mycmp{
 
 priority_queue<vector<int>, vector<vector<int>>, mycmp> pq;
 
-# 匿名函数
+// 匿名函数
 
 auto cmp = [](vector<int> a, vector<int> b){return a[0] < b[0];};
 
