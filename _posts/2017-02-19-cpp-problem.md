@@ -65,7 +65,7 @@ int * const a表示a是一个指针常量，初始化的时候必须固定指向
 
 简单讲，就是`lower_bound`返回大于等于给定数的最小值，而`upper_bound`返回大于给定数的最小值。
 
-### 4.基本数据类型取值范围
+### 4. 基本数据类型取值范围
 
 unsigned int   0～4294967295   
 int   			-2147483648～2147483647  
@@ -77,3 +77,68 @@ unsigned long long的最大值：1844674407370955161
 \_\_int64的最大值：9223372036854775807  
 \_\_int64的最小值：-9223372036854775808  
 unsigned __int64的最大值：18446744073709551615  
+
+### 5. priority_queue的初始化
+
+priority_queue接受三个初始化参数，分别为`存储单元基本类型、存储容器、比较函数`，比如如果要存储的基本单元为`int`，容器为`vector`，使用默认比较函数（默认为operator<，即把大的放堆顶），则可以初始化为`priority_queue<int, vector<int>, less<int>> pq`。
+
+对于自定义的比较函数初始化方法，可以是对自定义类重载小于操作符即（`<`），也可以是重载函数操作符对象（即`()`），也可以使用lambda函数。现在主要介绍后面两种常用的方法。
+
+```cpp
+
+# 重载函数操作符对象
+
+struct mycmp{
+    bool operator()(vector<int> a, vector<int> b){
+        return a[0] < b[0];
+    }
+};
+
+priority_queue<vector<int>, vector<vector<int>>, mycmp> pq;
+
+# 匿名函数
+
+auto cmp = [](vector<int> a, vector<int> b){return a[0] < b[0];};
+
+priority_queue<vector<int>, vector<vector<int>>, decltype(cmp)> pq(cmp);
+
+priority_queue<vector<int>, vector<vector<int>>, function<bool(vector<int>&, vector<int>&)>> pq(cmp);
+
+```
+
+
+### 6. vector直接用数组初始化
+
+从[cplusplus](http://www.cplusplus.com/reference/vector/vector/vector/)上得到的初始化例子如下：
+
+```cpp
+// constructing vectors
+#include <iostream>
+#include <vector>
+
+int main ()
+{
+  // constructors used in the same order as described above:
+  std::vector<int> first;                                // empty vector of ints
+  std::vector<int> second (4,100);                       // four ints with value 100
+  std::vector<int> third (second.begin(),second.end());  // iterating through second
+  std::vector<int> fourth (third);                       // a copy of third
+
+  // the iterator constructor can also be used to construct from arrays:
+  int myints[] = {16,2,77,29};
+  std::vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );
+
+  std::cout << "The contents of fifth are:";
+  for (std::vector<int>::iterator it = fifth.begin(); it != fifth.end(); ++it)
+    std::cout << ' ' << *it;
+  std::cout << '\n';
+
+  return 0;
+}
+```
+
+可以直接用数组初始化：
+
+```cpp
+vector<int> vec({1,2,3,4});
+```
