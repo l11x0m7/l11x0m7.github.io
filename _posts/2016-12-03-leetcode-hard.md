@@ -1813,6 +1813,8 @@ https://leetcode.com/problems/swim-in-rising-water/description/
 
 #### 代码
 
+下面只给出第一种方法的解。第二种方法类似。
+
 ```cpp
 class Solution {
 public:

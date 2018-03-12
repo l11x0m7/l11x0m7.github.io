@@ -9,4 +9,8 @@ description: LDA数学原理
 
 # LDA主题模型之数学原理
 
-待补充……
+可以直接参考References。
+
+# References
+
+[LDA数学八卦](http://odjt9j2ec.bkt.clouddn.com/lda-LDA%E6%95%B0%E5%AD%A6%E5%85%AB%E5%8D%A6.pdf)
