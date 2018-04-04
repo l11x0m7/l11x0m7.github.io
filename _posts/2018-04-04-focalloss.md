@@ -1,13 +1,13 @@
 ---
 layout: post
-title: Focal Loss，一个general的idea
+title: 对Focal Loss的认识
 date: 2018-04-04
 categories: blog
 tags: [Deep Learning, ]
 description: focal loss的介绍
 ---
 
-# Focal Loss，一个general的idea
+# 对Focal Loss的认识
 
 
 
