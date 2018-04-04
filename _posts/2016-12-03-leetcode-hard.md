@@ -1682,7 +1682,7 @@ public:
         map<state, int> m;
         way.push(board);
         m[board] = 0;
-        
+        state end = \{{1,2,3}, {4,5,0}\};
         int movex[4] = {0,0,1,-1};
         int movey[4] = {1,-1,0,0};
         while(!way.empty()) {
