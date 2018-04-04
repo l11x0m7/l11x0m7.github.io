@@ -1590,6 +1590,7 @@ https://leetcode.com/problems/scramble-string/description/
 dp方法：
 
 ```
+*
 class Solution {
 public:
     bool isScramble(string s1, string s2) {
@@ -1626,7 +1627,7 @@ public:
         }
         return dp[0][0][len1];
     }
-};
+}; *
 ```
 
 递归方法：
