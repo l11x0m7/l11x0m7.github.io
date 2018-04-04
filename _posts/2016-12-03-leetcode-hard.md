@@ -1673,7 +1673,7 @@ https://leetcode.com/contest/weekly-contest-69/problems/sliding-puzzle/
 
 #### 代码
 
-```cpp
+{% highlight cpp %}
 class Solution {
 public:
     int slidingPuzzle(vector<vector<int>>& board) {
@@ -1716,7 +1716,7 @@ public:
         return -1;
     }
 };
-```
+{% endhighlight %}
 
 
 # 774. Minimize Max Distance to Gas Station
