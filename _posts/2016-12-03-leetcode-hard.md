@@ -1589,7 +1589,7 @@ https://leetcode.com/problems/scramble-string/description/
 
 dp方法：
 
-```cpp
+```
 class Solution {
 public:
     bool isScramble(string s1, string s2) {
