@@ -3,7 +3,7 @@ layout: post
 title: Focal Loss，一个general的idea
 date: 2018-04-04
 categories: blog
-tags: [Deep Learning]
+tags: [Deep Learning, ]
 description: focal loss的介绍
 ---
 
@@ -13,7 +13,7 @@ description: focal loss的介绍
 
 * 调整损失函数权重，让样本少的在loss中的权重比例高，反之降低；
 * 过采样、欠采样
-* OHEM：只保留loss高的样本再训练，忽略简单样本
+* OHEM：只保留loss高的样本，忽略简单样本
 
 而虽然上述方法可以让模型关注到样本不平衡问题本身，但是并没有针对这个问题提出比较合理的解释（点一和点二），或者是采用比较复杂（丑陋）的方法（点三）。在Kaiming He的论文Focal Loss for Dense Object Detection中，提出的Focal Loss能够优雅的去尝试解决这个问题。
 
