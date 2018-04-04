@@ -37,11 +37,11 @@ $$
 
 $$
 CE(y_t)=-f(y_t)*log(\hat{y_t})
-f(y_t)={\alpha}_t*(1-\hat{y_t})^{\gama}
+f(y_t)={\alpha}_t*(1-\hat{y_t})^{\gamma}
 $$
 
 当$\hat{y_t}$趋于1时，那么$f(y_t)$就趋于0，表示这是个easy样本，需要削弱它对loss的贡献；相反，如果$\hat{y_t}$趋于0，那么$f(y_t)$就趋于$\alpha_t$，表示这是个hard样本，需要加强它对loss的贡献。  
-这里的两个参数$\alpha$和$\gama$协调来控制，本文作者采用$\alpha=0.25$，$\gama=2$效果最好。
+这里的两个参数$\alpha$和$\gamma$协调来控制，本文作者采用$\alpha=0.25$，$\gamma=2$效果最好。
 
 ## References
 
