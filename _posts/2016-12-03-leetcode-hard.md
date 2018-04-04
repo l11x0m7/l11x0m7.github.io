@@ -1632,9 +1632,9 @@ public:
 
 递归方法：
 
-*
 
 ```cpp
+
 class Solution {
 public:
     bool isScramble(string s1, string s2) {
@@ -1662,6 +1662,7 @@ public:
         return false;
     }
 };
+
 ```
 
 # 773. Sliding Puzzle
