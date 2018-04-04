@@ -4,7 +4,7 @@ title: Focal Loss，一个general的idea
 date: 2018-04-04
 categories: blog
 tags: [Deep Learning]
-description:
+description: focal loss的介绍
 ---
 
 # Focal Loss，一个general的idea
