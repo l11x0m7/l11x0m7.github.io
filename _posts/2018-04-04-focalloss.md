@@ -1,6 +1,6 @@
 ---
 layout: post 
-title: 对Focal Loss的认识 
+title: 对FocalLoss的认识 
 date: 2018-04-04 
 categories: blog 
 tags: [Deep Learning] 
