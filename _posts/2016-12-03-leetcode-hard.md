@@ -1587,10 +1587,9 @@ https://leetcode.com/problems/scramble-string/description/
 
 #### 代码
 
-dp方法：
+* dp方法：
 
-```
-*
+```cpp
 class Solution {
 public:
     bool isScramble(string s1, string s2) {
@@ -1627,10 +1626,10 @@ public:
         }
         return dp[0][0][len1];
     }
-}; *
+};
 ```
 
-递归方法：
+* 递归方法：
 
 ```cpp
 class Solution {
