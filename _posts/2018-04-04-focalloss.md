@@ -36,7 +36,7 @@ $$
 上述$y_t$为对应目标的预测概率。如果我们能够让那些loss高的样本拥有较高的权重，而loss较低的拥有较低的权重，那么我们可以在这个loss前面加一个调权公式：
 
 $$
-CE(y_t)=-f(y_t)*log(\hat{y_t}) \\
+FL(y_t)=-f(y_t)*log(\hat{y_t}) \\
 f(y_t)={\alpha}_t*(1-\hat{y_t})^{\gamma}
 $$
 
