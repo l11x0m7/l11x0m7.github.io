@@ -10,15 +10,15 @@ description: 简单描述下Group Norm的思想
 # Group Normalization简介
 
 之前我已经在normalization上单独做了一章，分别概述了Batch Norm、Layer Norm、Weight Norm以及selu在加速网络收敛上的效果。不过，最先提出这个思路的是BN，之后的则是在其基础上进行改进（或者照瓢画葫芦再来一套？），因此此处我们也是直接将GN的效果有BN直接进行比较（作者在论文也是这么做的）。虽然normalization在NLP任务上并不如CV里常用，但是这种学习的思想还是直接去了解的（万一哪天normalization在某类NLP任务上搞了个大新闻，还是很excited的）。  
-对上一节有兴趣的读者可以参考：  
-[加速网络收敛——BN、LN、WN与selu](http://skyhigh233.com/blog/2017/07/21/norm/)
+对上一节有兴趣的读者可以参考：[加速网络收敛——BN、LN、WN与selu](http://skyhigh233.com/blog/2017/07/21/norm/)
 
 ## Group Normalization的原理
 
-在我看来，GN在两个点起码比BN“好用”：  
+在我看来，GN有三个点起码比BN“好用”：  
 
 * BN需要区分train和evaluate过程，而GN不用
 * BN对batch size敏感，而GN与batch size独立（包括loss与accuracy等），BN的性能会随着训练的batch size变小而集聚下降（让BN在某些受内存限制而需要输入小batch的任务上效果不好）
+* 小batch size的时候，GN效果要比BN好（原因就是第二点）
 
 而GN在速度上，通常比BN要慢，这是因为GN相对于BN来说，有额外的transpose与reshape操作，当层数加深的时候，训练速度也按比例下降。
 
