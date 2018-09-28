@@ -166,4 +166,7 @@ description: 蚂蚁金服NLP智能服务比赛top2方案
 5. Mohammad Norouzi, David J. Fleet, Ruslan Salakhutdinov: Hamming Distance Metric Learning. NIPS 2012
 6. Zhiguo Wang, Wael Hamza, Radu Florian: Bilateral Multi-Perspective Matching for Natural Language Sentences. IJCAI 2017: 4144-4150
 
+## 答辩PPT
+
+[PPT](http://odjt9j2ec.bkt.clouddn.com/mayi-nlp-atec_sky.pptx)
 
