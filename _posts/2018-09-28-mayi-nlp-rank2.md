@@ -65,7 +65,7 @@ description: 蚂蚁金服NLP智能服务比赛top2方案
 词序列：[怎么 更改 花呗 手机 号码]
 字表示的词序列：[[怎 么] [更 改] [花 呗] [手 机] [号 码]]
 
-![](http://odjt9j2ec.bkt.clouddn.com/mayi-nlp-1.jpg)
+![](http://bloglxm.oss-cn-beijing.aliyuncs.com/mayi-nlp-1.jpg)
 
 ## 模型构建
 
@@ -82,14 +82,14 @@ description: 蚂蚁金服NLP智能服务比赛top2方案
 * 三种输入源（词序列+由字构成的词序列、字序列、词序列+字序列）
 * 两种不同来源的embedding（word2vec以及cw2vec）
 
-![](http://odjt9j2ec.bkt.clouddn.com/mayi-nlp-2.png)
+![](http://bloglxm.oss-cn-beijing.aliyuncs.com/mayi-nlp-2.png)
 
 ### RCNN
 
 * Bi-LSTM进行上下文编码
 * 得到上下文编码序列后，利用Multi-scale的CNN进行ngram信息抓取
 
-![](http://odjt9j2ec.bkt.clouddn.com/mayi-nlp-3.png)
+![](http://bloglxm.oss-cn-beijing.aliyuncs.com/mayi-nlp-3.png)
 
 ### GRUNN
 
@@ -98,7 +98,7 @@ description: 蚂蚁金服NLP智能服务比赛top2方案
 * 考虑attention信息
 * 考虑语义编码与attention的比较信息
 
-![](http://odjt9j2ec.bkt.clouddn.com/mayi-nlp-4.png)
+![](http://bloglxm.oss-cn-beijing.aliyuncs.com/mayi-nlp-4.png)
 
 
 ### BiMPM
@@ -108,9 +108,9 @@ description: 蚂蚁金服NLP智能服务比赛top2方案
 * Context layer 使用LSTM+Highway完成encode工作
 * Matching layr 基于Attention原理产生8对matching向量
 
-![](http://odjt9j2ec.bkt.clouddn.com/mayi-nlp-6.png)
+![](http://bloglxm.oss-cn-beijing.aliyuncs.com/mayi-nlp-6.png)
 
-![](http://odjt9j2ec.bkt.clouddn.com/mayi-nlp-7.png)
+![](http://bloglxm.oss-cn-beijing.aliyuncs.com/mayi-nlp-7.png)
 
 ### ESIM
 
@@ -120,7 +120,7 @@ description: 蚂蚁金服NLP智能服务比赛top2方案
 * 选用了BiLSTM编码方式
 * 采用退火训练方式防止过拟合（学习率随着迭代次数增多而下降）
 
-![](http://odjt9j2ec.bkt.clouddn.com/mayi-nlp-8.png)
+![](http://bloglxm.oss-cn-beijing.aliyuncs.com/mayi-nlp-8.png)
 
 ## Finetune
 
@@ -168,5 +168,5 @@ description: 蚂蚁金服NLP智能服务比赛top2方案
 
 ## 答辩PPT
 
-[PPT](http://odjt9j2ec.bkt.clouddn.com/mayi-nlp-atec_sky.pptx)
+[PPT](http://bloglxm.oss-cn-beijing.aliyuncs.com/mayi-nlp-atec_sky.pptx)
 

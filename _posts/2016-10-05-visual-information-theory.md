@@ -18,11 +18,11 @@ description: 信息论的可视化
 
 交叉熵给了我们一种表达两种分布差异的方法。p和q的差异有多大，p关于q的交叉熵就会比p的熵大多少。交叉熵越小，表示分布越接近。
 
-![](http://odjt9j2ec.bkt.clouddn.com/visual-info-theory-ce.png)
+![](http://bloglxm.oss-cn-beijing.aliyuncs.com/visual-info-theory-ce.png)
 
 KL散度的有意思的地方是它就像两个分布之间的距离。衡量着两个分布之间的差异。KL散度越大，两个分布之间差异越大。
 
-![](http://odjt9j2ec.bkt.clouddn.com/visual-info-theory-kl.png)
+![](http://bloglxm.oss-cn-beijing.aliyuncs.com/visual-info-theory-kl.png)
 
 ## 参考
 

@@ -61,4 +61,4 @@ $$\delta^L=\frac{\partial{C_{nll}}}{\partial{z^L}}=\hat{y}-y$$
 
 经人指点，原来这个在PRML上有普适性的结论。
 
-![](http://odjt9j2ec.bkt.clouddn.com/math-1.png)
+![](http://bloglxm.oss-cn-beijing.aliyuncs.com/math-1.png)

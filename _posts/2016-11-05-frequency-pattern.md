@@ -17,7 +17,7 @@ description: 简要介绍频繁项集合关联规则，支持度、置信度、�
 
 **事务**就是下图中的样子：
 
-![f1](http://odjt9j2ec.bkt.clouddn.com/frequency-pattern-f1.png)
+![f1](http://bloglxm.oss-cn-beijing.aliyuncs.com/frequency-pattern-f1.png)
 
 **支持度**，是指某个集合在所有事务中出现的频率，可以用$P(A)$表示。  
 **频繁项集**，是指支持度大于等于最小支持度(min_sup)的集合。  
@@ -35,35 +35,35 @@ description: 简要介绍频繁项集合关联规则，支持度、置信度、�
 从1-项集到n-项集，在每个k-项集中找出满足最小支持度的k-频繁项集，然后通过k-频繁项集组合，得到(k+1)-项集，之后再选出满足要求的(k+1)-频繁项集，以此类推，直到找到最大的k-项集为止。  
 下面通过一个比较好的例子来看，直接从书里摘出来：
 
-![f2](http://odjt9j2ec.bkt.clouddn.com/frequency-pattern-f2.png)  
-![f3](http://odjt9j2ec.bkt.clouddn.com/frequency-pattern-f3.png)  
-![f4](http://odjt9j2ec.bkt.clouddn.com/frequency-pattern-f4.png)  
-![f5](http://odjt9j2ec.bkt.clouddn.com/frequency-pattern-f5.png)  
+![f2](http://bloglxm.oss-cn-beijing.aliyuncs.com/frequency-pattern-f2.png)  
+![f3](http://bloglxm.oss-cn-beijing.aliyuncs.com/frequency-pattern-f3.png)  
+![f4](http://bloglxm.oss-cn-beijing.aliyuncs.com/frequency-pattern-f4.png)  
+![f5](http://bloglxm.oss-cn-beijing.aliyuncs.com/frequency-pattern-f5.png)  
 
 ### 导出关联规则
 
 这里我们只例举$X=\\{I1,I2,I5\\}$这个频繁项集。
 
-![f6](http://odjt9j2ec.bkt.clouddn.com/frequency-pattern-f6.png)  
-![f7](http://odjt9j2ec.bkt.clouddn.com/frequency-pattern-f7.png)
+![f6](http://bloglxm.oss-cn-beijing.aliyuncs.com/frequency-pattern-f6.png)  
+![f7](http://bloglxm.oss-cn-beijing.aliyuncs.com/frequency-pattern-f7.png)
 
 ### FP-Growth
 
 通过频繁项集增长模式来获取频繁项集，它的效率比Apriori高出很多。可以通过FP-Growth寻找频繁项集，之后使用上面的方法导出关联规则。  
 同样以上面的例子为例，直接截图：
 
-![f1](http://odjt9j2ec.bkt.clouddn.com/frequency-pattern-f1.png)  
+![f1](http://bloglxm.oss-cn-beijing.aliyuncs.com/frequency-pattern-f1.png)  
 
-![f8](http://odjt9j2ec.bkt.clouddn.com/frequency-pattern-f8.png)  
-![f9](http://odjt9j2ec.bkt.clouddn.com/frequency-pattern-f9.png)  
-![f10](http://odjt9j2ec.bkt.clouddn.com/frequency-pattern-f10.png)  
+![f8](http://bloglxm.oss-cn-beijing.aliyuncs.com/frequency-pattern-f8.png)  
+![f9](http://bloglxm.oss-cn-beijing.aliyuncs.com/frequency-pattern-f9.png)  
+![f10](http://bloglxm.oss-cn-beijing.aliyuncs.com/frequency-pattern-f10.png)  
 
 
 ### 垂直数据格式挖掘频繁项集
 
 上面的两种方法（Apriori和FP-Growth）都是水平数据格式的，垂直格式指的是每个项对应的事务ID。示例如下：
 
-![f11](http://odjt9j2ec.bkt.clouddn.com/frequency-pattern-f11.png)
+![f11](http://bloglxm.oss-cn-beijing.aliyuncs.com/frequency-pattern-f11.png)
 
 
 ## 3.算法实现
@@ -445,9 +445,9 @@ $$cosine(A,B)=\sqrt{(P(A|B){\times}P(B|A))}$$
 * 小于0.5为负相关
 * 等于0.5为中立
 
-![](http://odjt9j2ec.bkt.clouddn.com/frequency-pattern-interest1.png)
+![](http://bloglxm.oss-cn-beijing.aliyuncs.com/frequency-pattern-interest1.png)
 
-![](http://odjt9j2ec.bkt.clouddn.com/frequency-pattern-interest2.png)
+![](http://bloglxm.oss-cn-beijing.aliyuncs.com/frequency-pattern-interest2.png)
 
 ### 不平衡比
 

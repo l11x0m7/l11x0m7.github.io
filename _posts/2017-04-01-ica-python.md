@@ -270,26 +270,26 @@ if __name__ == '__main__':
 
 信号使用了四种：正弦波、方波、三角波和uniform噪声，原始信号如下图：
 
-![原始信号](http://odjt9j2ec.bkt.clouddn.com/ica-1.png)
+![原始信号](http://bloglxm.oss-cn-beijing.aliyuncs.com/ica-1.png)
 
 混合信号如下图：
 
-![混合信号](http://odjt9j2ec.bkt.clouddn.com/ica-2.png)
+![混合信号](http://bloglxm.oss-cn-beijing.aliyuncs.com/ica-2.png)
 
 #### 使用自己写的fastICA
 
-![](http://odjt9j2ec.bkt.clouddn.com/ica-3.png)
+![](http://bloglxm.oss-cn-beijing.aliyuncs.com/ica-3.png)
 
 #### 使用sklearn包里的fastica
 
-![](http://odjt9j2ec.bkt.clouddn.com/ica-4.png)
+![](http://bloglxm.oss-cn-beijing.aliyuncs.com/ica-4.png)
 
 ### 参考
 
 [ICA(独立成分分析)在信号盲源分离中的应用](http://blog.csdn.net/cai2016/article/details/52983473)  
 [史上最直白的ICA教程](http://blog.csdn.net/lizhe_dashuju/article/details/50263339)  
-[史上最直白的ICA教程pdf](http://odjt9j2ec.bkt.clouddn.com/ica-%E5%8F%B2%E4%B8%8A%E6%9C%80%E7%9B%B4%E7%99%BD%E7%9A%84ICA%E6%95%99%E7%A8%8B.pdf)  
+[史上最直白的ICA教程pdf](http://bloglxm.oss-cn-beijing.aliyuncs.com/ica-%E5%8F%B2%E4%B8%8A%E6%9C%80%E7%9B%B4%E7%99%BD%E7%9A%84ICA%E6%95%99%E7%A8%8B.pdf)  
 [Independent Component Analysis:
 Algorithms and Applications](http://mlsp.cs.cmu.edu/courses/fall2013/lectures/ICA_Hyvarinen.pdf)  
 [白化](http://deeplearning.stanford.edu/wiki/index.php/%E7%99%BD%E5%8C%96)  
-[Indepdent Componet analysis](http://odjt9j2ec.bkt.clouddn.com/ica-2001%28E-book%29Independent%20Component%20Analysis.pdf)  
+[Indepdent Componet analysis](http://bloglxm.oss-cn-beijing.aliyuncs.com/ica-2001%28E-book%29Independent%20Component%20Analysis.pdf)  

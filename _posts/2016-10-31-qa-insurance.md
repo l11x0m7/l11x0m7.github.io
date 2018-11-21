@@ -41,13 +41,13 @@ CNN利用了三个重要的思路，能够帮助改善机器学习系统：稀�
 
 #### 框架1：
 
-![](http://odjt9j2ec.bkt.clouddn.com/qainsurance-1.png)
+![](http://bloglxm.oss-cn-beijing.aliyuncs.com/qainsurance-1.png)
 
 Q语句和A语句分别处理，各自独立使用HL层、CNN层、P层和T层。
 
 #### 框架2：
 
-![](http://odjt9j2ec.bkt.clouddn.com/qainsurance-2.png)
+![](http://bloglxm.oss-cn-beijing.aliyuncs.com/qainsurance-2.png)
 
 * 输入Q和A为**[batch_size, sequence_length, embed_size]**
 * HL(Hidden Layer)使用tanh函数，输出为**[batch_size, sequence_length, hidden_size]**
@@ -57,26 +57,26 @@ Q语句和A语句分别处理，各自独立使用HL层、CNN层、P层和T层�
 
 #### 框架3：
 
-![](http://odjt9j2ec.bkt.clouddn.com/qainsurance-3.png)
+![](http://bloglxm.oss-cn-beijing.aliyuncs.com/qainsurance-3.png)
 
 #### 框架4：
 
-![](http://odjt9j2ec.bkt.clouddn.com/qainsurance-4.png)
+![](http://bloglxm.oss-cn-beijing.aliyuncs.com/qainsurance-4.png)
 
 #### 框架5：
 
-![](http://odjt9j2ec.bkt.clouddn.com/qainsurance-5.png)
+![](http://bloglxm.oss-cn-beijing.aliyuncs.com/qainsurance-5.png)
 
 #### 框架6：
 
-![](http://odjt9j2ec.bkt.clouddn.com/qainsurance-6.png)
+![](http://bloglxm.oss-cn-beijing.aliyuncs.com/qainsurance-6.png)
 
 
 ## 四、实现
 
 每个框架的实现都差不多，论文里也都做了比较，如下：
 
-![](http://odjt9j2ec.bkt.clouddn.com/qainsurance-result.png)
+![](http://bloglxm.oss-cn-beijing.aliyuncs.com/qainsurance-result.png)
 
 可以看到框架2的效果最好。按照框架2复现一下代码，结构大致按照图中显示的和论文中提及的部分来做。有些论文没有详述的，或者论文给定参数和实际实验效果不符的，都需要自定义。
 

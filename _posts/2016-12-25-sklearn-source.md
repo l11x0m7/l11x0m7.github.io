@@ -9,4 +9,4 @@ description: sklearn的比较好的学习教程
 
 一、资源
 
-[sklearn-tutorial](http://odjt9j2ec.bkt.clouddn.com/sklearn-sklearn_tutorial.pdf?attname=)
+[sklearn-tutorial](http://bloglxm.oss-cn-beijing.aliyuncs.com/sklearn-sklearn_tutorial.pdf?attname=)

@@ -29,7 +29,7 @@ $$P_0,P_1,...,P_{j-1},P{j},...$$
 
 现在假设向右移动一位模式串，此时恰好又和目标串匹配上，即为：
 
-![p1](http://odjt9j2ec.bkt.clouddn.com/kmp-p1.png)
+![p1](http://bloglxm.oss-cn-beijing.aliyuncs.com/kmp-p1.png)
 
 这说明$P_0$到$P_{j-1}$是匹配的，那么我们可以在这个P的子串中找到与该子串后缀一致的前缀，比如子串"abcab"中，前缀与后缀匹配的最大公共子串为"ab"，则我们可以将串P进行移动，使得前缀与原来的后缀对齐。
 
@@ -112,11 +112,11 @@ AC自动机用于多模匹配。
 
 比如给定5个单词：`say she shr he her`，可以构造如下的Trie树：
 
-![Trie](http://odjt9j2ec.bkt.clouddn.com/kmp-trie.jpg)
+![Trie](http://bloglxm.oss-cn-beijing.aliyuncs.com/kmp-trie.jpg)
 
 寻找每个结点的fail指针所指向的结点：
 
-![fail nodes](http://odjt9j2ec.bkt.clouddn.com/kmp-trie_fail.JPG)
+![fail nodes](http://bloglxm.oss-cn-beijing.aliyuncs.com/kmp-trie_fail.JPG)
 
 #### 代码实现
 

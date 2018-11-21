@@ -19,6 +19,6 @@ description: 吴恩达的新书，讲机器学习（以深度学习为例）在�
 
 这本书还没出完，后续继续关注。后面给出这本书的下载地址，以及此文的翻译笔记（个人觉得还是读英文版比较有意思，英语用词也比较浅显）。再加一个Andrew NG男神在NIPS 2016上的speech。
 
-1. [Machine Learning Yearning book draft(Chap 1-14)](http://odjt9j2ec.bkt.clouddn.com/Machine_Learning_Yearning.pdf)
+1. [Machine Learning Yearning book draft(Chap 1-14)](http://bloglxm.oss-cn-beijing.aliyuncs.com/Machine_Learning_Yearning.pdf)
 2. [Machine Learning Yearning book draft - 读记](http://mp.weixin.qq.com/s/UCqPBHvre5mn9F2in0nGlQ)
 3. [独家 \| 吴恩达NIPS 2016演讲现场直击：如何使用深度学习开发人工智能应用？](http://mp.weixin.qq.com/s/ZbUCh5bi6Ech55qJR2gaxg)

@@ -295,7 +295,7 @@ public:
 
 这块我们统一使用一样的例子，其树结构如下：
 
-![二叉树](http://odjt9j2ec.bkt.clouddn.com/tree-summary%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-02%20%E4%B8%8A%E5%8D%8810.53.07.png)
+![二叉树](http://bloglxm.oss-cn-beijing.aliyuncs.com/tree-summary%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-02%20%E4%B8%8A%E5%8D%8810.53.07.png)
 
 这棵树的各个遍历如下    
 前序遍历：[1,2,4,6,5,3]

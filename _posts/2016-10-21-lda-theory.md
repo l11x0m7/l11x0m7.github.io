@@ -13,4 +13,4 @@ description: LDA数学原理
 
 # References
 
-[LDA数学八卦](http://odjt9j2ec.bkt.clouddn.com/lda-LDA%E6%95%B0%E5%AD%A6%E5%85%AB%E5%8D%A6.pdf)
+[LDA数学八卦](http://bloglxm.oss-cn-beijing.aliyuncs.com/lda-LDA%E6%95%B0%E5%AD%A6%E5%85%AB%E5%8D%A6.pdf)

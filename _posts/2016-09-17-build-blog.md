@@ -144,7 +144,7 @@ jekyll是一个基于ruby开发的，专用于构建静态网站的程序。它�
 
 购买域名后，需要对域名进行解析，解析的目的是把你的域名放到dns服务器上，这样你在浏览器中输入网址的时候才能够响应。但是如何才能够和github上的地址关联起来呢？可以在域名解析页面配置如下（图片截取自我在dnspod购买的域名解析网页）：
 
-<img src="http://odjt9j2ec.bkt.clouddn.com/%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90.png">
+<img src="http://bloglxm.oss-cn-beijing.aliyuncs.com/%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90.png">
 
 如果上面添加的A记录（域名绑定IP）不能生效，则可以添加一条CNAME记录（域名绑定域名）。格式为：
 

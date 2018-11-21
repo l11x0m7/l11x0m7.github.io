@@ -13,4 +13,4 @@ description: 魔镜杯第三届比赛top1方案
 
 ## References
 
-[答辩PPT](http://odjt9j2ec.bkt.clouddn.com/ppd-nlp-%E6%8B%8D%E6%8B%8D%E8%B4%B7_sky.pptx)
+[答辩PPT](http://bloglxm.oss-cn-beijing.aliyuncs.com/ppd-nlp-%E6%8B%8D%E6%8B%8D%E8%B4%B7_sky.pptx)
