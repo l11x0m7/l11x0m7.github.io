@@ -7,7 +7,7 @@ header-img: "img/green.jpg"
 
 
 <center>
-    <p><img src="img/skyhigh.ico" align="center"></p>
+    <p><img src="http://bloglxm.oss-cn-beijing.aliyuncs.com/skyhigh.ico" align="center"></p>
 </center>
 
 林旭鸣，北京邮电大学在读研究生。

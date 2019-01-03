@@ -13,3 +13,8 @@ description: 书籍阅读笔记
 
 下面我将根据章节来划分与梳理自己对于该书的阅读总结。
 
+
+
+## References
+
+* [Tensorflow内核剖析](https://github.com/horance-liu/tensorflow-internals)
