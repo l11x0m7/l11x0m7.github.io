@@ -10,7 +10,11 @@ header-img: "img/green.jpg"
     <p><img src="http://bloglxm.oss-cn-beijing.aliyuncs.com/skyhigh.ico" align="center"></p>
 </center>
 
-林旭鸣，北京邮电大学在读研究生。
+林旭鸣
+
+2012-2016 本科 北京邮电大学  
+2016-2019 硕士 北京邮电大学  
+2019-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  杭州 阿里巴巴
 
 ### 坚信
 
@@ -23,7 +27,7 @@ header-img: "img/green.jpg"
 
 ### 关注
 
-github主页:[林旭鸣的Github](https://github.com/l11x0m7)
+github主页:[我的Github](https://github.com/l11x0m7)
 
 ### 著作
 
