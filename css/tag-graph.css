@@ -1,0 +1,219 @@
+/* ============================================================
+   Tags — Neo4j 风格标签共现知识图谱
+   仅作用于 tags 页 #tag-graph / .tg-*,与全局 clean-blog 样式隔离。
+   ============================================================ */
+
+#tag-graph-wrap {
+  --tg-cyan: #00c9d7;
+  --tg-cyan-deep: #0085a1;
+  --tg-pink: #ff2e88;
+  --tg-ink: #cfeef2;
+  --tg-panel-bg: rgba(8, 18, 26, 0.92);
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin: 30px 0;
+  align-items: stretch;
+}
+
+/* —— 图面板:深色「控制台」屏幕 —— */
+#tag-graph {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 560px;
+  height: 560px;
+  background: var(--tg-panel-bg);
+  border: 1px solid rgba(0, 201, 215, 0.4);
+  border-radius: 4px;
+  box-shadow: 0 0 14px rgba(0, 201, 215, 0.25), inset 0 0 40px rgba(0, 201, 215, 0.06);
+  overflow: hidden;
+}
+
+#tag-graph-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: grab;
+}
+#tag-graph-svg:active { cursor: grabbing; }
+
+/* 需 JS 提示(有 JS 时隐藏) */
+#tag-graph-noscript {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--tg-cyan);
+  font-family: "Courier New", Consolas, monospace;
+  letter-spacing: 1px;
+  pointer-events: none;
+}
+/* JS 成功初始化后给容器加 .tg-ready,隐藏提示 */
+#tag-graph.tg-ready #tag-graph-noscript { display: none; }
+
+/* —— tooltip —— */
+#tag-graph-tip {
+  position: absolute;
+  pointer-events: none;
+  padding: 5px 10px;
+  background: rgba(8, 18, 26, 0.95);
+  border: 1px solid var(--tg-cyan);
+  border-radius: 3px;
+  color: var(--tg-ink);
+  font-family: "Courier New", Consolas, monospace;
+  font-size: 12px;
+  white-space: nowrap;
+  box-shadow: 0 0 10px rgba(0, 201, 215, 0.5);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  z-index: 10;
+}
+#tag-graph-tip.show { opacity: 1; }
+#tag-graph-tip b { color: var(--tg-cyan); }
+
+/* —— SVG 节点 / 边 / 标签 —— */
+.tg-link {
+  stroke: var(--tg-cyan);
+  stroke-opacity: 0.18;
+  transition: stroke-opacity 0.3s ease, stroke 0.3s ease, stroke-width 0.3s ease;
+}
+/* 选中/悬停时邻接边高亮,非邻接边淡出 */
+#tag-graph-svg.tg-focus .tg-link { stroke-opacity: 0.05; }
+#tag-graph-svg.tg-focus .tg-link.tg-adj { stroke-opacity: 0.85; stroke: var(--tg-cyan); }
+
+.tg-node circle {
+  fill: var(--tg-cyan-deep);
+  stroke: var(--tg-cyan);
+  stroke-width: 1.5;
+  filter: drop-shadow(0 0 4px rgba(0, 201, 215, 0.6));
+  transition: fill 0.3s ease, stroke 0.3s ease, filter 0.3s ease, r 0.3s ease;
+  cursor: pointer;
+}
+.tg-node circle.tg-pulse { animation: tg-pulse 3s ease-in-out infinite; }
+@keyframes tg-pulse {
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(0, 201, 215, 0.5)); }
+  50%      { filter: drop-shadow(0 0 9px rgba(0, 201, 215, 0.95)); }
+}
+.tg-node:hover circle { fill: var(--tg-cyan); filter: drop-shadow(0 0 8px var(--tg-cyan)); }
+.tg-node.tg-active circle {
+  fill: var(--tg-pink);
+  stroke: var(--tg-pink);
+  filter: drop-shadow(0 0 10px var(--tg-pink));
+}
+.tg-node.tg-adj circle { fill: var(--tg-cyan); filter: drop-shadow(0 0 7px var(--tg-cyan)); }
+#tag-graph-svg.tg-focus .tg-node:not(.tg-active):not(.tg-adj) circle {
+  fill: #1d3540;
+  stroke: #2a4a55;
+  filter: none;
+  opacity: 0.5;
+}
+
+.tg-label {
+  font-family: "Courier New", Consolas, monospace;
+  font-size: 12px;
+  fill: var(--tg-ink);
+  text-shadow: 0 0 6px rgba(0, 201, 215, 0.7);
+  pointer-events: none;
+  user-select: none;
+  transition: fill 0.3s ease;
+}
+.tg-node.tg-active .tg-label { fill: #fff; text-shadow: 0 0 8px var(--tg-pink); }
+.tg-node.tg-adj .tg-label { fill: var(--tg-cyan); }
+#tag-graph-svg.tg-focus .tg-node:not(.tg-active):not(.tg-adj) .tg-label { fill: #5a7682; opacity: 0.5; }
+
+/* —— 侧栏:选中标签的文章列表 —— */
+#tag-graph-panel {
+  flex: 0 0 280px;
+  min-width: 240px;
+  padding: 18px 20px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(0, 201, 215, 0.3);
+  border-radius: 4px;
+  align-self: stretch;
+  max-height: 560px;
+  overflow-y: auto;
+}
+.tg-panel-hint {
+  margin: 0;
+  color: #999;
+  font-size: 14px;
+  text-align: center;
+  padding-top: 40px;
+}
+.tg-panel-title {
+  margin: 0 0 14px;
+  font-family: "Courier New", Consolas, monospace;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--tg-cyan-deep);
+  border-bottom: 1px solid rgba(0, 201, 215, 0.3);
+  padding-bottom: 8px;
+}
+.tg-panel-title .tg-panel-count { color: #999; font-weight: 400; font-size: 13px; }
+.tg-post {
+  padding: 8px 0;
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.07);
+}
+.tg-post:last-child { border-bottom: none; }
+.tg-post .tg-post-date {
+  display: block;
+  font-family: "Courier New", Consolas, monospace;
+  font-size: 11px;
+  color: #999;
+  letter-spacing: 1px;
+}
+.tg-post a {
+  font-size: 14px;
+  font-weight: 600;
+  color: #404040;
+  text-decoration: none;
+  line-height: 1.4;
+  transition: color 0.3s ease;
+}
+.tg-post a:hover { color: var(--tg-cyan-deep); }
+
+/* —— 响应式:窄屏侧栏移到下方 —— */
+@media only screen and (max-width: 768px) {
+  #tag-graph-wrap { flex-direction: column; }
+  #tag-graph { height: 420px; min-height: 420px; }
+  #tag-graph-panel {
+    flex: 0 0 auto;
+    max-height: none;
+    width: 100%;
+  }
+}
+
+/* —— 降级:减少动效偏好 —— */
+@media (prefers-reduced-motion: reduce) {
+  .tg-node circle.tg-pulse { animation: none; }
+  .tg-link, .tg-node circle, .tg-label, .tg-post a, #tag-graph-tip { transition: none; }
+}
+
+/* —— d3 加载失败时的降级标签列表(JS 注入) —— */
+#tag-graph-fallback {
+  flex: 1 1 0;
+  padding: 20px;
+  color: var(--tg-ink);
+  font-family: "Courier New", Consolas, monospace;
+}
+#tag-graph-fallback .tg-fb-tag {
+  margin: 10px 0;
+}
+#tag-graph-fallback .tg-fb-tag-head {
+  color: var(--tg-cyan);
+  font-weight: 700;
+  cursor: pointer;
+}
+#tag-graph-fallback .tg-fb-list { margin: 6px 0 6px 14px; }
+#tag-graph-fallback .tg-fb-list a {
+  display: block;
+  color: var(--tg-ink);
+  text-decoration: none;
+  padding: 3px 0;
+  font-size: 13px;
+}
+#tag-graph-fallback .tg-fb-list a:hover { color: var(--tg-cyan); }
