@@ -14,7 +14,7 @@
   list-style: none;
 }
 
-/* —— 中央发光脊柱 —— */
+/* —— 中央发光脊柱:背景流动 + 呼吸发光 —— */
 .cyber-timeline::before {
   content: "";
   position: absolute;
@@ -31,8 +31,20 @@
     var(--tl-cyan-deep) 92%,
     transparent 100%
   );
+  background-size: 100% 200%;
   box-shadow: 0 0 8px var(--tl-cyan), 0 0 16px rgba(0, 201, 215, 0.5);
   z-index: 0;
+  animation: tl-spine 4s linear infinite, tl-glow 2.6s ease-in-out infinite;
+}
+/* 脊柱渐变沿垂直方向循环流动,模拟数据持续向下传输 */
+@keyframes tl-spine {
+  0%   { background-position: 0 0; }
+  100% { background-position: 0 -200%; }
+}
+/* 脊柱整体辉光呼吸 */
+@keyframes tl-glow {
+  0%, 100% { box-shadow: 0 0 6px var(--tl-cyan), 0 0 12px rgba(0, 201, 215, 0.4); }
+  50%      { box-shadow: 0 0 10px var(--tl-cyan), 0 0 22px rgba(0, 201, 215, 0.7); }
 }
 
 /* —— 扫描光带:沿脊柱向下流动 —— */
@@ -80,13 +92,31 @@
   background: #fff;
   border: none;
   border-radius: 0;
-  text-shadow: 0 0 8px rgba(0, 201, 215, 0.7);
-  animation: tl-pulse 2.6s ease-in-out infinite;
 }
+
+/* 逐字浮现:JS 把每位数字拆成 .tl-digit 并设 --i 索引 */
+.tl-digit {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(8px);
+  text-shadow: none;
+}
+.tl-year.in-view .tl-digit {
+  animation: tl-digit-in 0.5s ease forwards,
+             tl-pulse 2.6s ease-in-out infinite;
+  animation-delay: calc(var(--i) * 0.12s), calc(var(--i) * 0.12s + 0.5s);
+}
+/* 入场:从下方淡入并点亮 */
+@keyframes tl-digit-in {
+  0%   { opacity: 0; transform: translateY(8px); text-shadow: none; }
+  100% { opacity: 1; transform: translateY(0); text-shadow: 0 0 8px rgba(0, 201, 215, 0.8); }
+}
+/* 入场后持续发光呼吸闪烁 */
 @keyframes tl-pulse {
-  0%, 100% { text-shadow: 0 0 8px rgba(0, 201, 215, 0.7); }
-  50%      { text-shadow: 0 0 12px rgba(0, 201, 215, 1); }
+  0%, 100% { text-shadow: 0 0 6px rgba(0, 201, 215, 0.6); }
+  50%      { text-shadow: 0 0 14px rgba(0, 201, 215, 1); }
 }
+/* 无 JS 时年份仍可见(JS 没拆分时 .tl-digit 不存在,文字直接显示) */
 
 /* —— 文章条目(左右交替)—— */
 .tl-item {
@@ -191,9 +221,13 @@
 
 /* —— 降级:减少动效偏好 —— */
 @media (prefers-reduced-motion: reduce) {
-  .cyber-timeline::after { animation: none; display: none; }
-  .tl-year-label { animation: none; }
+  .cyber-timeline::before,
+  .cyber-timeline::after { animation: none; }
+  .cyber-timeline::after { display: none; }
+  .tl-year-label,
+  .tl-year.in-view .tl-digit,
   .tl-item.in-view .tl-date { animation: none; }
+  .tl-year.in-view .tl-digit { opacity: 1; transform: none; text-shadow: 0 0 8px rgba(0, 201, 215, 0.8); }
   .cyber-timeline.js .tl-card { opacity: 1; transform: none; }
   .tl-card, .tl-dot, .tl-title, .tl-date { transition: none; }
 }
