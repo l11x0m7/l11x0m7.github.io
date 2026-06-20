@@ -70,22 +70,22 @@
 .tl-year-label {
   position: relative;
   z-index: 2;
-  padding: 5px 16px;
+  padding: 5px 18px;
   font-family: "Courier New", Consolas, monospace;
   font-size: 17px;
   font-weight: 700;
   letter-spacing: 3px;
   color: var(--tl-cyan);
-  background: transparent;
-  border: 1px solid rgba(0, 201, 215, 0.5);
-  border-radius: 2px;
+  /* 纯文字无框;白底盖住中央竖线,不让线穿过年份 */
+  background: #fff;
+  border: none;
+  border-radius: 0;
   text-shadow: 0 0 8px rgba(0, 201, 215, 0.7);
-  box-shadow: 0 0 8px rgba(0, 201, 215, 0.3);
   animation: tl-pulse 2.6s ease-in-out infinite;
 }
 @keyframes tl-pulse {
-  0%, 100% { box-shadow: 0 0 8px rgba(0, 201, 215, 0.3); text-shadow: 0 0 8px rgba(0, 201, 215, 0.7); }
-  50%      { box-shadow: 0 0 14px rgba(0, 201, 215, 0.55); text-shadow: 0 0 12px rgba(0, 201, 215, 1); }
+  0%, 100% { text-shadow: 0 0 8px rgba(0, 201, 215, 0.7); }
+  50%      { text-shadow: 0 0 12px rgba(0, 201, 215, 1); }
 }
 
 /* —— 文章条目(左右交替)—— */
