@@ -27,21 +27,7 @@ description: "SkyHigh"
 <!-- Pager -->
 {% if paginator.total_pages > 1 %}
 <div class="pagination-row">
-  <!-- Original Newer / Older buttons -->
-  <ul class="pager">
-      {% if paginator.previous_page %}
-      <li class="previous">
-          <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">&larr; Newer Posts</a>
-      </li>
-      {% endif %}
-      {% if paginator.next_page %}
-      <li class="next">
-          <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Older Posts &rarr;</a>
-      </li>
-      {% endif %}
-  </ul>
-
-  <!-- Numbered page links -->
+  <!-- Numbered page links (on top) -->
   <nav class="pagination-container">
     <ul class="pagination">
       {% for page in (1..paginator.total_pages) %}
@@ -55,5 +41,19 @@ description: "SkyHigh"
       {% endfor %}
     </ul>
   </nav>
+
+  <!-- Newer / Older buttons (below) -->
+  <ul class="pager">
+      {% if paginator.previous_page %}
+      <li class="previous">
+          <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">&larr; Newer Posts</a>
+      </li>
+      {% endif %}
+      {% if paginator.next_page %}
+      <li class="next">
+          <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Older Posts &rarr;</a>
+      </li>
+      {% endif %}
+  </ul>
 </div>
 {% endif %}
