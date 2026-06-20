@@ -5,6 +5,13 @@
    视口内元素同步点亮(避免首屏闪烁),其余滚动进入时点亮。
    ============================================================ */
 (function () {
+  // 节点间距按相邻两篇发文的真实天数间隔换算(平方根压缩)。
+  // gapPx = clamp(MIN_GAP, sqrt(days) * GAP_SCALE, MAX_GAP)
+  var GAP_SCALE = 14;   // 1 天 ≈ 14px;16 天 ≈ 56px;100 天 ≈ 140px
+  var MIN_GAP = 12;     // 同日多篇(days=0)的最小间距,防重叠
+  var MAX_GAP = 160;    // 封顶,防止数月间隔把页面拉得过长
+  var DAY_MS = 86400000;
+
   var timeline = document.querySelector('.cyber-timeline');
   if (!timeline) return;
 
@@ -28,6 +35,28 @@
       label.appendChild(s);
     });
   });
+
+  // 按相邻两篇发文的真实时间间隔换算节点间距(平方根压缩)。
+  // DOM 顺序即 site.posts 倒序(最新在上):items[i] 比 items[i+1] 更新,
+  // 间隔取绝对天数差。从第二个 item 起,把算出的间距写入 inline margin-top;
+  // 第一个 item 紧跟年份标签,沿用默认上边距。年份标签不参与换算(仍是分组锚点)。
+  if (items.length > 1) {
+    // 解析每个 item 的发文日期(来自 .tl-date 的 datetime 属性)
+    var dates = Array.prototype.map.call(items, function (el) {
+      var t = el.querySelector('.tl-date');
+      var d = t && t.getAttribute('datetime');
+      var ms = d ? Date.parse(d) : NaN;
+      return isNaN(ms) ? null : ms;
+    });
+    for (var i = 1; i < items.length; i++) {
+      var prev = dates[i - 1];
+      var curr = dates[i];
+      if (prev == null || curr == null) continue; // 日期缺失则跳过,保留默认间距
+      var days = Math.abs(prev - curr) / DAY_MS;
+      var gap = Math.min(Math.max(Math.sqrt(days) * GAP_SCALE, MIN_GAP), MAX_GAP);
+      items[i].style.marginTop = Math.round(gap) + 'px';
+    }
+  }
 
   function reveal(el, delay) {
     el.style.transitionDelay = delay + 'ms';

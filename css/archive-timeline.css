@@ -125,7 +125,10 @@
   display: flex;
   align-items: center;
   min-height: 44px;
-  margin: 14px 0;
+  /* 间距由 JS 按相邻发文时间间隔换算后写入 margin-top;
+     无 JS 时用 14px 等距降级。去掉下边距避免与下一条的 margin-top 叠加。 */
+  margin: 14px 0 0;
+  transition: margin-top 0.4s ease;
 }
 
 /* 中央节点:菱形圆点 */
