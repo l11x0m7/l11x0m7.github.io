@@ -6,9 +6,7 @@
 .cyber-timeline {
   --tl-cyan: #00c9d7;
   --tl-cyan-deep: #0085a1;
-  --tl-pink: #ff2e88;
   --tl-ink: #404040;
-  --tl-bg: rgba(255, 255, 255, 0.55);
 
   position: relative;
   padding: 20px 0 40px;
@@ -72,21 +70,22 @@
 .tl-year-label {
   position: relative;
   z-index: 2;
-  padding: 6px 18px;
+  padding: 5px 16px;
   font-family: "Courier New", Consolas, monospace;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 700;
-  letter-spacing: 2px;
-  color: #fff;
-  background: var(--tl-cyan-deep);
-  border: 1px solid var(--tl-cyan);
+  letter-spacing: 3px;
+  color: var(--tl-cyan);
+  background: transparent;
+  border: 1px solid rgba(0, 201, 215, 0.5);
   border-radius: 2px;
-  box-shadow: 0 0 10px var(--tl-cyan), 0 0 22px rgba(0, 201, 215, 0.45);
+  text-shadow: 0 0 8px rgba(0, 201, 215, 0.7);
+  box-shadow: 0 0 8px rgba(0, 201, 215, 0.3);
   animation: tl-pulse 2.6s ease-in-out infinite;
 }
 @keyframes tl-pulse {
-  0%, 100% { box-shadow: 0 0 10px var(--tl-cyan), 0 0 22px rgba(0, 201, 215, 0.45); border-color: var(--tl-cyan); }
-  50%      { box-shadow: 0 0 16px var(--tl-pink), 0 0 28px rgba(255, 46, 136, 0.55); border-color: var(--tl-pink); }
+  0%, 100% { box-shadow: 0 0 8px rgba(0, 201, 215, 0.3); text-shadow: 0 0 8px rgba(0, 201, 215, 0.7); }
+  50%      { box-shadow: 0 0 14px rgba(0, 201, 215, 0.55); text-shadow: 0 0 12px rgba(0, 201, 215, 1); }
 }
 
 /* —— 文章条目(左右交替)—— */
@@ -118,54 +117,39 @@
   transform: translate(-50%, -50%) rotate(45deg) scale(1.25);
 }
 
-/* 卡片 */
+/* 卡片:无边框无背景,简约纯文字 */
 .tl-card {
   position: relative;
   width: 45%;
-  padding: 8px 14px;
-  background: var(--tl-bg);
-  border: 1px solid rgba(0, 201, 215, 0.4);
-  border-radius: 2px;
-  transition: border-color 0.35s ease, background 0.35s ease, box-shadow 0.35s ease;
-}
-/* 卡片 → 脊柱 的发光连线 */
-.tl-card::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  width: 24px;
-  height: 1px;
-  background: var(--tl-cyan);
-  box-shadow: 0 0 6px var(--tl-cyan);
-  transform: translateY(-50%);
-  transition: background 0.35s ease, box-shadow 0.35s ease;
+  padding: 4px 18px;
 }
 
 /* 左右交替:奇数靠左、偶数靠右(nth-of-type 只计 .tl-item,忽略年份节点) */
-.tl-item:nth-of-type(odd) .tl-card  { margin-right: auto; }
-.tl-item:nth-of-type(odd) .tl-card::before  { right: -24px; }
-.tl-item:nth-of-type(even) .tl-card { margin-left: auto; }
-.tl-item:nth-of-type(even) .tl-card::before { left: -24px; }
+.tl-item:nth-of-type(odd) .tl-card  { margin-right: auto; text-align: right; }
+.tl-item:nth-of-type(even) .tl-card { margin-left: auto; text-align: left; }
 
-/* hover:霓虹高亮(粉色) */
-.tl-card:hover {
-  border-color: var(--tl-pink);
-  background: rgba(255, 255, 255, 0.85);
-  box-shadow: 0 0 14px rgba(255, 46, 136, 0.55), 0 4px 18px rgba(255, 46, 136, 0.2);
-}
-.tl-card:hover::before {
-  background: var(--tl-pink);
-  box-shadow: 0 0 6px var(--tl-pink);
-}
-
-/* 日期 + 标题 */
+/* 日期:等宽字体,青色闪烁发光(进入视口后点亮) */
 .tl-date {
   display: block;
   font-family: "Courier New", Consolas, monospace;
   font-size: 12px;
-  color: #999;
+  color: var(--tl-cyan-deep);
   letter-spacing: 1px;
+  opacity: 0.55;
+  transition: opacity 0.4s ease, color 0.4s ease, text-shadow 0.4s ease;
 }
+.tl-item.in-view .tl-date {
+  opacity: 1;
+  color: var(--tl-cyan);
+  text-shadow: 0 0 6px rgba(0, 201, 215, 0.8);
+  animation: tl-blink 2.4s ease-in-out infinite;
+}
+@keyframes tl-blink {
+  0%, 100% { opacity: 1; text-shadow: 0 0 6px rgba(0, 201, 215, 0.8); }
+  50%      { opacity: 0.45; text-shadow: 0 0 3px rgba(0, 201, 215, 0.4); }
+}
+
+/* 标题:纯文字,hover 变青 */
 .tl-title {
   display: block;
   font-size: 15px;
@@ -185,8 +169,7 @@
 .cyber-timeline.js .tl-item.in-view .tl-card {
   opacity: 1;
   transform: translateY(0);
-  transition: opacity 0.5s ease, transform 0.5s ease,
-              border-color 0.35s ease, background 0.35s ease, box-shadow 0.35s ease;
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 /* —— 响应式:窄屏单侧(脊柱居左,卡片全右侧)—— */
@@ -202,10 +185,7 @@
     width: calc(100% - 50px);
     margin-left: 50px;
     margin-right: 0;
-  }
-  .tl-item .tl-card::before {
-    left: -24px;
-    right: auto;
+    text-align: left;
   }
 }
 
@@ -213,6 +193,7 @@
 @media (prefers-reduced-motion: reduce) {
   .cyber-timeline::after { animation: none; display: none; }
   .tl-year-label { animation: none; }
+  .tl-item.in-view .tl-date { animation: none; }
   .cyber-timeline.js .tl-card { opacity: 1; transform: none; }
-  .tl-card, .tl-dot, .tl-title { transition: none; }
+  .tl-card, .tl-dot, .tl-title, .tl-date { transition: none; }
 }
