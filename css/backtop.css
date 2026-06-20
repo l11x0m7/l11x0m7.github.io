@@ -2,7 +2,14 @@
 #back-top {
   position: fixed;
   bottom: 30px;
-  margin-left: 1040px;
+  right: 30px;
+  z-index: 9999;
+}
+@media only screen and (max-width: 768px) {
+  #back-top {
+    bottom: 20px;
+    right: 15px;
+  }
 }
 #back-top a {
   width: 54px;

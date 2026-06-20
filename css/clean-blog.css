@@ -565,6 +565,36 @@ form .row:first-child .floating-label-form-group {
   border-color: #e0e0e0;
   cursor: not-allowed;
 }
+/* Layout: Newer/Older buttons and numbered pages on the same row */
+.pagination-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin: 30px 0 10px;
+}
+.pagination-row > .pager,
+.pagination-row > .pagination-container {
+  flex: 0 0 auto;
+  margin: 0;
+}
+.pagination-row > .pagination-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.pagination-row .pager {
+  margin: 0;
+}
+@media only screen and (max-width: 768px) {
+  .pagination-row {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .pagination-row > .pagination-container {
+    justify-content: center;
+  }
+}
 ::-moz-selection {
   color: white;
   text-shadow: none;
