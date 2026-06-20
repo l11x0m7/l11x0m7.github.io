@@ -1,0 +1,148 @@
+/* ============================================================
+   Blog Search — 主页搜索框 + 结果(简约 + 霓虹高亮)
+   仅作用于主页 .blog-search*,与全局 clean-blog 样式隔离。
+   ============================================================ */
+
+.blog-search {
+  --bs-cyan: #00c9d7;
+  --bs-cyan-deep: #0085a1;
+  --bs-pink: #ff2e88;
+  --bs-ink: #404040;
+
+  margin: 0 0 36px;
+}
+
+/* —— 搜索表单:输入框 + 按钮一行 —— */
+.blog-search-form {
+  display: flex;
+  gap: 10px;
+  align-items: stretch;
+}
+
+/* —— 搜索框 —— */
+.blog-search-box {
+  flex: 1 1 auto;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 16px;
+  font-family: "Helvetica Neue", Arial, "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 15px;
+  color: var(--bs-ink);
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 3px;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.blog-search-box::placeholder { color: #bbb; }
+.blog-search-box:focus {
+  border-color: var(--bs-cyan);
+  box-shadow: 0 0 10px rgba(0, 201, 215, 0.4);
+}
+
+/* —— 搜索按钮 —— */
+.blog-search-btn {
+  flex: 0 0 auto;
+  padding: 12px 22px;
+  font-family: "Helvetica Neue", Arial, "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #fff;
+  background: var(--bs-cyan-deep);
+  border: 1px solid var(--bs-cyan);
+  border-radius: 3px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.blog-search-btn:hover,
+.blog-search-btn:focus {
+  background: var(--bs-cyan);
+  border-color: var(--bs-cyan);
+  box-shadow: 0 0 12px rgba(0, 201, 215, 0.55);
+  outline: none;
+}
+
+/* —— 状态提示 —— */
+.blog-search-status {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #999;
+  min-height: 18px;
+}
+.blog-search-status.bs-error { color: var(--bs-pink); }
+
+/* —— 结果列表 —— */
+.blog-search-results { margin-top: 6px; }
+
+.blog-search-result {
+  padding: 18px 0;
+  border-bottom: 1px solid #eee;
+}
+.blog-search-result:last-child { border-bottom: none; }
+
+.bs-result-head { margin-bottom: 6px; }
+.bs-result-title {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--bs-ink);
+  text-decoration: none;
+  line-height: 1.35;
+  transition: color 0.25s ease;
+}
+.bs-result-title:hover { color: var(--bs-cyan-deep); }
+
+.bs-result-meta {
+  font-family: "Courier New", Consolas, monospace;
+  font-size: 12px;
+  color: #999;
+  letter-spacing: 1px;
+  margin: 2px 0 8px;
+}
+.bs-result-tags { margin-left: 8px; }
+.bs-result-tag {
+  display: inline-block;
+  font-family: "Courier New", Consolas, monospace;
+  font-size: 11px;
+  color: var(--bs-cyan-deep);
+  border: 1px solid rgba(0, 201, 215, 0.35);
+  border-radius: 2px;
+  padding: 0 6px;
+  margin-right: 5px;
+  line-height: 1.7;
+}
+
+.bs-result-excerpt {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.6;
+}
+.bs-result-excerpt .bs-ellipsis { color: #bbb; }
+
+/* —— 命中高亮:标红加粗 —— */
+.blog-search mark,
+.bs-hit {
+  background: transparent;
+  color: var(--bs-pink);
+  font-weight: 700;
+  text-shadow: 0 0 6px rgba(255, 46, 136, 0.35);
+}
+
+/* —— 搜索进行中:隐藏主页文章列表与分页 —— */
+body.bs-searching .post-preview,
+body.bs-searching hr,
+body.bs-searching .pagination-row {
+  display: none;
+}
+
+/* —— 响应式 —— */
+@media only screen and (max-width: 768px) {
+  .blog-search-box { font-size: 16px; } /* 防 iOS 缩放 */
+  .bs-result-title { font-size: 17px; }
+}
+
+/* —— 降级:减少动效 —— */
+@media (prefers-reduced-motion: reduce) {
+  .blog-search-box, .bs-result-title { transition: none; }
+}

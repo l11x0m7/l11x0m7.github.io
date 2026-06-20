@@ -3,6 +3,18 @@ layout: page
 description: "SkyHigh"
 ---
 
+<link rel="stylesheet" href="/css/blog-search.css">
+
+<div class="blog-search" id="blog-search">
+  <form class="blog-search-form" id="blog-search-form" role="search">
+    <input type="search" class="blog-search-box" id="blog-search-input"
+           placeholder="搜索文章(标题 / 正文 / 标签)…" autocomplete="off">
+    <button type="submit" class="blog-search-btn" id="blog-search-btn" aria-label="搜索">搜索</button>
+  </form>
+  <div class="blog-search-status" id="blog-search-status"></div>
+  <div class="blog-search-results" id="blog-search-results"></div>
+</div>
+
 {% for post in paginator.posts %}
 <div class="post-preview">
     <a href="{{ post.url | prepend: site.baseurl }}">
@@ -57,3 +69,6 @@ description: "SkyHigh"
   </ul>
 </div>
 {% endif %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/7.0.0/fuse.min.js" defer></script>
+<script src="/js/blog-search.js" defer></script>
