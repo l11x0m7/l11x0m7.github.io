@@ -54,11 +54,9 @@ layout: default
                     </li>
                     {% endif %}
                 </ul>
-		<!--
-        {% if site.intensedebate_comments %}
-		{% include intensedebate-comments.html %}
-		{% endif %}
-        -->
+        {% if site.comments.provider == "giscus" %}
+        {% include giscus-comments.html %}
+        {% endif %}
             </div>
         </div>
     </div>

@@ -48,7 +48,7 @@ defaults:
 
 # Comments 
 comments :
-  provider : duoshuo
+  provider : giscus
   duoshuo :
     short_name : 
   disqus :
@@ -62,4 +62,14 @@ bing_verify:
 
 # Links to include in footer navigation
 
-intensedebate_comments: true
+intensedebate_comments: false
+
+# Giscus (GitHub Discussions backed) 评论
+# repo_id / category_id 需在 https://giscus.app 获取后填入,留空则评论框无法加载
+giscus:
+  repo: "l11x0m7/l11x0m7.github.io"
+  repo_id: "MDEwOlJlcG9zaXRvcnk2ODI3Nzg5Mw=="
+  category: "Announcements"
+  category_id: "DIC_kwDOBBHWhc4C_h8-"
+  mapping: "pathname"
+  theme: "light"

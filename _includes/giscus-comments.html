@@ -1,0 +1,21 @@
+{% if page.comments != false %}
+<div class="post-comments" style="margin-top: 2em;">
+<script src="https://giscus.app/client.js"
+        data-repo="{{ site.giscus.repo }}"
+        data-repo-id="{{ site.giscus.repo_id }}"
+        data-category="{{ site.giscus.category }}"
+        data-category-id="{{ site.giscus.category_id }}"
+        data-mapping="{{ site.giscus.mapping | default: 'pathname' }}"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="{{ site.giscus.theme | default: 'light' }}"
+        data-lang="zh-CN"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+<noscript>请启用 JavaScript 以加载 Giscus 评论。</noscript>
+</div>
+{% endif %}
