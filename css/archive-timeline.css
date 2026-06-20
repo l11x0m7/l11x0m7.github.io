@@ -1,0 +1,218 @@
+/* ============================================================
+   Archive — Cyberpunk Vertical Timeline (方案 A: 霓虹脊柱)
+   仅作用于 archive 页 .cyber-timeline,与全局 clean-blog 样式隔离。
+   ============================================================ */
+
+.cyber-timeline {
+  --tl-cyan: #00c9d7;
+  --tl-cyan-deep: #0085a1;
+  --tl-pink: #ff2e88;
+  --tl-ink: #404040;
+  --tl-bg: rgba(255, 255, 255, 0.55);
+
+  position: relative;
+  padding: 20px 0 40px;
+  margin: 30px 0;
+  list-style: none;
+}
+
+/* —— 中央发光脊柱 —— */
+.cyber-timeline::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--tl-cyan-deep) 8%,
+    var(--tl-cyan) 50%,
+    var(--tl-cyan-deep) 92%,
+    transparent 100%
+  );
+  box-shadow: 0 0 8px var(--tl-cyan), 0 0 16px rgba(0, 201, 215, 0.5);
+  z-index: 0;
+}
+
+/* —— 扫描光带:沿脊柱向下流动 —— */
+.cyber-timeline::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 2px;
+  height: 80px;
+  transform: translateX(-50%);
+  background: linear-gradient(to bottom, transparent, #ffffff, var(--tl-cyan), transparent);
+  box-shadow: 0 0 12px #ffffff, 0 0 20px var(--tl-cyan);
+  z-index: 0;
+  opacity: 0.9;
+  animation: tl-scan 3.2s linear infinite;
+}
+@keyframes tl-scan {
+  0%   { top: -80px;  opacity: 0; }
+  10%  { opacity: 0.9; }
+  90%  { opacity: 0.9; }
+  100% { top: 100%;   opacity: 0; }
+}
+
+/* —— 年份节点 —— */
+.tl-year {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 38px 0 26px;
+}
+.tl-year:first-child { margin-top: 0; }
+
+.tl-year-label {
+  position: relative;
+  z-index: 2;
+  padding: 6px 18px;
+  font-family: "Courier New", Consolas, monospace;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #fff;
+  background: var(--tl-cyan-deep);
+  border: 1px solid var(--tl-cyan);
+  border-radius: 2px;
+  box-shadow: 0 0 10px var(--tl-cyan), 0 0 22px rgba(0, 201, 215, 0.45);
+  animation: tl-pulse 2.6s ease-in-out infinite;
+}
+@keyframes tl-pulse {
+  0%, 100% { box-shadow: 0 0 10px var(--tl-cyan), 0 0 22px rgba(0, 201, 215, 0.45); border-color: var(--tl-cyan); }
+  50%      { box-shadow: 0 0 16px var(--tl-pink), 0 0 28px rgba(255, 46, 136, 0.55); border-color: var(--tl-pink); }
+}
+
+/* —— 文章条目(左右交替)—— */
+.tl-item {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  margin: 14px 0;
+}
+
+/* 中央节点:菱形圆点 */
+.tl-dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background: var(--tl-cyan-deep);
+  border: 1px solid var(--tl-cyan);
+  z-index: 2;
+  transition: background 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease;
+}
+.tl-item.in-view .tl-dot {
+  background: var(--tl-cyan);
+  box-shadow: 0 0 8px var(--tl-cyan), 0 0 14px rgba(0, 201, 215, 0.6);
+  transform: translate(-50%, -50%) rotate(45deg) scale(1.25);
+}
+
+/* 卡片 */
+.tl-card {
+  position: relative;
+  width: 45%;
+  padding: 8px 14px;
+  background: var(--tl-bg);
+  border: 1px solid rgba(0, 201, 215, 0.4);
+  border-radius: 2px;
+  transition: border-color 0.35s ease, background 0.35s ease, box-shadow 0.35s ease;
+}
+/* 卡片 → 脊柱 的发光连线 */
+.tl-card::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 24px;
+  height: 1px;
+  background: var(--tl-cyan);
+  box-shadow: 0 0 6px var(--tl-cyan);
+  transform: translateY(-50%);
+  transition: background 0.35s ease, box-shadow 0.35s ease;
+}
+
+/* 左右交替:奇数靠左、偶数靠右(nth-of-type 只计 .tl-item,忽略年份节点) */
+.tl-item:nth-of-type(odd) .tl-card  { margin-right: auto; }
+.tl-item:nth-of-type(odd) .tl-card::before  { right: -24px; }
+.tl-item:nth-of-type(even) .tl-card { margin-left: auto; }
+.tl-item:nth-of-type(even) .tl-card::before { left: -24px; }
+
+/* hover:霓虹高亮(粉色) */
+.tl-card:hover {
+  border-color: var(--tl-pink);
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 14px rgba(255, 46, 136, 0.55), 0 4px 18px rgba(255, 46, 136, 0.2);
+}
+.tl-card:hover::before {
+  background: var(--tl-pink);
+  box-shadow: 0 0 6px var(--tl-pink);
+}
+
+/* 日期 + 标题 */
+.tl-date {
+  display: block;
+  font-family: "Courier New", Consolas, monospace;
+  font-size: 12px;
+  color: #999;
+  letter-spacing: 1px;
+}
+.tl-title {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--tl-ink);
+  text-decoration: none;
+  line-height: 1.4;
+  transition: color 0.3s ease;
+}
+.tl-card:hover .tl-title { color: var(--tl-cyan); }
+
+/* —— reveal 动效(仅 JS 启用 .js 后生效,无 JS 时卡片默认可见)—— */
+.cyber-timeline.js .tl-card {
+  opacity: 0;
+  transform: translateY(12px);
+}
+.cyber-timeline.js .tl-item.in-view .tl-card {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.5s ease, transform 0.5s ease,
+              border-color 0.35s ease, background 0.35s ease, box-shadow 0.35s ease;
+}
+
+/* —— 响应式:窄屏单侧(脊柱居左,卡片全右侧)—— */
+@media only screen and (max-width: 768px) {
+  .cyber-timeline::before { left: 20px; }
+  .cyber-timeline::after  { left: 20px; }
+
+  .tl-year { justify-content: flex-start; padding-left: 50px; }
+
+  .tl-dot { left: 20px; }
+
+  .tl-item .tl-card {
+    width: calc(100% - 50px);
+    margin-left: 50px;
+    margin-right: 0;
+  }
+  .tl-item .tl-card::before {
+    left: -24px;
+    right: auto;
+  }
+}
+
+/* —— 降级:减少动效偏好 —— */
+@media (prefers-reduced-motion: reduce) {
+  .cyber-timeline::after { animation: none; display: none; }
+  .tl-year-label { animation: none; }
+  .cyber-timeline.js .tl-card { opacity: 1; transform: none; }
+  .tl-card, .tl-dot, .tl-title { transition: none; }
+}

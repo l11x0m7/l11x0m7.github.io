@@ -5,17 +5,23 @@ description: "不积跬步 无以至千里"
 header-img: "img/orange.jpg"
 ---
 
+<link rel="stylesheet" href="/css/archive-timeline.css">
 
-<ul class="listing">
+<div class="cyber-timeline">
 {% for post in site.posts %}
-  {% capture y %}{{post.date | date:"%Y"}}{% endcapture %}
+  {% capture y %}{{ post.date | date:"%Y" }}{% endcapture %}
   {% if year != y %}
     {% assign year = y %}
-    <li class="listing-seperator">{{ y }}</li>
+  <div class="tl-year"><span class="tl-year-label">{{ y }}</span></div>
   {% endif %}
-  <li class="listing-item">
-    <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-    <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-  </li>
+  <div class="tl-item">
+    <span class="tl-dot"></span>
+    <div class="tl-card">
+      <time class="tl-date" datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%m-%d" }}</time>
+      <a class="tl-title" href="{{ post.url | prepend: site.baseurl }}" title="{{ post.title }}">{{ post.title }}</a>
+    </div>
+  </div>
 {% endfor %}
-</ul>
+</div>
+
+<script src="/js/archive-timeline.js" defer></script>
